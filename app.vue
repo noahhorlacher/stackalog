@@ -1,10 +1,9 @@
 <script setup>
-const colorMode = useColorMode()
-colorMode.preference = 'dark'
+
 </script>
 
 <template>
-  <div>
+  <div vaul-drawer-wrapper class="bg-background">
     <SidebarProvider>
       <AppSidebar />
       <main>

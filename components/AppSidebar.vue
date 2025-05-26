@@ -1,11 +1,14 @@
 <script setup>
+const colorMode = useColorMode()
+const isDark = computed(() => colorMode.value === 'dark')
+
 const menuGroups = [
     {
         title: 'App',
         items: [
             {
                 title: 'Stacks',
-                url: '#',
+                url: '/stacks',
                 icon: 'tabler:stack-2'
             },
             {
@@ -25,12 +28,12 @@ const menuGroups = [
             },
                         {
                 title: 'Ihr Account',
-                url: '#',
+                url: '/einstellungen',
                 icon: 'tabler:settings'
             },
             {
                 title: 'Support',
-                url: '#',
+                url: '/support',
                 icon: 'tabler:phone-ringing'
             },
         ]
@@ -41,7 +44,8 @@ const menuGroups = [
 <template>
 <Sidebar>
     <SidebarHeader>
-        <img class="w-16" src="/icon-white.svg" />
+        <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
+        <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
     </SidebarHeader>
 
     <SidebarContent>
@@ -65,14 +69,50 @@ const menuGroups = [
     <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div class="flex items-center justify-between">
-                <div class="flex gap-2 items-center">
-                    <Icon name="tabler:user" /> Max Mustermann
-                </div>
-                <Button variant="ghost">
-                    <Icon name="tabler:arrow-bar-right" />
-                </Button>
-            </div>
+
+            <Drawer>
+                <DrawerTrigger class="w-full">
+                    <Button variant="ghost" class="w-full cursor-pointer">
+                        <div class="flex items-center gap-2 justify-start w-full">
+                            <Avatar>
+                                <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
+                                <AvatarFallback>MM</AvatarFallback>
+                            </Avatar>
+                            <p>Max Mustermann</p>
+                        </div>
+                    </Button>
+                </DrawerTrigger>
+                <DrawerContent>
+
+                    <DrawerHeader class="mt-8">
+                        <DrawerTitle class="flex items-center justify-center gap-4">
+                            <Avatar>
+                                <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
+                                <AvatarFallback>MM</AvatarFallback>
+                            </Avatar>
+                            <p>Max Muster</p>
+                        </DrawerTitle>
+                        <DrawerDescription class="flex items-center justify-center gap-2">
+                            <Icon name="tabler:shield-check" />
+                            <p>Administrator</p>
+                        </DrawerDescription>
+                    </DrawerHeader>
+
+                    <DrawerFooter class="mt-16">
+                        <Button class="w-fit mx-auto mb-8 cursor-pointer">
+                            <Icon name="tabler:arrow-right-to-arc" />
+                            <p>Abmelden</p>
+                        </Button>
+                        <!-- <DrawerClose>
+                            <Button variant="outline">
+                                Abbrechen
+                            </Button>
+                        </DrawerClose> -->
+                    </DrawerFooter>
+
+                </DrawerContent>
+
+            </Drawer>
           </SidebarMenuItem>
         </SidebarMenu>
     </SidebarFooter>
