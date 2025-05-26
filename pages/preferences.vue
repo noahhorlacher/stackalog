@@ -40,7 +40,7 @@ onMounted(() => {
               <AvatarFallback>MM</AvatarFallback>
             </Avatar>
             <div class="space-y-2">
-              <Button variant="outline" size="sm" class="cursor-pointer">
+              <Button variant="outline" size="sm">
                 Foto ändern
               </Button>
               <p class="text-sm text-muted-foreground">JPG, GIF oder PNG. Maximum 1MB.</p>
@@ -90,7 +90,7 @@ onMounted(() => {
                 defaultValue="max.mustermann@example.com"
                 class="flex-1"
               />
-              <Button variant="outline" class="cursor-pointer">Verifizieren</Button>
+              <Button variant="outline">Verifizieren</Button>
             </div>
             <p class="text-sm text-muted-foreground">Wir senden Ihnen eine Email um Ihre Änderung zu bestätigen.</p>
           </div>
@@ -279,13 +279,13 @@ onMounted(() => {
               <Label class="text-base">Account löschen</Label>
               <p class="text-sm text-muted-foreground">Löschen Sie Ihren Account und die assoziierten Informationen permanent.</p>
             </div>
-            <Button class="cursor-pointer" variant="destructive">Account Löschen</Button>
+            <Button variant="destructive">Account Löschen</Button>
           </div>
         </CardContent>
       </Card>
 
       <div class="flex justify-end gap-2 mt-8">
-        <Button  class="cursor-pointer" variant="outline">Abbrechen</Button>
-        <Button class="cursor-pointer" >Änderungen Speichern</Button>
+        <Button variant="outline">Abbrechen</Button>
+        <Button>Änderungen Speichern</Button>
       </div>
 </template>

@@ -26,8 +26,8 @@ const menuGroups = [
                 icon: 'tabler:user'
             },
                         {
-                title: 'Ihr Account',
-                url: '/einstellungen',
+                title: 'Einstellungen',
+                url: '/preferences',
                 icon: 'tabler:settings'
             },
             {
@@ -57,12 +57,12 @@ function signOut() {
             <SidebarGroupContent>
                 <SidebarMenu>
                     <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
-                    <SidebarMenuButton asChild>
-                        <a :href="item.url">
-                            <icon :name="item.icon" />
-                            <span>{{item.title}}</span>
-                        </a>
-                    </SidebarMenuButton>
+                        <SidebarMenuButton asChild>
+                            <NuxtLink :to="item.url">
+                                <icon :name="item.icon" />
+                                <span>{{item.title}}</span>
+                            </NuxtLink>
+                        </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarGroupContent>
@@ -75,7 +75,7 @@ function signOut() {
 
             <Drawer>
                 <DrawerTrigger class="w-full">
-                    <Button variant="ghost" class="w-full cursor-pointer">
+                    <Button variant="ghost" class="w-full">
                         <div class="flex items-center gap-2 justify-start w-full">
                             <Avatar>
                                 <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
