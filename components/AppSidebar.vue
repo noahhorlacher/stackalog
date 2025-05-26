@@ -1,6 +1,5 @@
 <script setup>
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
+const router = useRouter()
 
 const menuGroups = [
     {
@@ -39,6 +38,10 @@ const menuGroups = [
         ]
     }
 ]
+
+function signOut() {
+    router.push('/auth/sign-out')
+}
 </script>
 
 <template>
@@ -99,7 +102,7 @@ const menuGroups = [
                     </DrawerHeader>
 
                     <DrawerFooter class="mt-16">
-                        <Button class="w-fit mx-auto mb-8 cursor-pointer">
+                        <Button class="w-fit mx-auto mb-8 cursor-pointer" @click="signOut">
                             <Icon name="tabler:arrow-right-to-arc" />
                             <p>Abmelden</p>
                         </Button>
