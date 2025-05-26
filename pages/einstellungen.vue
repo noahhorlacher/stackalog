@@ -1,16 +1,21 @@
 <script setup>
 const colorMode = useColorMode()
+const ready = ref(false)
 
 const isDark = computed({
-    get() { return colorMode.value === 'dark' },
-    set(_isDark) {
-        colorMode.preference = _isDark ? 'dark' : 'light'
+    get() {
+      return colorMode.value === 'dark'
+    },
+    set(value) {
+        colorMode.preference = value ? 'dark' : 'light'
     }
 })
 
-// update colormode
 onMounted(() => {
-  isDark.value = colorMode.value === 'dark'
+  // Allow the DOM to finish hydration and colorMode to stabilize
+  nextTick(() => {
+    ready.value = true
+  })
 })
 </script>
 
@@ -144,10 +149,13 @@ onMounted(() => {
               <Label class="text-base">Theme</Label>
               <p class="text-sm text-muted-foreground">Wählen Sie zwischen Dark- und Lightmode</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div v-if="ready" class="flex items-center gap-2">
               <Icon name="tabler:sun" />
-              <Switch :model-value="isDark" @update:model-value="isDark = !isDark" aria-label="Theme auswählen" />
+              <Switch :model-value="isDark" @update:model-value="() => isDark = !isDark" aria-label="Theme auswählen" />
               <Icon name="tabler:moon" />
+            </div>
+            <div v-else>
+              <Skeleton class="h-4 w-16" />
             </div>
           </div>
 
