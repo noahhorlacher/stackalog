@@ -13,7 +13,7 @@ const menuGroups = [
             },
             {
                 title: 'Logs',
-                url: '#',
+                url: '/logs',
                 icon: 'tabler:logs'
             },
         ]

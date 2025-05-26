@@ -1,45 +1,40 @@
 <script setup>
-const stacks = [
+const logs = [
     {
         id: null,
         title: 'Skeleton Test',
-        logs: []
     },
     {
         id: 1,
-        title: 'Hauptgebäude',
-        logs: []
+        title: 'Computer 1',
     },
     {
         id: 2,
-        title: 'Schule',
-        logs: []
+        title: 'Computer 2',
     },
     {
         id: 3,
-        title: 'Gebäude 2',
-        logs: []
+        title: 'Scangerät',
     },
     {
         id: 4,
-        title: 'Defekt',
-        logs: [1, 1, 1, 1]
+        title: 'Secret Cyborg',
     },
 ]
 </script>
 
 <template>
-    <h1 class="text-3xl mb-6">Stacks</h1>
+    <h1 class="text-3xl mb-6">Logs</h1>
     <div class="relative mb-12">
         <Icon name="tabler:search" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
             type="text"
-            placeholder="Stacks durchsuchen..."
+            placeholder="Logs durchsuchen..."
             class="pl-10 pr-4"
         />
     </div>
 
     <div class="flex gap-8 flex-wrap">
-        <StackCard v-for="(stack, index) of stacks" :stack :key="`stack-${index}`" />
+        <LogCard v-for="(log, index) of logs" :log :key="`log-${index}`" />
     </div>
 </template>

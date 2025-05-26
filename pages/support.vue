@@ -8,7 +8,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
               <CardTitle class="flex items-center gap-2">
@@ -164,6 +164,16 @@
               </form>
             </CardContent>
           </Card>
+
+          <Alert>
+            <AlertTitle>
+                <Icon name="tabler:alert-circle" />
+                Dringende Sicherheitsprobleme
+            </AlertTitle>
+            <AlertDescription>
+              Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter security@company.com oder rufen Sie unsere Notfall-Hotline unter +1 (555) 999-0000 an.
+            </AlertDescription>
+          </Alert>
         </div>
 
         <div class="space-y-6">
@@ -286,15 +296,5 @@
           </Card>
         </div>
       </div>
-
-      <Alert>
-        <AlertTitle>
-            <Icon name="tabler:alert-circle" />
-            Dringende Sicherheitsprobleme
-        </AlertTitle>
-        <AlertDescription>
-          Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter security@company.com oder rufen Sie unsere Notfall-Hotline unter +1 (555) 999-0000 an.
-        </AlertDescription>
-      </Alert>
     </div>
 </template>
