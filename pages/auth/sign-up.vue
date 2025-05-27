@@ -17,35 +17,35 @@ definePageMeta({
         <form class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-2">
-              <Label htmlFor="firstName">Vorname</Label>
+              <Label for="firstName">Vorname</Label>
               <Input id="firstName" placeholder="Max" required />
             </div>
             <div class="space-y-2">
-              <Label htmlFor="lastName">Nachname</Label>
+              <Label for="lastName">Nachname</Label>
               <Input id="lastName" placeholder="Mustermann" required />
             </div>
           </div>
 
           <div class="space-y-2">
-            <Label htmlFor="email">E-Mail</Label>
+            <Label for="email">E-Mail</Label>
             <Input id="email" type="email" placeholder="max@example.com" required />
           </div>
 
           <div class="space-y-2">
-            <Label htmlFor="password">Passwort</Label>
+            <Label for="password">Passwort</Label>
             <Input id="password" type="password" required />
             <p class="text-xs text-muted-foreground">Muss mindestens 8 Zeichen lang sein</p>
           </div>
 
           <div class="space-y-2">
-            <Label htmlFor="confirmPassword">Passwort bestätigen</Label>
+            <Label for="confirmPassword">Passwort bestätigen</Label>
             <Input id="confirmPassword" type="password" required />
           </div>
 
           <div class="flex items-center space-x-2">
             <Checkbox id="terms" required />
             <Label
-              htmlFor="terms"
+              for="terms"
               class="text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Ich stimme den

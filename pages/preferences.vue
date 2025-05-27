@@ -21,9 +21,9 @@ onMounted(() => {
 
 <template>
     <div class="space-y-2 mb-6">
-        <h1 class="text-3xl font-bold">Ihr Account</h1>
-        <p class="text-muted-foreground">Managen Sie Ihre Account Einstellungen.</p>
-      </div>
+      <h1 class="text-3xl font-bold">Ihr Account</h1>
+      <p class="text-muted-foreground">Verwalten Sie Ihre Account Einstellungen</p>
+    </div>
 
       <Card>
         <CardHeader>
@@ -31,7 +31,7 @@ onMounted(() => {
             <Icon name="tabler:user" />
             Profil
           </CardTitle>
-          <CardDescription>Updaten Sie Ihre persönlichen Informationen und Account Details.</CardDescription>
+          <CardDescription>Aktualisieren Sie Ihre persönlichen Informationen und Account Details</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="flex items-center gap-4">
@@ -43,7 +43,7 @@ onMounted(() => {
               <Button variant="outline" size="sm">
                 Foto ändern
               </Button>
-              <p class="text-sm text-muted-foreground">JPG, GIF oder PNG. Maximum 1MB.</p>
+              <p class="text-sm text-muted-foreground">JPG, GIF oder PNG. Maximum 1MB</p>
             </div>
           </div>
 
@@ -77,7 +77,7 @@ onMounted(() => {
             <Icon name="tabler:mail" />
             Account
           </CardTitle>
-          <CardDescription>Managen Sie Ihre Kontaktinformation und Regionseinstellungen.</CardDescription>
+          <CardDescription>Verwalten Sie Ihre Kontaktinformation und Regionseinstellungen</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="space-y-2">
@@ -141,7 +141,7 @@ onMounted(() => {
             <Icon name="tabler:globe" />
             Erscheinung
           </CardTitle>
-          <CardDescription>Passen Sie die Erscheinung an.</CardDescription>
+          <CardDescription>Passen Sie die Erscheinung an</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="flex items-center justify-between">
@@ -183,7 +183,7 @@ onMounted(() => {
             <Icon name="tabler:bell" />
             Benachrichtigungen
           </CardTitle>
-          <CardDescription>Konfigurieren Sie, wie Sie Nachrichten und Updates erhalten.</CardDescription>
+          <CardDescription>Konfigurieren Sie, wie Sie Nachrichten und Updates erhalten</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="flex items-center justify-between">
@@ -218,7 +218,7 @@ onMounted(() => {
             <Icon name="tabler:shield" />
             Sicherheit
           </CardTitle>
-          <CardDescription>Managen Sie Ihre Accountsicherheit.</CardDescription>
+          <CardDescription>Verwalten Sie Ihre Accountsicherheit</CardDescription>
         </CardHeader>
         <CardContent class="space-y-6">
           <div class="space-y-2">

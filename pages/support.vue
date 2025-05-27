@@ -3,7 +3,7 @@
       <div class="space-y-2">
         <h1 class="text-3xl font-bold">Support kontaktieren</h1>
         <p class="text-muted-foreground">
-          Unser Supportteam ist für Sie da.
+          Unser Supportteam ist für Sie da
         </p>
       </div>
 
@@ -135,7 +135,7 @@
                 <div class="space-y-2">
                   <Label>Anhänge</Label>
                   <div class="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
-                    <Upload class="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <Icon name="tabler:file-upload" class="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p class="text-sm text-muted-foreground mb-2">Drag and droppen Sie Dateien hier, oder klicken Sie um nach Dateien zu suchen.</p>
                     <input
                       type="file"
@@ -209,7 +209,7 @@
           <Card>
             <CardHeader>
               <CardTitle class="flex items-center gap-2">
-                <Clock class="h-5 w-5" />
+                <Icon name="tabler:clock" class="h-5 w-5" />
                 Support Zeiten
               </CardTitle>
             </CardHeader>

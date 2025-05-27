@@ -22,7 +22,7 @@ definePageMeta({
         <CardContent class="space-y-4">
           <form class="space-y-4">
             <div class="space-y-2">
-              <Label htmlFor="email">E-Mail-Adresse</Label>
+              <Label for="email">E-Mail-Adresse</Label>
               <Input id="email" type="email" placeholder="Gib deine E-Mail-Adresse ein" required />
             </div>
             <Button type="submit" class="w-full">

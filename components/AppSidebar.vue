@@ -21,8 +21,8 @@ const menuGroups = [
         title: 'System',
         items: [
             {
-                title: 'Benutzer',
-                url: '#',
+                title: 'Benutzerverwaltung',
+                url: '/users',
                 icon: 'tabler:user'
             },
                         {

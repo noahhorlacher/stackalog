@@ -18,12 +18,12 @@ definePageMeta({
       <CardContent class="space-y-4">
         <form class="space-y-4">
           <div class="space-y-2">
-            <Label htmlFor="email">E-Mail</Label>
+            <Label for="email">E-Mail</Label>
             <Input id="email" type="email" placeholder="max.mustermann@example.com" required />
           </div>
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <Label htmlFor="password">Passwort</Label>
+              <Label for="password">Passwort</Label>
               <NuxtLink href="/auth/forgot-password" class="text-sm text-blue-600 hover:underline">
                 Passwort vergessen?
               </NuxtLink>

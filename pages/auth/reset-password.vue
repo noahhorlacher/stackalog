@@ -21,13 +21,13 @@ definePageMeta({
         <CardContent class="space-y-4">
           <form class="space-y-4">
             <div class="space-y-2">
-              <Label htmlFor="password">Neues Passwort</Label>
+              <Label for="password">Neues Passwort</Label>
               <Input id="password" type="password" required />
               <p class="text-xs text-muted-foreground">Muss mindestens 8 Zeichen lang sein</p>
             </div>
 
             <div class="space-y-2">
-              <Label htmlFor="confirmPassword">Neues Passwort bestätigen</Label>
+              <Label for="confirmPassword">Neues Passwort bestätigen</Label>
               <Input id="confirmPassword" type="password" required />
             </div>
 

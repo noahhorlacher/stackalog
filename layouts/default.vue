@@ -1,10 +1,10 @@
 <template>
     <SidebarProvider>
         <AppSidebar />
-        <main>
+        <main class="w-full">
             <SidebarTrigger class="p-5 fixed ml-4 mt-4" variant="ghost" />
             
-            <div class="py-12 px-24">
+            <div class="py-12 px-24 max-w-[1200px] mx-auto">
                 <slot />
             </div>
 
