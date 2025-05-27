@@ -2,37 +2,36 @@
   <div class="min-h-screen bg-background p-6">
     <div class="max-w-7xl mx-auto space-y-6">
       <!-- Header -->
-      <div>
-        <h1 class="text-3xl font-bold tracking-tight">User Management</h1>
-        <p class="text-muted-foreground">Manage your users and their information</p>
-      </div>
+        <div class="space-y-2 mb-6">
+            <h1 class="text-3xl font-bold">Benutzerverwaltung</h1>
+            <p class="text-muted-foreground">Verwalten Sie Benutzer und ihre Berechtigungen</p>
+        </div>
 
       <!-- Search and Add User Section -->
-
         <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-        <div class="relative flex-1 max-w-md">
-            <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-            v-model="searchQuery"
-            placeholder="Search users by name, email, or role..."
-            class="pl-10"
-            />
-        </div>
-        <Button @click="openAddModal" class="flex items-center gap-2">
-            <Plus class="h-4 w-4" />
-            Add User
-        </Button>
+            <div class="relative flex-1 max-w-md">
+                <Icon name="tabler:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                v-model="searchQuery"
+                placeholder="Nutzer mit Name, Email oder Rolle suchen..."
+                class="pl-10"
+                />
+            </div>
+            <Button @click="openAddModal" class="flex items-center gap-2">
+                <Icon name="tabler:plus" />
+                Benutzer hinzufügen
+            </Button>
         </div>
 
       <!-- Users Table -->
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>User</TableHead>
-                <TableHead>Role</TableHead>
+                <TableHead>Benutzer</TableHead>
+                <TableHead>Rolle</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead class="text-right">Actions</TableHead>
+                <TableHead>Erstellt</TableHead>
+                <TableHead class="text-right">Aktionen</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -40,22 +39,23 @@
                 <TableCell>
                   <div class="flex items-center gap-3">
                     <Avatar>
-                      <AvatarFallback>{{ user.name.charAt(0).toUpperCase() }}</AvatarFallback>
+                      <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <div class="font-medium">{{ user.name }}</div>
+                      <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
                       <div class="text-sm text-muted-foreground">{{ user.email }}</div>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
                   <Badge :variant="getRoleVariant(user.role)">
+                    <Icon :name="getRoleIcon(user.role)" />
                     {{ user.role }}
                   </Badge>
                 </TableCell>
                 <TableCell>
                   <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-                    {{ user.status }}
+                    {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
                   </Badge>
                 </TableCell>
                 <TableCell class="text-muted-foreground">
@@ -69,7 +69,7 @@
                       @click="viewUser(user)"
                       class="h-8 w-8 p-0"
                     >
-                      <Eye class="h-4 w-4" />
+                      <Icon name="tabler:eye" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -77,7 +77,7 @@
                       @click="editUser(user)"
                       class="h-8 w-8 p-0"
                     >
-                      <Edit class="h-4 w-4" />
+                      <Icon name="tabler:edit" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -85,7 +85,7 @@
                       @click="deleteUser(user)"
                       class="h-8 w-8 p-0 text-destructive hover:text-destructive"
                     >
-                      <Trash2 class="h-4 w-4" />
+                      <Icon name="tabler:trash" />
                     </Button>
                   </div>
                 </TableCell>
@@ -106,34 +106,37 @@
       <Dialog v-model:open="showViewModal">
         <DialogContent class="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>User Details</DialogTitle>
+            <DialogTitle>Benutzerdetails</DialogTitle>
           </DialogHeader>
           <div v-if="selectedUser" class="space-y-6">
             <div class="text-center">
               <Avatar class="h-16 w-16 mx-auto mb-4">
                 <AvatarFallback class="text-xl">
-                  {{ selectedUser.name.charAt(0).toUpperCase() }}
+                  {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
                 </AvatarFallback>
               </Avatar>
-              <h4 class="text-lg font-medium">{{ selectedUser.name }}</h4>
+              <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
             </div>
             <div class="space-y-3">
               <div class="flex justify-between">
-                <span class="font-medium">Email:</span>
+                <span class="font-medium">Email Adresse:</span>
                 <span class="text-muted-foreground">{{ selectedUser.email }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="font-medium">Role:</span>
-                <Badge :variant="getRoleVariant(selectedUser.role)">{{ selectedUser.role }}</Badge>
+                <span class="font-medium">Rolle:</span>
+                <Badge :variant="getRoleVariant(selectedUser.role)">
+                    <Icon :name="getRoleIcon(selectedUser.role)" />
+                    {{ selectedUser.role }}
+                </Badge>
               </div>
               <div class="flex justify-between">
                 <span class="font-medium">Status:</span>
                 <Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
-                  {{ selectedUser.status }}
+                  {{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
                 </Badge>
               </div>
               <div class="flex justify-between">
-                <span class="font-medium">Joined:</span>
+                <span class="font-medium">Erstellt:</span>
                 <span class="text-muted-foreground">{{ formatDate(selectedUser.joinedAt) }}</span>
               </div>
             </div>
@@ -145,38 +148,46 @@
       <Dialog v-model:open="showFormModal">
         <DialogContent class="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{{ showAddModal ? 'Add New User' : 'Edit User' }}</DialogTitle>
+            <DialogTitle>{{ showAddModal ? 'Benutzer hinzufügen' : 'Benutzer bearbeiten' }}</DialogTitle>
           </DialogHeader>
           <form @submit.prevent="saveUser" class="space-y-4">
             <div class="space-y-2">
-              <Label for="name">Name</Label>
+              <Label for="firstName">Vorname</Label>
               <Input
-                id="name"
-                v-model="formData.name"
+                id="firstName"
+                v-model="formData.firstName"
                 required
-                placeholder="Enter user name"
+                placeholder="Vor- und Mittelnamen eingeben"
               />
             </div>
             <div class="space-y-2">
-              <Label for="email">Email</Label>
+              <Label for="lastName">Nachname</Label>
+              <Input
+                id="lastName"
+                v-model="formData.lastName"
+                required
+                placeholder="Nachname eingeben"
+              />
+            </div>
+            <div class="space-y-2">
+              <Label for="email">Email Adresse</Label>
               <Input
                 id="email"
                 v-model="formData.email"
                 type="email"
                 required
-                placeholder="Enter email address"
+                placeholder="Email Adresse eingeben"
               />
             </div>
             <div class="space-y-2">
-              <Label for="role">Role</Label>
+              <Label for="role">Rolle</Label>
               <Select v-model="formData.role">
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a role" />
+                  <SelectValue placeholder="Rolle wählen" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Admin">Admin</SelectItem>
-                  <SelectItem value="Editor">Editor</SelectItem>
-                  <SelectItem value="Viewer">Viewer</SelectItem>
+                  <SelectItem value="Administrator">Administrator</SelectItem>
+                  <SelectItem value="Benutzer">Benutzer</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -187,17 +198,17 @@
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Inactive">Inactive</SelectItem>
+                  <SelectItem value="Active">Aktiv</SelectItem>
+                  <SelectItem value="Inactive">Inaktiv</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <DialogFooter class="gap-2">
               <Button type="button" variant="outline" @click="closeModals">
-                Cancel
+                Abbrechen
               </Button>
               <Button type="submit">
-                {{ showAddModal ? 'Add User' : 'Save Changes' }}
+                {{ showAddModal ? 'Benutzer hinzufügen' : 'Änderungen speichern' }}
               </Button>
             </DialogFooter>
           </form>
@@ -208,16 +219,16 @@
       <AlertDialog v-model:open="showDeleteModal">
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete User</AlertDialogTitle>
+            <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
+            <p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName }}</strong> löschen möchten?</p> 
             <AlertDialogDescription>
-              Are you sure you want to delete <strong>{{ selectedUser?.name }}</strong>? 
-              This action cannot be undone.
+              Diese Aktion kann nicht rückgängig gemacht werden.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel @click="closeModals">Cancel</AlertDialogCancel>
+            <AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
             <AlertDialogAction @click="confirmDelete" class="bg-destructive text-white hover:bg-destructive/90">
-              Delete User
+              Benutzer löschen
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -227,49 +238,6 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
-import { Search, Plus, Eye, Edit, Trash2, Users } from 'lucide-vue-next'
-
-// shadcn-vue components
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-
 // Reactive data
 const searchQuery = ref('')
 const showViewModal = ref(false)
@@ -301,49 +269,55 @@ const formData = reactive({
 const users = ref([
   {
     id: 1,
-    name: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'john.doe@example.com',
-    role: 'Admin',
+    role: 'Administrator',
     status: 'Active',
     joinedAt: '2024-01-15'
   },
   {
     id: 2,
-    name: 'Jane Smith',
+    firstName: 'Jane',
+    lastName: 'Smith',
     email: 'jane.smith@example.com',
-    role: 'Editor',
+    role: 'Benutzer',
     status: 'Active',
     joinedAt: '2024-02-20'
   },
   {
     id: 3,
-    name: 'Mike Johnson',
+    firstName: 'Mike',
+    lastName: 'Johnson',
     email: 'mike.johnson@example.com',
-    role: 'Viewer',
+    role: 'Benutzer',
     status: 'Inactive',
     joinedAt: '2024-01-10'
   },
   {
     id: 4,
-    name: 'Sarah Wilson',
+    firstName: 'Sarah',
+    lastName: 'Wilson',
     email: 'sarah.wilson@example.com',
-    role: 'Editor',
+    role: 'Administrator',
     status: 'Active',
     joinedAt: '2024-03-05'
   },
   {
     id: 5,
-    name: 'David Brown',
+    firstName: 'David',
+    lastName: 'Brown',
     email: 'david.brown@example.com',
-    role: 'Admin',
+    role: 'Benutzer',
     status: 'Active',
     joinedAt: '2024-02-28'
   },
   {
     id: 6,
-    name: 'Lisa Davis',
+    firstName: 'Lisa',
+    lastName: 'Davis',
     email: 'lisa.davis@example.com',
-    role: 'Viewer',
+    role: 'Benutzer',
     status: 'Active',
     joinedAt: '2024-03-12'
   }
@@ -355,7 +329,8 @@ const filteredUsers = computed(() => {
   
   const query = searchQuery.value.toLowerCase()
   return users.value.filter(user =>
-    user.name.toLowerCase().includes(query) ||
+    user.firstName.toLowerCase().includes(query) ||
+    user.lastName.toLowerCase().includes(query) ||
     user.email.toLowerCase().includes(query) ||
     user.role.toLowerCase().includes(query)
   )
@@ -364,15 +339,23 @@ const filteredUsers = computed(() => {
 // Methods
 const getRoleVariant = (role) => {
   const variants = {
-    'Admin': 'destructive',
-    'Editor': 'default',
-    'Viewer': 'secondary'
+    'Administrator': 'default',
+    'Benutzer': 'outline'
+  }
+  return variants[role] || 'secondary'
+}
+
+// Methods
+const getRoleIcon = (role) => {
+  const variants = {
+    'Administrator': 'tabler:shield-check',
+    'Benutzer': 'tabler:user'
   }
   return variants[role] || 'secondary'
 }
 
 const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
+  return new Date(dateString).toLocaleDateString('de-CH', {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
@@ -391,7 +374,8 @@ const viewUser = (user) => {
 
 const editUser = (user) => {
   selectedUser.value = user
-  formData.name = user.name
+  formData.firstName = user.firstName
+  formData.lastName = user.lastName
   formData.email = user.email
   formData.role = user.role
   formData.status = user.status
@@ -408,7 +392,8 @@ const saveUser = () => {
     // Add new user
     const newUser = {
       id: Math.max(...users.value.map(u => u.id)) + 1,
-      name: formData.name,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email,
       role: formData.role,
       status: formData.status,
@@ -421,7 +406,8 @@ const saveUser = () => {
     if (index !== -1) {
       users.value[index] = {
         ...users.value[index],
-        name: formData.name,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         role: formData.role,
         status: formData.status
@@ -449,7 +435,8 @@ const closeModals = () => {
 }
 
 const resetForm = () => {
-  formData.name = ''
+  formData.firstName = ''
+  formData.lastName = ''
   formData.email = ''
   formData.role = 'Viewer'
   formData.status = 'Active'
