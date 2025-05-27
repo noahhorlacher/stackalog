@@ -46,9 +46,10 @@ function signOut() {
 
 <template>
 <Sidebar>
-    <SidebarHeader>
+    <SidebarHeader class="flex flex-row items-center">
         <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
         <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
+        <p>Stackalog</p>
     </SidebarHeader>
 
     <SidebarContent>
