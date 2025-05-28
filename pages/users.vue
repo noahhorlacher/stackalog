@@ -234,66 +234,68 @@ const resetForm = () => {
 		</p>
 	</div>
 
-	<Table v-else>
-		<TableHeader>
-			<TableRow>
-				<TableHead>Benutzer</TableHead>
-				<TableHead>Rolle</TableHead>
-				<TableHead>Status</TableHead>
-				<TableHead class="text-right">Aktionen</TableHead>
-			</TableRow>
-		</TableHeader>
-		<TableBody>
-			<TableRow v-for="(user, index) in filteredUsers" :key="`user-row-${index}`">
-				<TableCell>
-					<div class="flex items-center gap-3">
-						<Avatar>
-							<AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}
-							</AvatarFallback>
-						</Avatar>
-						<div>
-							<div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
-							<div class="text-sm text-muted-foreground">{{ user.email }}</div>
+	<div v-else class="max-h-[800px] w-full overflow-y-scroll">
+		<Table>
+			<TableHeader>
+				<TableRow>
+					<TableHead>Benutzer</TableHead>
+					<TableHead>Rolle</TableHead>
+					<TableHead>Status</TableHead>
+					<TableHead class="text-right pr-6">Aktionen</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				<TableRow v-for="(user, index) in filteredUsers" :key="`user-row-${index}`">
+					<TableCell class="py-6">
+						<div class="flex items-center gap-3">
+							<Avatar>
+								<AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}
+								</AvatarFallback>
+							</Avatar>
+							<div>
+								<div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
+								<div class="text-sm text-muted-foreground">{{ user.email }}</div>
+							</div>
 						</div>
-					</div>
-				</TableCell>
-				<TableCell>
-					<Badge :variant="getRoleVariant(user.role)">
-						<Icon :name="getRoleIcon(user.role)" />
-						{{ user.role }}
-					</Badge>
-				</TableCell>
-				<TableCell>
-					<Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-						{{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-					</Badge>
-				</TableCell>
-				<TableCell class="text-right">
-					<div class="flex justify-end">
-						<DropdownMenu>
-							<DropdownMenuTrigger>
-								<Button variant="ghost" class="h-8 w-8 p-0">
-									<Icon name="tabler:dots" />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
-								<DropdownMenuItem @click="viewUser(user)">
-									<Icon name="tabler:eye" />Anzeigen
-								</DropdownMenuItem>
-								<DropdownMenuItem @click="editUser(user)">
-									<Icon name="tabler:edit" />Bearbeiten
-								</DropdownMenuItem>
-								<DropdownMenuItem @click="deleteUser(user)" variant="destructive">
-									<Icon name="tabler:trash" />Löschen
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</div>
-				</TableCell>
-			</TableRow>
-		</TableBody>
-	</Table>
+					</TableCell>
+					<TableCell>
+						<Badge :variant="getRoleVariant(user.role)">
+							<Icon :name="getRoleIcon(user.role)" />
+							{{ user.role }}
+						</Badge>
+					</TableCell>
+					<TableCell>
+						<Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
+							{{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+						</Badge>
+					</TableCell>
+					<TableCell class="text-right">
+						<div class="flex justify-end">
+							<DropdownMenu>
+								<DropdownMenuTrigger>
+									<Button variant="ghost" class="h-8 w-8 p-0 mr-3">
+										<Icon name="tabler:dots" />
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align="end">
+									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
+									<DropdownMenuItem @click="viewUser(user)">
+										<Icon name="tabler:eye" />Anzeigen
+									</DropdownMenuItem>
+									<DropdownMenuItem @click="editUser(user)">
+										<Icon name="tabler:edit" />Bearbeiten
+									</DropdownMenuItem>
+									<DropdownMenuItem @click="deleteUser(user)" variant="destructive">
+										<Icon name="tabler:trash" />Löschen
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+					</TableCell>
+				</TableRow>
+			</TableBody>
+		</Table>
+	</div>
 
 	<!-- View User Dialog -->
 	<Dialog v-model:open="showViewModal">

@@ -452,66 +452,65 @@ const saveLog = () => {
                 {{ logSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Log hinzu' }}
             </p>
         </div>
-
-		<Table class="max-h-[100px] overflow-scroll">
-			<TableHeader>
-				<TableRow>
-					<TableHead>ID</TableHead>
-					<TableHead>Details</TableHead>
-					<TableHead>Kategorie</TableHead>
-					<TableHead>Status</TableHead>
-					<TableHead>Zuweisung</TableHead>
-					<TableHead>Ort</TableHead>
-					<TableHead>Wert</TableHead>
-					<TableHead class="text-right">Aktionen</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				<TableRow v-for="(log, index) of filteredLogs" :key="`log-${index}`">
-					<TableCell class="font-mono">{{log.id}}</TableCell>
-					<TableCell class="py-4">
-						<div class="flex items-center gap-3">
-							<Button variant="outline" class="p-2">
-								<Icon :name="log.icon" size="28" class="w-28 h-28"/>
-							</Button>
-							<div>
-								<div class="font-semibold text-primary">{{log.name}}</div>
-								<div class="text-sm text-muted-foreground">{{log.subcategory}}</div>
-							</div>
-						</div>
-					</TableCell>
-					<TableCell class="py-4 text-muted-foreground">{{log.category}}</TableCell>
-					<TableCell class="py-4">
-						<Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">{{ log.status }}</Badge>
-					</TableCell>
-					<TableCell class="text-muted-foreground py-4">{{ log.assignedTo }}</TableCell>
-					<TableCell class="text-muted-foreground py-4">{{ log.location }}</TableCell>
-					<TableCell class="font-semibold py-4">Fr. {{ log.value.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</TableCell>
-					<TableCell class="py-4 flex justify-end">
-						<DropdownMenu>
-							<DropdownMenuTrigger>
-								<Button variant="ghost" class="h-8 w-8 p-0">
-									<Icon name="tabler:dots" />
+		<div class="max-h-[700px] w-full overflow-y-scroll">
+			<Table>
+				<TableHeader>
+					<TableRow>
+						<TableHead>ID</TableHead>
+						<TableHead>Details</TableHead>
+						<TableHead>Status</TableHead>
+						<TableHead>Zuweisung</TableHead>
+						<TableHead>Ort</TableHead>
+						<TableHead>Wert</TableHead>
+						<TableHead class="text-right pr-6">Aktionen</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					<TableRow v-for="(log, index) of filteredLogs" :key="`log-${index}`">
+						<TableCell class="font-mono">{{log.id}}</TableCell>
+						<TableCell>
+							<div class="flex items-center gap-3">
+								<Button variant="outline" class="p-2">
+									<Icon :name="log.icon" size="28" class="w-28 h-28"/>
 								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
-								<DropdownMenuItem @click="">
-									<Icon name="tabler:eye" />Anzeigen
-								</DropdownMenuItem>
-								<DropdownMenuItem @click="">
-									<Icon name="tabler:edit" />Bearbeiten
-								</DropdownMenuItem>
-								<DropdownMenuItem @click="" variant="destructive">
-									<Icon name="tabler:trash" />Löschen
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</TableCell>
-				</TableRow>
-			</TableBody>
-		</Table>
-    </div>
+								<div>
+									<div class="font-semibold text-primary">{{log.name}}</div>
+									<div class="text-sm text-muted-foreground">{{log.subcategory}}</div>
+								</div>
+							</div>
+						</TableCell>
+						<TableCell class="py-6">
+							<Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">{{ log.status }}</Badge>
+						</TableCell>
+						<TableCell class="text-muted-foreground">{{ log.assignedTo }}</TableCell>
+						<TableCell class="text-muted-foreground">{{ log.location }}</TableCell>
+						<TableCell class="font-semibold">Fr. {{ log.value.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</TableCell>
+						<TableCell class="flex justify-end">
+							<DropdownMenu>
+								<DropdownMenuTrigger>
+									<Button variant="ghost" class="h-8 w-8 p-0 mr-3">
+										<Icon name="tabler:dots" />
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align="end">
+									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
+									<DropdownMenuItem @click="">
+										<Icon name="tabler:eye" />Anzeigen
+									</DropdownMenuItem>
+									<DropdownMenuItem @click="">
+										<Icon name="tabler:edit" />Bearbeiten
+									</DropdownMenuItem>
+									<DropdownMenuItem @click="" variant="destructive">
+										<Icon name="tabler:trash" />Löschen
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
+		</div>
+	</div>
 
     <!-- Add Log Dialog -->
 	<Dialog v-model:open="showAddModal">

@@ -5,7 +5,7 @@ definePageMeta({
 
 const router = useRouter()
 
-router.push('/stacks')
+router.push('/logs')
 </script>
 
 <template>

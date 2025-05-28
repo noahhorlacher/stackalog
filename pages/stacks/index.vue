@@ -3,11 +3,11 @@ const stackSearchQuery = ref('')
 const showAddModal = ref(false)
 
 const stacks = ref([
-  { id: null, title: 'Skeleton Test', logs: [] },
-  { id: 1, title: 'Hauptgebäude', logs: [] },
-  { id: 2, title: 'Schule', logs: [] },
-  { id: 3, title: 'Gebäude 2', logs: [] },
-  { id: 4, title: 'Defekt', logs: [1, 1, 1, 1] }
+  { id: null, title: 'Skeleton Test', icon: "", logs: [] },
+  { id: 1, title: 'Hauptgebäude', icon: "tabler:building", logs: [] },
+  { id: 2, title: 'Schule', icon: "tabler:building-community", logs: [] },
+  { id: 3, title: 'Gebäude 2', icon: "tabler:building-bank", logs: [] },
+  { id: 4, title: 'Defekt', icon: "tabler:error-404", logs: [1, 1, 1, 1] }
 ])
 
 // Form data for add/edit
