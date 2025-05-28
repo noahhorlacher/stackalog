@@ -1,5 +1,16 @@
 <script setup>
 const router = useRouter()
+import { useSidebar } from "@/components/ui/sidebar";
+
+const {
+  state,
+  open,
+  setOpen,
+  openMobile,
+  setOpenMobile,
+  isMobile,
+  toggleSidebar,
+} = useSidebar()
 
 const menuGroups = [
     {
@@ -45,23 +56,23 @@ function signOut() {
 </script>
 
 <template>
-<Sidebar>
+<Sidebar collapsible="icon">
     <SidebarHeader class="flex flex-row items-center">
         <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
         <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
-        <p>Stackalog</p>
+        <p v-if="open">Stackalog</p>
     </SidebarHeader>
 
     <SidebarContent>
         <SidebarGroup v-for="menuGroup in menuGroups">
-            <SidebarGroupLabel>{{ menuGroup.title }}</SidebarGroupLabel>
+            <SidebarGroupLabel v-if="open">{{ menuGroup.title }}</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
                     <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
                         <SidebarMenuButton asChild>
                             <NuxtLink :to="item.url">
                                 <icon :name="item.icon" />
-                                <span>{{item.title}}</span>
+                                <p v-if="open">{{item.title}}</p>
                             </NuxtLink>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -76,25 +87,33 @@ function signOut() {
 
             <Drawer>
                 <DrawerTrigger class="w-full">
-                    <Button variant="ghost" class="w-full">
-                        <div class="flex items-center gap-2 justify-start w-full">
-                            <Avatar>
+                    <SidebarMenuButton v-if="open" class="cursor-pointer">
+                        <div class="flex flex-row items-center justify-start w-full gap-x-2">
+                            <Avatar class="m-0 p-0">
                                 <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                                <AvatarFallback>MM</AvatarFallback>
+                                <AvatarFallback class="text-sm">MM</AvatarFallback>
                             </Avatar>
-                            <p>Max Mustermann</p>
+                            <p>Max&nbsp;Mustermann</p>
                         </div>
-                    </Button>
+                    </SidebarMenuButton>
+                    <div v-else class="cursor-pointer">
+                        <Avatar class="m-0 p-0">
+                            <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
+                            <AvatarFallback class="text-sm">MM</AvatarFallback>
+                        </Avatar>
+                    </div>
                 </DrawerTrigger>
                 <DrawerContent>
 
                     <DrawerHeader class="mt-8">
-                        <DrawerTitle class="flex items-center justify-center gap-4">
-                            <Avatar>
-                                <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                                <AvatarFallback>MM</AvatarFallback>
-                            </Avatar>
-                            <p>Max Muster</p>
+                        <DrawerTitle class="flex flex-col items-center justify-center gap-4">
+                            <div class="text-center mb-4">
+                                <Avatar class="h-16 w-16 mx-auto mb-4">
+                                    <AvatarFallback class="text-xl">MM</AvatarFallback>
+                                </Avatar>
+                                <h4 class="text-lg font-medium">Max Mustermann</h4>
+                                <p class="text-muted-foreground text-sm">max.mustermann@example.com</p>
+                            </div>
                         </DrawerTitle>
                         <DrawerDescription class="flex items-center justify-center gap-2">
                             <Badge variant="default" class="mt-4">

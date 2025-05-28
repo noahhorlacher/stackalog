@@ -212,7 +212,7 @@ const resetForm = () => {
     </div>
 
     <!-- Search and Add User Section -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+    <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-12">
         <div class="relative flex-1 max-w-md">
             <Icon name="tabler:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
@@ -229,68 +229,68 @@ const resetForm = () => {
 
     <!-- Users Table -->
     <Table>
-    <TableHeader>
-        <TableRow>
-        <TableHead>Benutzer</TableHead>
-        <TableHead>Rolle</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead class="text-right">Aktionen</TableHead>
-        </TableRow>
-    </TableHeader>
-    <TableBody>
-        <TableRow v-for="user in filteredUsers" :key="user.id">
-        <TableCell>
-            <div class="flex items-center gap-3">
-            <Avatar>
-                <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
-            </Avatar>
-            <div>
-                <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
-                <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-            </div>
-            </div>
-        </TableCell>
-        <TableCell>
-            <Badge :variant="getRoleVariant(user.role)">
-            <Icon :name="getRoleIcon(user.role)" />
-            {{ user.role }}
-            </Badge>
-        </TableCell>
-        <TableCell>
-            <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-            {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-            </Badge>
-        </TableCell>
-        <TableCell class="text-right">
-            <div class="flex justify-end gap-1">
-            <Button
-                variant="ghost"
-                size="sm"
-                @click="viewUser(user)"
-                class="h-8 w-8 p-0"
-            >
-                <Icon name="tabler:eye" />
-            </Button>
-            <Button
-                variant="ghost"
-                size="sm"
-                @click="editUser(user)"
-                class="h-8 w-8 p-0"
-            >
-                <Icon name="tabler:edit" />
-            </Button>
-            <Button
-                variant="ghost"
-                size="sm"
-                @click="deleteUser(user)"
-                class="h-8 w-8 p-0 text-destructive hover:text-destructive"
-            >
-                <Icon name="tabler:trash" />
-            </Button>
-            </div>
-        </TableCell>
-        </TableRow>
-    </TableBody>
+        <TableHeader>
+            <TableRow>
+            <TableHead>Benutzer</TableHead>
+            <TableHead>Rolle</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead class="text-right">Aktionen</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            <TableRow v-for="user in filteredUsers" :key="user.id">
+            <TableCell>
+                <div class="flex items-center gap-3">
+                <Avatar>
+                    <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
+                </Avatar>
+                <div>
+                    <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
+                    <div class="text-sm text-muted-foreground">{{ user.email }}</div>
+                </div>
+                </div>
+            </TableCell>
+            <TableCell>
+                <Badge :variant="getRoleVariant(user.role)">
+                <Icon :name="getRoleIcon(user.role)" />
+                {{ user.role }}
+                </Badge>
+            </TableCell>
+            <TableCell>
+                <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
+                {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+                </Badge>
+            </TableCell>
+            <TableCell class="text-right">
+                <div class="flex justify-end gap-1">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="viewUser(user)"
+                    class="h-8 w-8 p-0"
+                >
+                    <Icon name="tabler:eye" />
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="editUser(user)"
+                    class="h-8 w-8 p-0"
+                >
+                    <Icon name="tabler:edit" />
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="deleteUser(user)"
+                    class="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                >
+                    <Icon name="tabler:trash" />
+                </Button>
+                </div>
+            </TableCell>
+            </TableRow>
+        </TableBody>
     </Table>
 
     <!-- Empty State -->
@@ -312,9 +312,9 @@ const resetForm = () => {
             <div v-if="selectedUser" class="space-y-6">
                 <div class="text-center mb-4">
                     <Avatar class="h-16 w-16 mx-auto mb-4">
-                    <AvatarFallback class="text-xl">
-                        {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
-                    </AvatarFallback>
+                      <AvatarFallback class="text-xl">
+                          {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
+                      </AvatarFallback>
                     </Avatar>
                     <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
                     <span class="text-muted-foreground">{{ selectedUser.email }}</span>
