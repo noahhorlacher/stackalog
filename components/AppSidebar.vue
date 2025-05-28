@@ -97,8 +97,10 @@ function signOut() {
                             <p>Max Muster</p>
                         </DrawerTitle>
                         <DrawerDescription class="flex items-center justify-center gap-2">
-                            <Icon name="tabler:shield-check" />
-                            <p>Administrator</p>
+                            <Badge variant="default" class="mt-4">
+                                <Icon name="tabler:shield-check" />
+                                <p>Administrator</p>
+                            </Badge>
                         </DrawerDescription>
                     </DrawerHeader>
 

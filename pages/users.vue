@@ -228,124 +228,115 @@ const resetForm = () => {
     </div>
 
     <!-- Users Table -->
-        <Table>
-        <TableHeader>
-            <TableRow>
-            <TableHead>Benutzer</TableHead>
-            <TableHead>Rolle</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Erstellt</TableHead>
-            <TableHead class="text-right">Aktionen</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-            <TableRow v-for="user in filteredUsers" :key="user.id">
-            <TableCell>
-                <div class="flex items-center gap-3">
-                <Avatar>
-                    <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
-                </Avatar>
-                <div>
-                    <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
-                    <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-                </div>
-                </div>
-            </TableCell>
-            <TableCell>
-                <Badge :variant="getRoleVariant(user.role)">
-                <Icon :name="getRoleIcon(user.role)" />
-                {{ user.role }}
-                </Badge>
-            </TableCell>
-            <TableCell>
-                <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-                {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-                </Badge>
-            </TableCell>
-            <TableCell class="text-muted-foreground">
-                {{ formatDate(user.joinedAt) }}
-            </TableCell>
-            <TableCell class="text-right">
-                <div class="flex justify-end gap-1">
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    @click="viewUser(user)"
-                    class="h-8 w-8 p-0"
-                >
-                    <Icon name="tabler:eye" />
-                </Button>
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    @click="editUser(user)"
-                    class="h-8 w-8 p-0"
-                >
-                    <Icon name="tabler:edit" />
-                </Button>
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    @click="deleteUser(user)"
-                    class="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                >
-                    <Icon name="tabler:trash" />
-                </Button>
-                </div>
-            </TableCell>
-            </TableRow>
-        </TableBody>
-        </Table>
+    <Table>
+    <TableHeader>
+        <TableRow>
+        <TableHead>Benutzer</TableHead>
+        <TableHead>Rolle</TableHead>
+        <TableHead>Status</TableHead>
+        <TableHead>Erstellt</TableHead>
+        <TableHead class="text-right">Aktionen</TableHead>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        <TableRow v-for="user in filteredUsers" :key="user.id">
+        <TableCell>
+            <div class="flex items-center gap-3">
+            <Avatar>
+                <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
+            </Avatar>
+            <div>
+                <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
+                <div class="text-sm text-muted-foreground">{{ user.email }}</div>
+            </div>
+            </div>
+        </TableCell>
+        <TableCell>
+            <Badge :variant="getRoleVariant(user.role)">
+            <Icon :name="getRoleIcon(user.role)" />
+            {{ user.role }}
+            </Badge>
+        </TableCell>
+        <TableCell>
+            <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
+            {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+            </Badge>
+        </TableCell>
+        <TableCell class="text-muted-foreground">
+            {{ formatDate(user.joinedAt) }}
+        </TableCell>
+        <TableCell class="text-right">
+            <div class="flex justify-end gap-1">
+            <Button
+                variant="ghost"
+                size="sm"
+                @click="viewUser(user)"
+                class="h-8 w-8 p-0"
+            >
+                <Icon name="tabler:eye" />
+            </Button>
+            <Button
+                variant="ghost"
+                size="sm"
+                @click="editUser(user)"
+                class="h-8 w-8 p-0"
+            >
+                <Icon name="tabler:edit" />
+            </Button>
+            <Button
+                variant="ghost"
+                size="sm"
+                @click="deleteUser(user)"
+                class="h-8 w-8 p-0 text-destructive hover:text-destructive"
+            >
+                <Icon name="tabler:trash" />
+            </Button>
+            </div>
+        </TableCell>
+        </TableRow>
+    </TableBody>
+    </Table>
 
-        <!-- Empty State -->
-        <div v-if="filteredUsers.length === 0" class="text-center py-12">
-        <Users class="mx-auto h-12 w-12 text-muted-foreground" />
-        <h3 class="mt-2 text-sm font-medium">No users found</h3>
-        <p class="mt-1 text-sm text-muted-foreground">
-            {{ searchQuery ? 'Try adjusting your search criteria.' : 'Get started by adding a new user.' }}
-        </p>
-        </div>
+    <!-- Empty State -->
+    <div v-if="filteredUsers.length === 0" class="text-center py-12">
+    <Users class="mx-auto h-12 w-12 text-muted-foreground" />
+    <h3 class="mt-2 text-sm font-medium">No users found</h3>
+    <p class="mt-1 text-sm text-muted-foreground">
+        {{ searchQuery ? 'Try adjusting your search criteria.' : 'Get started by adding a new user.' }}
+    </p>
+    </div>
 
     <!-- View User Dialog -->
     <Dialog v-model:open="showViewModal">
-    <DialogContent class="sm:max-w-md">
-        <DialogHeader>
-        <DialogTitle>Benutzerdetails</DialogTitle>
-        </DialogHeader>
-        <div v-if="selectedUser" class="space-y-6">
-        <div class="text-center">
-            <Avatar class="h-16 w-16 mx-auto mb-4">
-            <AvatarFallback class="text-xl">
-                {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
-            </AvatarFallback>
-            </Avatar>
-            <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
-        </div>
-        <div class="space-y-3">
-            <div class="flex justify-between">
-            <span class="font-medium">Email Adresse:</span>
-            <span class="text-muted-foreground">{{ selectedUser.email }}</span>
+        <DialogContent class="sm:max-w-md">
+            <DialogHeader>
+                <DialogTitle>Benutzerdetails</DialogTitle>
+            </DialogHeader>
+
+            <div v-if="selectedUser" class="space-y-6">
+                <div class="text-center mb-4">
+                    <Avatar class="h-16 w-16 mx-auto mb-4">
+                    <AvatarFallback class="text-xl">
+                        {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
+                    </AvatarFallback>
+                    </Avatar>
+                    <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
+                    <span class="text-muted-foreground">{{ selectedUser.email }}</span>
+                </div>
+                <div class="flex justify-center gap-3">
+                    <Badge :variant="getRoleVariant(selectedUser.role)">
+                        <Icon :name="getRoleIcon(selectedUser.role)" />
+                        {{ selectedUser.role }}
+                    </Badge>
+                    <Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
+                        {{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+                    </Badge>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <span class="text-muted-foreground text-sm">Erstellt: {{ formatDate(selectedUser.joinedAt) }}</span>
+                </div>
             </div>
-            <div class="flex justify-between">
-            <span class="font-medium">Rolle:</span>
-            <Badge :variant="getRoleVariant(selectedUser.role)">
-                <Icon :name="getRoleIcon(selectedUser.role)" />
-                {{ selectedUser.role }}
-            </Badge>
-            </div>
-            <div class="flex justify-between">
-            <span class="font-medium">Status:</span>
-            <Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
-                {{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-            </Badge>
-            </div>
-            <div class="flex justify-between">
-            <span class="font-medium">Erstellt:</span>
-            <span class="text-muted-foreground">{{ formatDate(selectedUser.joinedAt) }}</span>
-            </div>
-        </div>
-        </div>
-    </DialogContent>
+        </DialogContent>
     </Dialog>
 
     <!-- Add/Edit User Dialog -->
