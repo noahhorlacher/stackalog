@@ -234,7 +234,6 @@ const resetForm = () => {
         <TableHead>Benutzer</TableHead>
         <TableHead>Rolle</TableHead>
         <TableHead>Status</TableHead>
-        <TableHead>Erstellt</TableHead>
         <TableHead class="text-right">Aktionen</TableHead>
         </TableRow>
     </TableHeader>
@@ -261,9 +260,6 @@ const resetForm = () => {
             <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
             {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
             </Badge>
-        </TableCell>
-        <TableCell class="text-muted-foreground">
-            {{ formatDate(user.joinedAt) }}
         </TableCell>
         <TableCell class="text-right">
             <div class="flex justify-end gap-1">
