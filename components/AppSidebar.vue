@@ -2,15 +2,7 @@
 const router = useRouter()
 import { useSidebar } from "@/components/ui/sidebar";
 
-const {
-  state,
-  open,
-  setOpen,
-  openMobile,
-  setOpenMobile,
-  isMobile,
-  toggleSidebar,
-} = useSidebar()
+const { open } = useSidebar()
 
 const menuGroups = [
     {

@@ -11,26 +11,23 @@ const props = defineProps({
 </script>
 
 <template>
-    <Card class="w-48">
-        <div v-if="log.id !== undefined && log.id !== null">
-            <CardHeader>
-                <CardTitle>{{ log.title }}</CardTitle>
-            </CardHeader>
-            <CardFooter class="flex justify-end mt-8">
-                <NuxtLink :to="`/logs/${log.id}`">
-                    <Button variant="outline" class="cursor-pointer">Öffnen</Button>
-                </NuxtLink>
-            </CardFooter>
-        </div>
-        <div v-else>
-            <CardHeader>
-                <CardTitle>
-                    <Skeleton class="h-4 w-full"></Skeleton>
-                </CardTitle>
-            </CardHeader>
-            <CardFooter class="flex justify-end mt-8">
-                <Button variant="outline" disabled>Lädt...</Button>
-            </CardFooter>
-        </div>
-    </Card>
+    <NuxtLink :to="`/logs/${log.id}`">
+        <Card class="w-48 cursor-pointer hover:bg-muted">
+            <div v-if="log.id !== undefined && log.id !== null">
+                <CardHeader>
+                    <!-- image -->
+                    <Skeleton class="h-32 w-full mb-4"></Skeleton>
+                    <CardTitle>{{ log.title }}</CardTitle>
+                </CardHeader>
+            </div>
+            <div v-else>
+                <CardHeader>
+                    <CardTitle>
+                        <Skeleton class="h-32 w-full mb-4"></Skeleton>
+                        <Skeleton class="h-4 w-full"></Skeleton>
+                    </CardTitle>
+                </CardHeader>
+            </div>
+        </Card>
+    </NuxtLink>
 </template>

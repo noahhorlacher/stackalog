@@ -22,7 +22,7 @@ onMounted(() => {
 <template>
     <div class="space-y-2 mb-6">
       <h1 class="text-3xl font-bold">Ihr Account</h1>
-      <p class="text-muted-foreground">Verwalten Sie Ihre Account Einstellungen</p>
+      <p class="text-muted-foreground">Verwalten Sie Ihren Account</p>
     </div>
 
       <Card>
