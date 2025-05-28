@@ -491,12 +491,12 @@ const saveLog = () => {
 						<TableCell class="text-muted-foreground">{{ log.assignedTo }}</TableCell>
 						<TableCell class="text-muted-foreground">{{ log.location }}</TableCell>
 						<TableCell class="font-semibold">Fr. {{ log.value.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</TableCell>
-						<TableCell class="flex justify-end">
+						<TableCell class="text-right">
 							<DropdownMenu>
 								<DropdownMenuTrigger>
-									<Button variant="ghost" class="h-8 w-8 p-0 mr-3">
-										<Icon name="tabler:dots" />
-									</Button>
+                    <Button variant="ghost" class="h-8 w-8 p-0 mr-3">
+                      <Icon name="tabler:dots" />
+                    </Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end">
 									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
