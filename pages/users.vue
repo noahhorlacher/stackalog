@@ -1,242 +1,3 @@
-<template>
-  <div class="min-h-screen bg-background p-6">
-    <div class="max-w-7xl mx-auto space-y-6">
-      <!-- Header -->
-        <div class="space-y-2 mb-6">
-            <h1 class="text-3xl font-bold">Benutzerverwaltung</h1>
-            <p class="text-muted-foreground">Verwalten Sie Benutzer und ihre Berechtigungen</p>
-        </div>
-
-      <!-- Search and Add User Section -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-            <div class="relative flex-1 max-w-md">
-                <Icon name="tabler:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                v-model="searchQuery"
-                placeholder="Nutzer mit Name, Email oder Rolle suchen..."
-                class="pl-10"
-                />
-            </div>
-            <Button @click="openAddModal" class="flex items-center gap-2">
-                <Icon name="tabler:plus" />
-                Benutzer hinzufügen
-            </Button>
-        </div>
-
-      <!-- Users Table -->
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Benutzer</TableHead>
-                <TableHead>Rolle</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Erstellt</TableHead>
-                <TableHead class="text-right">Aktionen</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow v-for="user in filteredUsers" :key="user.id">
-                <TableCell>
-                  <div class="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
-                      <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge :variant="getRoleVariant(user.role)">
-                    <Icon :name="getRoleIcon(user.role)" />
-                    {{ user.role }}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-                    {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-                  </Badge>
-                </TableCell>
-                <TableCell class="text-muted-foreground">
-                  {{ formatDate(user.joinedAt) }}
-                </TableCell>
-                <TableCell class="text-right">
-                  <div class="flex justify-end gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      @click="viewUser(user)"
-                      class="h-8 w-8 p-0"
-                    >
-                      <Icon name="tabler:eye" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      @click="editUser(user)"
-                      class="h-8 w-8 p-0"
-                    >
-                      <Icon name="tabler:edit" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      @click="deleteUser(user)"
-                      class="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                    >
-                      <Icon name="tabler:trash" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-
-          <!-- Empty State -->
-          <div v-if="filteredUsers.length === 0" class="text-center py-12">
-            <Users class="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 class="mt-2 text-sm font-medium">No users found</h3>
-            <p class="mt-1 text-sm text-muted-foreground">
-              {{ searchQuery ? 'Try adjusting your search criteria.' : 'Get started by adding a new user.' }}
-            </p>
-          </div>
-
-      <!-- View User Dialog -->
-      <Dialog v-model:open="showViewModal">
-        <DialogContent class="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Benutzerdetails</DialogTitle>
-          </DialogHeader>
-          <div v-if="selectedUser" class="space-y-6">
-            <div class="text-center">
-              <Avatar class="h-16 w-16 mx-auto mb-4">
-                <AvatarFallback class="text-xl">
-                  {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
-                </AvatarFallback>
-              </Avatar>
-              <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
-            </div>
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="font-medium">Email Adresse:</span>
-                <span class="text-muted-foreground">{{ selectedUser.email }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="font-medium">Rolle:</span>
-                <Badge :variant="getRoleVariant(selectedUser.role)">
-                    <Icon :name="getRoleIcon(selectedUser.role)" />
-                    {{ selectedUser.role }}
-                </Badge>
-              </div>
-              <div class="flex justify-between">
-                <span class="font-medium">Status:</span>
-                <Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
-                  {{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-                </Badge>
-              </div>
-              <div class="flex justify-between">
-                <span class="font-medium">Erstellt:</span>
-                <span class="text-muted-foreground">{{ formatDate(selectedUser.joinedAt) }}</span>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <!-- Add/Edit User Dialog -->
-      <Dialog v-model:open="showFormModal">
-        <DialogContent class="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{{ showAddModal ? 'Benutzer hinzufügen' : 'Benutzer bearbeiten' }}</DialogTitle>
-          </DialogHeader>
-          <form @submit.prevent="saveUser" class="space-y-4">
-            <div class="space-y-2">
-              <Label for="firstName">Vorname</Label>
-              <Input
-                id="firstName"
-                v-model="formData.firstName"
-                required
-                placeholder="Vor- und Mittelnamen eingeben"
-              />
-            </div>
-            <div class="space-y-2">
-              <Label for="lastName">Nachname</Label>
-              <Input
-                id="lastName"
-                v-model="formData.lastName"
-                required
-                placeholder="Nachname eingeben"
-              />
-            </div>
-            <div class="space-y-2">
-              <Label for="email">Email Adresse</Label>
-              <Input
-                id="email"
-                v-model="formData.email"
-                type="email"
-                required
-                placeholder="Email Adresse eingeben"
-              />
-            </div>
-            <div class="space-y-2">
-              <Label for="role">Rolle</Label>
-              <Select v-model="formData.role">
-                <SelectTrigger>
-                  <SelectValue placeholder="Rolle wählen" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Administrator">Administrator</SelectItem>
-                  <SelectItem value="Benutzer">Benutzer</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div class="space-y-2">
-              <Label for="status">Status</Label>
-              <Select v-model="formData.status">
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Active">Aktiv</SelectItem>
-                  <SelectItem value="Inactive">Inaktiv</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <DialogFooter class="gap-2">
-              <Button type="button" variant="outline" @click="closeModals">
-                Abbrechen
-              </Button>
-              <Button type="submit">
-                {{ showAddModal ? 'Benutzer hinzufügen' : 'Änderungen speichern' }}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      <!-- Delete Confirmation Dialog -->
-      <AlertDialog v-model:open="showDeleteModal">
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
-            <p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName }}</strong> löschen möchten?</p> 
-            <AlertDialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
-            <AlertDialogAction @click="confirmDelete" class="bg-destructive text-white hover:bg-destructive/90">
-              Benutzer löschen
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
-  </div>
-</template>
-
 <script setup>
 // Reactive data
 const searchQuery = ref('')
@@ -442,3 +203,238 @@ const resetForm = () => {
   formData.status = 'Active'
 }
 </script>
+
+<template>
+    <!-- Header -->
+    <div class="space-y-2 mb-6">
+        <h1 class="text-3xl font-bold">Benutzerverwaltung</h1>
+        <p class="text-muted-foreground">Verwalten Sie Benutzer und ihre Berechtigungen</p>
+    </div>
+
+    <!-- Search and Add User Section -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+        <div class="relative flex-1 max-w-md">
+            <Icon name="tabler:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+            v-model="searchQuery"
+            placeholder="Nutzer mit Name, Email oder Rolle suchen..."
+            class="pl-10"
+            />
+        </div>
+        <Button @click="openAddModal" class="flex items-center gap-2">
+            <Icon name="tabler:plus" />
+            Benutzer hinzufügen
+        </Button>
+    </div>
+
+    <!-- Users Table -->
+        <Table>
+        <TableHeader>
+            <TableRow>
+            <TableHead>Benutzer</TableHead>
+            <TableHead>Rolle</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Erstellt</TableHead>
+            <TableHead class="text-right">Aktionen</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            <TableRow v-for="user in filteredUsers" :key="user.id">
+            <TableCell>
+                <div class="flex items-center gap-3">
+                <Avatar>
+                    <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}</AvatarFallback>
+                </Avatar>
+                <div>
+                    <div class="font-medium">{{ user.firstName + ' ' + user.lastName }}</div>
+                    <div class="text-sm text-muted-foreground">{{ user.email }}</div>
+                </div>
+                </div>
+            </TableCell>
+            <TableCell>
+                <Badge :variant="getRoleVariant(user.role)">
+                <Icon :name="getRoleIcon(user.role)" />
+                {{ user.role }}
+                </Badge>
+            </TableCell>
+            <TableCell>
+                <Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
+                {{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+                </Badge>
+            </TableCell>
+            <TableCell class="text-muted-foreground">
+                {{ formatDate(user.joinedAt) }}
+            </TableCell>
+            <TableCell class="text-right">
+                <div class="flex justify-end gap-1">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="viewUser(user)"
+                    class="h-8 w-8 p-0"
+                >
+                    <Icon name="tabler:eye" />
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="editUser(user)"
+                    class="h-8 w-8 p-0"
+                >
+                    <Icon name="tabler:edit" />
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    @click="deleteUser(user)"
+                    class="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                >
+                    <Icon name="tabler:trash" />
+                </Button>
+                </div>
+            </TableCell>
+            </TableRow>
+        </TableBody>
+        </Table>
+
+        <!-- Empty State -->
+        <div v-if="filteredUsers.length === 0" class="text-center py-12">
+        <Users class="mx-auto h-12 w-12 text-muted-foreground" />
+        <h3 class="mt-2 text-sm font-medium">No users found</h3>
+        <p class="mt-1 text-sm text-muted-foreground">
+            {{ searchQuery ? 'Try adjusting your search criteria.' : 'Get started by adding a new user.' }}
+        </p>
+        </div>
+
+    <!-- View User Dialog -->
+    <Dialog v-model:open="showViewModal">
+    <DialogContent class="sm:max-w-md">
+        <DialogHeader>
+        <DialogTitle>Benutzerdetails</DialogTitle>
+        </DialogHeader>
+        <div v-if="selectedUser" class="space-y-6">
+        <div class="text-center">
+            <Avatar class="h-16 w-16 mx-auto mb-4">
+            <AvatarFallback class="text-xl">
+                {{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
+            </AvatarFallback>
+            </Avatar>
+            <h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
+        </div>
+        <div class="space-y-3">
+            <div class="flex justify-between">
+            <span class="font-medium">Email Adresse:</span>
+            <span class="text-muted-foreground">{{ selectedUser.email }}</span>
+            </div>
+            <div class="flex justify-between">
+            <span class="font-medium">Rolle:</span>
+            <Badge :variant="getRoleVariant(selectedUser.role)">
+                <Icon :name="getRoleIcon(selectedUser.role)" />
+                {{ selectedUser.role }}
+            </Badge>
+            </div>
+            <div class="flex justify-between">
+            <span class="font-medium">Status:</span>
+            <Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
+                {{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
+            </Badge>
+            </div>
+            <div class="flex justify-between">
+            <span class="font-medium">Erstellt:</span>
+            <span class="text-muted-foreground">{{ formatDate(selectedUser.joinedAt) }}</span>
+            </div>
+        </div>
+        </div>
+    </DialogContent>
+    </Dialog>
+
+    <!-- Add/Edit User Dialog -->
+    <Dialog v-model:open="showFormModal">
+    <DialogContent class="sm:max-w-md">
+        <DialogHeader>
+        <DialogTitle>{{ showAddModal ? 'Benutzer hinzufügen' : 'Benutzer bearbeiten' }}</DialogTitle>
+        </DialogHeader>
+        <form @submit.prevent="saveUser" class="space-y-4">
+        <div class="space-y-2">
+            <Label for="firstName">Vorname</Label>
+            <Input
+            id="firstName"
+            v-model="formData.firstName"
+            required
+            placeholder="Vor- und Mittelnamen eingeben"
+            />
+        </div>
+        <div class="space-y-2">
+            <Label for="lastName">Nachname</Label>
+            <Input
+            id="lastName"
+            v-model="formData.lastName"
+            required
+            placeholder="Nachname eingeben"
+            />
+        </div>
+        <div class="space-y-2">
+            <Label for="email">Email Adresse</Label>
+            <Input
+            id="email"
+            v-model="formData.email"
+            type="email"
+            required
+            placeholder="Email Adresse eingeben"
+            />
+        </div>
+        <div class="space-y-2">
+            <Label for="role">Rolle</Label>
+            <Select v-model="formData.role">
+            <SelectTrigger>
+                <SelectValue placeholder="Rolle wählen" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="Administrator">Administrator</SelectItem>
+                <SelectItem value="Benutzer">Benutzer</SelectItem>
+            </SelectContent>
+            </Select>
+        </div>
+        <div class="space-y-2">
+            <Label for="status">Status</Label>
+            <Select v-model="formData.status">
+            <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="Active">Aktiv</SelectItem>
+                <SelectItem value="Inactive">Inaktiv</SelectItem>
+            </SelectContent>
+            </Select>
+        </div>
+        <DialogFooter class="gap-2">
+            <Button type="button" variant="outline" @click="closeModals">
+            Abbrechen
+            </Button>
+            <Button type="submit">
+            {{ showAddModal ? 'Benutzer hinzufügen' : 'Änderungen speichern' }}
+            </Button>
+        </DialogFooter>
+        </form>
+    </DialogContent>
+    </Dialog>
+
+    <!-- Delete Confirmation Dialog -->
+    <AlertDialog v-model:open="showDeleteModal">
+    <AlertDialogContent>
+        <AlertDialogHeader>
+        <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
+        <p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName }}</strong> löschen möchten?</p> 
+        <AlertDialogDescription>
+            Diese Aktion kann nicht rückgängig gemacht werden.
+        </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+        <AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
+        <AlertDialogAction @click="confirmDelete" class="bg-destructive text-white hover:bg-destructive/90">
+            Benutzer löschen
+        </AlertDialogAction>
+        </AlertDialogFooter>
+    </AlertDialogContent>
+    </AlertDialog>
+</template>
