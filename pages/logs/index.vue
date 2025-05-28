@@ -54,6 +54,61 @@ const saveLog = () => {
       <p class="text-muted-foreground">Ihre Einträge</p>
     </div>
 
+	
+	<div class="mb-8 grid grid-cols-4 gap-4">
+		<Card>
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Total</p>
+					<Icon name="tabler:logs" class="text-blue-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-blue-400 mb-2">{{ logs.length }}</p>
+					<p class="text-xs">In allen Kategorien</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+
+		<Card>
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Verfügbar</p>
+					<Icon name="tabler:graph" class="text-emerald-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-emerald-400 mb-2">17</p>
+					<p class="text-xs">Bereit für den Einsatz</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+
+		<Card>
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Verwendet</p>
+					<Icon name="tabler:users" class="text-yellow-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-yellow-400 mb-2">312</p>
+					<p class="text-xs">Momentan im Gebrauch</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+
+		<Card>
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Totaler Wert</p>
+					<Icon name="tabler:currency-frank" class="text-violet-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-violet-400 mb-2">Fr. 141'057.40</p>
+					<p class="text-xs">Vermögensbewertung</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+	</div>
+
     <div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-12">
 		<div class="relative flex-1 max-w-md">
 			<Icon name="tabler:search"
