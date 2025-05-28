@@ -98,11 +98,11 @@ function signOut() {
                 <DrawerContent>
 
                     <DrawerHeader class="mt-8">
-                        <DrawerTitle class="flex flex-col items-center justify-center gap-4">
-                            <div class="text-center mb-4">
-                                <Avatar class="h-16 w-16 mx-auto mb-4">
-                                    <AvatarFallback class="text-xl">MM</AvatarFallback>
-                                </Avatar>
+                        <DrawerTitle class="flex text-center flex-col items-center justify-center gap-2">
+                            <Avatar class="h-16 w-16 mx-auto mb-4">
+                                <AvatarFallback class="text-xl">MM</AvatarFallback>
+                            </Avatar>
+                            <div>
                                 <h4 class="text-lg font-medium">Max Mustermann</h4>
                                 <p class="text-muted-foreground text-sm">max.mustermann@example.com</p>
                             </div>
