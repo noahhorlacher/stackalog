@@ -86,7 +86,7 @@ const saveLog = () => {
 			<form @submit.prevent="saveLog" class="space-y-4">
 				<div class="space-y-2">
 					<Label for="firstName">Titel</Label>
-					<Input id="firstName" v-model="formData.title" required placeholder="Stack Titel eingeben" />
+					<Input id="firstName" v-model="formData.title" required placeholder="Log Titel eingeben" />
 				</div>
 				<DialogFooter class="gap-2">
 					<Button type="button" variant="outline" @click="closeModals">

@@ -216,7 +216,7 @@ const resetForm = () => {
 		<div class="relative flex-1 max-w-md">
 			<Icon name="tabler:search"
 				class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-			<Input v-model="searchQuery" placeholder="Nutzer mit Name, Email oder Rolle suchen..." class="pl-10" />
+			<Input v-model="searchQuery" placeholder="Benutzer mit Name, Email oder Rolle durchsuchen..." class="pl-10" />
 		</div>
 		<Button @click="openAddModal" class="flex items-center gap-2">
 			<Icon name="tabler:plus" />
@@ -269,16 +269,26 @@ const resetForm = () => {
 					</Badge>
 				</TableCell>
 				<TableCell class="text-right">
-					<div class="flex justify-end gap-1">
-						<Button variant="ghost" size="sm" @click="viewUser(user)" class="h-8 w-8 p-0">
-							<Icon name="tabler:eye" />
-						</Button>
-						<Button variant="ghost" size="sm" @click="editUser(user)" class="h-8 w-8 p-0">
-							<Icon name="tabler:edit" />
-						</Button>
-						<Button variant="ghost" size="sm" @click="deleteUser(user)" class="h-8 w-8 p-0">
-							<Icon name="tabler:trash" />
-						</Button>
+					<div class="flex justify-end">
+						<DropdownMenu>
+							<DropdownMenuTrigger>
+								<Button variant="ghost" class="h-8 w-8 p-0">
+									<Icon name="tabler:dots" />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end">
+								<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
+								<DropdownMenuItem @click="viewUser(user)">
+									<Icon name="tabler:eye" />Anzeigen
+								</DropdownMenuItem>
+								<DropdownMenuItem @click="editUser(user)">
+									<Icon name="tabler:edit" />Bearbeiten
+								</DropdownMenuItem>
+								<DropdownMenuItem @click="deleteUser(user)" variant="destructive">
+									<Icon name="tabler:trash" />Löschen
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 				</TableCell>
 			</TableRow>
