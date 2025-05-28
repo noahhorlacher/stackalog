@@ -470,9 +470,11 @@ const saveLog = () => {
 						<TableCell class="font-mono">{{log.id}}</TableCell>
 						<TableCell>
 							<div class="flex items-center gap-3">
-								<Button variant="outline" class="p-2">
-									<Icon :name="log.icon" size="28" class="w-28 h-28"/>
-								</Button>
+                <div class="bg-muted p-2 rounded-md">
+                  <div class="h-7 w-7">
+                    <Icon :name="log.icon" size="28"/>
+                  </div>
+                </div>
 								<div>
 									<div class="font-semibold text-primary">{{log.name}}</div>
 									<div class="text-sm text-muted-foreground">{{log.subcategory}}</div>
