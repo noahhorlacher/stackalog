@@ -24,7 +24,7 @@ const props = defineProps({
                         </div>
                         <p>{{ stack.title }}</p>
                     </CardTitle>
-                    <CardDescription class="flex flex-col gap-y-4">
+                    <CardDescription class="flex flex-col gap-y-2">
                         <div class="flex items-center justify-between">
                             <p class="text-muted-foreground">Logs</p>
                             <p class="text-foreground font-bold">{{ stack.logs.length }}</p>

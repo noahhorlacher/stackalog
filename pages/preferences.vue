@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: 'Stackalog — Ihr Account'
+})
+
 const colorMode = useColorMode()
 const ready = ref(false)
 

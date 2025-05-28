@@ -2,6 +2,10 @@
 definePageMeta({
     layout: 'fullwidth'
 })
+
+useSeoMeta({
+  title: 'Stackalog — Passwort vergessen'
+})
 </script>
 
 <template>

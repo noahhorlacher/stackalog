@@ -3,6 +3,10 @@ const log = {
     id: 1,
     title: 'Ein Log'
 }
+
+useSeoMeta({
+  title: 'Stackalog — Log'
+})
 </script>
 
 <template>

@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: 'Stackalog — Logs'
+})
+
 const logSearchQuery = ref('')
 const showAddModal = ref(false)
 

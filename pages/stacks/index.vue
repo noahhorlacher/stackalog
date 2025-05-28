@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: 'Stackalog — Stacks'
+})
+
 const stackSearchQuery = ref('')
 const showAddModal = ref(false)
 

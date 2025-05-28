@@ -1,7 +1,13 @@
+<script setup>
+useSeoMeta({
+  title: 'Stackalog — Support'
+})
+</script>
+
 <template>
     <div class="space-y-8">
       <div class="space-y-2">
-        <h1 class="text-3xl font-bold">Support kontaktieren</h1>
+        <h1 class="text-3xl font-bold">Support</h1>
         <p class="text-muted-foreground">
           Unser Supportteam ist für Sie da
         </p>

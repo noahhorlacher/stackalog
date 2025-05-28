@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: 'Stackalog — Benutzer'
+})
+
 // Reactive data
 const searchQuery = ref('')
 const showViewModal = ref(false)

@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: 'Stackalog — Stack'
+})
+
 const stack = {
     id: 1,
     title: 'Hauptgebäude',

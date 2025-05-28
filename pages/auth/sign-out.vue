@@ -3,6 +3,10 @@ definePageMeta({
     layout: 'fullwidth'
 })
 
+useSeoMeta({
+  title: 'Stackalog — Abmelden'
+})
+
 const router = useRouter()
 
 onMounted(() => {
