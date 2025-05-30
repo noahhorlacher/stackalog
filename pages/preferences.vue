@@ -127,25 +127,6 @@ onMounted(() => {
         </CardContent>
       </Card>
 
-      <Card class="border-destructive mt-8">
-        <CardHeader>
-          <CardTitle class="flex items-center gap-2 text-destructive">
-            <Icon name="tabler:trash" />
-            Danger Zone
-          </CardTitle>
-          <CardDescription>Diese Aktionen können nicht rückgängig gemacht werden.</CardDescription>
-        </CardHeader>
-        <CardContent class="space-y-4">
-          <div class="flex items-center justify-between gap-8">
-            <div class="space-y-1">
-              <Label class="text-base">Account löschen</Label>
-              <p class="text-sm text-muted-foreground">Löschen Sie Ihren Account und die assoziierten Informationen permanent.</p>
-            </div>
-            <Button variant="destructive">Account Löschen</Button>
-          </div>
-        </CardContent>
-      </Card>
-
       <div class="flex justify-end gap-2 mt-8">
         <Button variant="outline">Abbrechen</Button>
         <Button>Änderungen speichern</Button>

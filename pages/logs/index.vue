@@ -456,66 +456,66 @@ const saveLog = () => {
                 {{ logSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Log hinzu' }}
             </p>
         </div>
-		<div class="max-h-[700px] w-full overflow-y-scroll">
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead>ID</TableHead>
-						<TableHead>Details</TableHead>
-						<TableHead>Status</TableHead>
-						<TableHead>Zuweisung</TableHead>
-						<TableHead>Ort</TableHead>
-						<TableHead>Wert</TableHead>
-						<TableHead class="text-right pr-6">Aktionen</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					<TableRow v-for="(log, index) of filteredLogs" :key="`log-${index}`">
-						<TableCell class="font-mono">{{log.id}}</TableCell>
-						<TableCell>
-							<div class="flex items-center gap-3">
-                <div class="bg-muted p-2 rounded-md">
-                  <div class="h-7 w-7">
-                    <Icon :name="log.icon" size="28"/>
+      <div v-else class="max-h-[700px] w-full overflow-y-scroll">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Details</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Zuweisung</TableHead>
+              <TableHead>Ort</TableHead>
+              <TableHead>Wert</TableHead>
+              <TableHead class="text-right pr-6">Aktionen</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow v-for="(log, index) of filteredLogs" :key="`log-${index}`">
+              <TableCell class="font-mono">{{log.id}}</TableCell>
+              <TableCell>
+                <div class="flex items-center gap-3">
+                  <div class="bg-muted p-2 rounded-md">
+                    <div class="h-7 w-7">
+                      <Icon :name="log.icon" size="28"/>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-primary">{{log.name}}</div>
+                    <div class="text-sm text-muted-foreground">{{log.subcategory}}</div>
                   </div>
                 </div>
-								<div>
-									<div class="font-semibold text-primary">{{log.name}}</div>
-									<div class="text-sm text-muted-foreground">{{log.subcategory}}</div>
-								</div>
-							</div>
-						</TableCell>
-						<TableCell class="py-6">
-							<Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">{{ log.status }}</Badge>
-						</TableCell>
-						<TableCell class="text-muted-foreground">{{ log.assignedTo }}</TableCell>
-						<TableCell class="text-muted-foreground">{{ log.location }}</TableCell>
-						<TableCell class="font-semibold">Fr. {{ log.value.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</TableCell>
-						<TableCell class="text-right">
-							<DropdownMenu>
-								<DropdownMenuTrigger>
-                    <Button variant="ghost" class="h-8 w-8 p-0 mr-3">
-                      <Icon name="tabler:dots" />
-                    </Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="end">
-									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
-									<DropdownMenuItem @click="">
-										<Icon name="tabler:eye" />Log anzeigen
-									</DropdownMenuItem>
-									<DropdownMenuItem @click="">
-										<Icon name="tabler:edit" />Log bearbeiten
-									</DropdownMenuItem>
-									<DropdownMenuItem @click="" variant="destructive">
-										<Icon name="tabler:trash" />Log löschen
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</TableCell>
-					</TableRow>
-				</TableBody>
-			</Table>
-		</div>
+              </TableCell>
+              <TableCell class="py-6">
+                <Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">{{ log.status }}</Badge>
+              </TableCell>
+              <TableCell class="text-muted-foreground">{{ log.assignedTo }}</TableCell>
+              <TableCell class="text-muted-foreground">{{ log.location }}</TableCell>
+              <TableCell class="font-semibold">Fr. {{ log.value.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</TableCell>
+              <TableCell class="text-right">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                      <Button variant="ghost" class="h-8 w-8 p-0 mr-3">
+                        <Icon name="tabler:dots" />
+                      </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
+                    <DropdownMenuItem @click="">
+                      <Icon name="tabler:eye" />Log anzeigen
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="">
+                      <Icon name="tabler:edit" />Log bearbeiten
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="" variant="destructive">
+                      <Icon name="tabler:trash" />Log löschen
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
 	</div>
 
     <!-- Add Log Dialog -->
