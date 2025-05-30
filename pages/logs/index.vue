@@ -382,7 +382,7 @@ const saveLog = () => {
 
 	<!-- stats -->
 	<div class="mb-8 grid grid-cols-4 gap-4">
-		<Card>
+		<Card class="hover:shadow-md shadow-blue-600 transition-shadow">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Total</p>
@@ -395,7 +395,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card>
+		<Card class="hover:shadow-md shadow-emerald-600 transition-shadow">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Verfügbar</p>
@@ -408,7 +408,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card>
+		<Card class="hover:shadow-md shadow-yellow-600 transition-shadow">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Verwendet</p>
@@ -421,7 +421,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card>
+		<Card class="hover:shadow-md shadow-violet-600 transition-shadow">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Totaler Wert</p>
