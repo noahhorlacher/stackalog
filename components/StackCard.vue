@@ -12,9 +12,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <NuxtLink :to="`/stacks/${stack.id}`">
+    <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
         <Card class="w-48 hover:bg-muted/50 transition-colors">
-            <div v-if="stack.id !== undefined && stack.id !== null">
+            <div >
                 <CardHeader>
                     <CardTitle class="mb-6">
                         <div class="bg-muted p-2 w-fit rounded-md mb-3">
@@ -36,18 +36,18 @@ const props = defineProps({
                     </CardDescription>
                 </CardHeader>
             </div>
-            <div v-else>
-                <CardHeader>
-                    <CardTitle class="mb-7">
-                        <Skeleton class="w-11 h-11 mb-3"></Skeleton>
-                        <Skeleton class="h-4 w-full"></Skeleton>
-                    </CardTitle>
-                    <CardDescription>
-                        <Skeleton class="h-3 mb-5"></Skeleton>
-                        <Skeleton class="h-3"></Skeleton>
-                    </CardDescription>
-                </CardHeader>
-            </div>
+            </Card>
+        </NuxtLink>
+        <Card v-else class="w-48">
+            <CardHeader>
+                <CardTitle class="mb-7">
+                    <Skeleton class="w-11 h-11 mb-3"></Skeleton>
+                    <Skeleton class="h-4 w-full"></Skeleton>
+                </CardTitle>
+                <CardDescription>
+                    <Skeleton class="h-3 mb-5"></Skeleton>
+                    <Skeleton class="h-3"></Skeleton>
+                </CardDescription>
+            </CardHeader>
         </Card>
-    </NuxtLink>
 </template>
