@@ -29,6 +29,7 @@ onMounted(() => {
       <p class="text-muted-foreground">Verwalten Sie Ihren Account</p>
     </div>
 
+    <div class="grid grid-cols-2 gap-8">
       <Card>
         <CardHeader>
           <CardTitle class="flex items-center gap-2">
@@ -64,7 +65,7 @@ onMounted(() => {
         </CardContent>
       </Card>
 
-      <Card class="mt-8">
+      <Card>
         <CardHeader>
           <CardTitle class="flex items-center gap-2">
             <Icon name="tabler:mail" />
@@ -99,6 +100,7 @@ onMounted(() => {
 
         </CardContent>
       </Card>
+    </div>
 
       <Card class="mt-8">
         <CardHeader>
