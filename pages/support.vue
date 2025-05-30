@@ -2,6 +2,42 @@
 useSeoMeta({
   title: 'Stackalog — Support'
 })
+
+const supportHours = {
+  monday: { open: '09:00', close: '18:00' },
+  tuesday: { open: '09:00', close: '18:00' },
+  wednesday: { open: '09:00', close: '18:00' },
+  thursday: { open: '09:00', close: '18:00' },
+  friday: { open: '09:00', close: '18:00' },
+  saturday: { open: '10:00', close: '16:00' },
+  sunday: null // closed
+}
+
+const supportOnline = ref(isSupportOnline(supportHours))
+// update support online
+setInterval(() => {
+  supportOnline.value = isSupportOnline(supportHours)
+}, 60_000)
+
+function isSupportOnline(hours) {
+  const now = new Date()
+  const dayIndex = now.getDay() // 0 = sunday
+  const dayMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+  const today = hours[dayMap[dayIndex]]
+
+  if (!today) return false // no support today
+
+  const [openHour, openMinute] = today.open.split(':').map(Number)
+  const [closeHour, closeMinute] = today.close.split(':').map(Number)
+
+  const openTime = new Date(now)
+  openTime.setHours(openHour, openMinute, 0, 0)
+
+  const closeTime = new Date(now)
+  closeTime.setHours(closeHour, closeMinute, 0, 0)
+
+  return now >= openTime && now <= closeTime
+}
 </script>
 
 <template>
@@ -60,22 +96,10 @@ useSeoMeta({
                           Technisches Problem
                         </div>
                       </SelectItem>
-                      <SelectItem value="payment">
-                        <div class="flex items-center gap-2">
-                          <Icon name="tabler:credit-card" />
-                          Zahlungen & Abonnement
-                        </div>
-                      </SelectItem>
                       <SelectItem value="security">
                         <div class="flex items-center gap-2">
                           <Icon name="tabler:shield" />
                           Sicherheit & Privatsphäre
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="feature">
-                        <div class="flex items-center gap-2">
-                          <Icon name="tabler:bolt" />
-                          Feature Anfrage
                         </div>
                       </SelectItem>
                       <SelectItem value="other">
@@ -202,13 +226,6 @@ useSeoMeta({
                   <p class="text-sm text-muted-foreground">+1 (555) 123-4567</p>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
-                <Icon name="tabler:message" class="text-muted-foreground" />
-                <div>
-                  <p class="font-medium">Live Chat</p>
-                  <p class="text-sm text-muted-foreground">24/7 verfügbar</p>
-                </div>
-              </div>
             </CardContent>
           </Card>
 
@@ -220,22 +237,29 @@ useSeoMeta({
               </CardTitle>
             </CardHeader>
             <CardContent class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-sm">Montag - Freitag</span>
-                <span class="text-sm font-medium">9:00 - 18:00 EST</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-sm">Samstag</span>
-                <span class="text-sm font-medium">10:00 - 16:00 EST</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-sm">Sonntag</span>
-                <span class="text-sm font-medium">Geschlossen</span>
+              <div v-for="(hours, day) in supportHours" :key="day" class="flex justify-between">
+                <span class="text-sm capitalize">
+                  {{
+                    {
+                      monday: 'Montag',
+                      tuesday: 'Dienstag',
+                      wednesday: 'Mittwoch',
+                      thursday: 'Donnerstag',
+                      friday: 'Freitag',
+                      saturday: 'Samstag',
+                      sunday: 'Sonntag'
+                    }[day]
+                  }}
+                </span>
+                <span class="text-sm font-medium">
+                  {{ hours ? `${hours.open} - ${hours.close}` : 'Geschlossen' }}
+                </span>
               </div>
               <Separator />
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                <span class="text-sm text-green-600 font-medium">Momentan Online</span>
+                <div v-if="supportOnline" class="w-2 h-2 rounded-full bg-green-500"></div>
+                <div v-else class="w-2 h-2 rounded-full bg-red-500"></div>
+                <span class="text-sm font-medium">{{ supportOnline ? 'Momentan Online' : 'Derzeit Offline' }}</span>
               </div>
             </CardContent>
           </Card>
@@ -289,14 +313,6 @@ useSeoMeta({
               <Button variant="ghost" class="w-full justify-start cursor-pointer" size="sm">
                 <Icon name="tabler:file-text" />
                 Dokumentation
-              </Button>
-              <Button variant="ghost" class="w-full justify-start cursor-pointer" size="sm">
-                <Icon name="tabler:users" />
-                Community Forum
-              </Button>
-              <Button variant="ghost" class="w-full justify-start cursor-pointer" size="sm">
-                <Icon name="tabler:settings" />
-                Systemstatus
               </Button>
             </CardContent>
           </Card>
