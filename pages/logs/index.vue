@@ -382,7 +382,7 @@ const saveLog = () => {
 
 	<!-- stats -->
 	<div class="mb-8 grid grid-cols-4 gap-4">
-		<Card class="hover:shadow-md shadow-blue-600 transition-shadow">
+		<Card class="hover:shadow-md shadow-blue-600 hover:-translate-y-[3px] transition-all">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Total</p>
@@ -395,7 +395,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card class="hover:shadow-md shadow-emerald-600 transition-shadow">
+		<Card class="hover:shadow-md shadow-emerald-600 hover:-translate-y-[3px] transition-all">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Verfügbar</p>
@@ -408,7 +408,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card class="hover:shadow-md shadow-yellow-600 transition-shadow">
+		<Card class="hover:shadow-md shadow-yellow-600 hover:-translate-y-[3px] transition-all">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Verwendet</p>
@@ -421,7 +421,7 @@ const saveLog = () => {
 			</CardContent>
 		</Card>
 
-		<Card class="hover:shadow-md shadow-violet-600 transition-shadow">
+		<Card class="hover:shadow-md shadow-violet-600 hover:-translate-y-[3px] transition-all">
 			<CardContent>
 				<div class="flex justify-between font-bold items-center mb-2">
 					<p class="text-sm text-muted-foreground">Totaler Wert</p>
@@ -444,7 +444,7 @@ const saveLog = () => {
             class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input v-model="logSearchQuery" placeholder="Logs durchsuchen..." class="pl-10" />
           </div>
-          <Button @click="openAddModal" class="flex items-center gap-2">
+          <Button @click="openAddModal" class="flex items-center">
             <Icon name="tabler:plus" />
             Log hinzufügen
           </Button>
