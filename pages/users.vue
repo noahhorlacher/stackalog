@@ -37,7 +37,7 @@ const users = ref([
 		firstName: 'John',
 		lastName: 'Doe',
 		email: 'john.doe@example.com',
-		role: 'Administrator',
+		isAdmin: true,
 		status: 'Active',
 		joinedAt: '2024-01-15'
 	},
@@ -46,7 +46,7 @@ const users = ref([
 		firstName: 'Jane',
 		lastName: 'Smith',
 		email: 'jane.smith@example.com',
-		role: 'Benutzer',
+		isAdmin: false,
 		status: 'Active',
 		joinedAt: '2024-02-20'
 	},
@@ -55,7 +55,7 @@ const users = ref([
 		firstName: 'Mike',
 		lastName: 'Johnson',
 		email: 'mike.johnson@example.com',
-		role: 'Benutzer',
+		isAdmin: false,
 		status: 'Inactive',
 		joinedAt: '2024-01-10'
 	},
@@ -64,7 +64,7 @@ const users = ref([
 		firstName: 'Sarah',
 		lastName: 'Wilson',
 		email: 'sarah.wilson@example.com',
-		role: 'Administrator',
+		isAdmin: true,
 		status: 'Active',
 		joinedAt: '2024-03-05'
 	},
@@ -73,7 +73,7 @@ const users = ref([
 		firstName: 'David',
 		lastName: 'Brown',
 		email: 'david.brown@example.com',
-		role: 'Benutzer',
+		isAdmin: false,
 		status: 'Active',
 		joinedAt: '2024-02-28'
 	},
@@ -82,7 +82,7 @@ const users = ref([
 		firstName: 'Lisa',
 		lastName: 'Davis',
 		email: 'lisa.davis@example.com',
-		role: 'Benutzer',
+		isAdmin: false,
 		status: 'Active',
 		joinedAt: '2024-03-12'
 	}
@@ -96,28 +96,12 @@ const filteredUsers = computed(() => {
 	return users.value.filter(user =>
 		user.firstName.toLowerCase().includes(query) ||
 		user.lastName.toLowerCase().includes(query) ||
-		user.email.toLowerCase().includes(query) ||
-		user.role.toLowerCase().includes(query)
+		user.email.toLowerCase().includes(query)
 	)
 })
 
-// Methods
-const getRoleVariant = (role) => {
-	const variants = {
-		'Administrator': 'default',
-		'Benutzer': 'outline'
-	}
-	return variants[role] || 'secondary'
-}
-
-// Methods
-const getRoleIcon = (role) => {
-	const variants = {
-		'Administrator': 'tabler:shield-check',
-		'Benutzer': 'tabler:user'
-	}
-	return variants[role] || 'secondary'
-}
+const getRoleVariant = isAdmin => isAdmin ? 'default' : 'outline'
+const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
 
 const formatDate = (dateString) => {
 	return new Date(dateString).toLocaleDateString('de-CH', {
@@ -142,7 +126,7 @@ const editUser = (user) => {
 	formData.firstName = user.firstName
 	formData.lastName = user.lastName
 	formData.email = user.email
-	formData.role = user.role
+	formData.isAdmin = user.isAdmin
 	formData.status = user.status
 	showEditModal.value = true
 }
@@ -160,7 +144,7 @@ const saveUser = () => {
 			firstName: formData.firstName,
 			lastName: formData.lastName,
 			email: formData.email,
-			role: formData.role,
+			isAdmin: formData.isAdmin,
 			status: formData.status,
 			joinedAt: new Date().toISOString().split('T')[0]
 		}
@@ -174,7 +158,7 @@ const saveUser = () => {
 				firstName: formData.firstName,
 				lastName: formData.lastName,
 				email: formData.email,
-				role: formData.role,
+				isAdmin: formData.isAdmin,
 				status: formData.status
 			}
 		}
@@ -203,7 +187,7 @@ const resetForm = () => {
 	formData.firstName = ''
 	formData.lastName = ''
 	formData.email = ''
-	formData.role = 'Viewer'
+	formData.isAdmin = false
 	formData.status = 'Active'
 }
 </script>
@@ -220,7 +204,7 @@ const resetForm = () => {
 		<div class="relative flex-1 max-w-md">
 			<Icon name="tabler:search"
 				class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-			<Input v-model="searchQuery" placeholder="Benutzer mit Name, Email oder Rolle durchsuchen..." class="pl-10" />
+			<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..." class="pl-10" />
 		</div>
 		<Button @click="openAddModal" class="flex items-center gap-2">
 			<Icon name="tabler:plus" />
@@ -263,9 +247,9 @@ const resetForm = () => {
 						</div>
 					</TableCell>
 					<TableCell>
-						<Badge :variant="getRoleVariant(user.role)">
-							<Icon :name="getRoleIcon(user.role)" />
-							{{ user.role }}
+						<Badge :variant="getRoleVariant(user.isAdmin)">
+							<Icon :name="getRoleIcon(user.isAdmin)" />
+							{{ user.isAdmin ? 'Administrator' : 'Benutzer' }}
 						</Badge>
 					</TableCell>
 					<TableCell>
@@ -319,9 +303,9 @@ const resetForm = () => {
 					<span class="text-muted-foreground">{{ selectedUser.email }}</span>
 				</div>
 				<div class="flex justify-center gap-3">
-					<Badge :variant="getRoleVariant(selectedUser.role)">
-						<Icon :name="getRoleIcon(selectedUser.role)" />
-						{{ selectedUser.role }}
+					<Badge :variant="getRoleVariant(selectedUser.isAdmin)">
+						<Icon :name="getRoleIcon(selectedUser.isAdmin)" />
+						{{ selectedUser.isAdmin ? 'Administrator' : 'Benutzer' }}
 					</Badge>
 					<Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
 						{{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
@@ -354,16 +338,8 @@ const resetForm = () => {
 					<Input id="email" v-model="formData.email" type="email" required placeholder="Email Adresse eingeben" />
 				</div>
 				<div class="space-y-2">
-					<Label for="role">Rolle</Label>
-					<Select v-model="formData.role">
-						<SelectTrigger>
-							<SelectValue placeholder="Rolle wählen" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="Administrator">Administrator</SelectItem>
-							<SelectItem value="Benutzer">Benutzer</SelectItem>
-						</SelectContent>
-					</Select>
+					<Label for="role">Administratorberechtigungen</Label>
+					<Checkbox v-model="formData.isAdmin" />
 				</div>
 				<div class="space-y-2">
 					<Label for="status">Status</Label>

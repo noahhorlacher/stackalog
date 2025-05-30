@@ -45,6 +45,16 @@ const menuGroups = [
 function signOut() {
     router.push('/auth/sign-out')
 }
+
+const user = {
+    firstName: 'Max',
+    lastName: 'Mustermann',
+    email: 'max.mustermann@example.com',
+    isAdmin: true
+}
+
+const getRoleVariant = isAdmin => isAdmin ? 'default' : 'outline'
+const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
 </script>
 
 <template>
@@ -83,15 +93,15 @@ function signOut() {
                         <div class="flex flex-row items-center justify-start w-full gap-x-2">
                             <Avatar class="m-0 p-0">
                                 <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                                <AvatarFallback class="text-sm">MM</AvatarFallback>
+                                <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                             </Avatar>
-                            <p>Max&nbsp;Mustermann</p>
+                            <p>{{ user.firstName + '&nbsp;' + user.lastName }}</p>
                         </div>
                     </SidebarMenuButton>
                     <div v-else class="cursor-pointer">
                         <Avatar class="m-0 p-0">
                             <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                            <AvatarFallback class="text-sm">MM</AvatarFallback>
+                            <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                         </Avatar>
                     </div>
                 </DrawerTrigger>
@@ -100,17 +110,17 @@ function signOut() {
                     <DrawerHeader class="mt-8">
                         <DrawerTitle class="flex text-center flex-col items-center justify-center gap-2">
                             <Avatar class="h-16 w-16 mx-auto mb-4">
-                                <AvatarFallback class="text-xl">MM</AvatarFallback>
+                                <AvatarFallback class="text-xl">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                             </Avatar>
                             <div>
-                                <h4 class="text-lg font-medium">Max Mustermann</h4>
-                                <p class="text-muted-foreground text-sm">max.mustermann@example.com</p>
+                                <h4 class="text-lg font-medium">{{ user.firstName + '&nbsp;' + user.lastName }}</h4>
+                                <p class="text-muted-foreground text-sm">{{ user.email }}</p>
                             </div>
                         </DrawerTitle>
                         <DrawerDescription class="flex items-center justify-center gap-2">
-                            <Badge variant="default" class="mt-4">
-                                <Icon name="tabler:shield-check" />
-                                <p>Administrator</p>
+                            <Badge :variant="getRoleVariant(user.isAdmin)" class="mt-4">
+                                <Icon :name="getRoleIcon(user.isAdmin)" />
+                                <p>{{ user.isAdmin ? 'Administrator' : 'Benutzer' }}</p>
                             </Badge>
                         </DrawerDescription>
                     </DrawerHeader>
