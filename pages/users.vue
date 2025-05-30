@@ -197,17 +197,21 @@ const resetForm = () => {
 	</div>
 
 	<!-- Search and Add User Section -->
-	<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-12">
-		<div class="relative flex-1 max-w-md">
-			<Icon name="tabler:search"
-				class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-			<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..." class="pl-10" />
-		</div>
-		<Button @click="openAddModal" class="flex items-center gap-2">
-			<Icon name="tabler:plus" />
-			Benutzer hinzufügen
-		</Button>
-	</div>
+	<Card class="mb-12">
+		<CardContent>
+			<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+				<div class="relative flex-1 max-w-md">
+					<Icon name="tabler:search"
+					class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+					<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..." class="pl-10" />
+				</div>
+				<Button @click="openAddModal" class="flex items-center gap-2">
+					<Icon name="tabler:plus" />
+					Benutzer hinzufügen
+				</Button>
+			</div>
+		</CardContent>
+	</Card>
 
 	<!-- Users Table -->
 	<!-- Empty State -->
