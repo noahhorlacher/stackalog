@@ -57,9 +57,6 @@ const user = {
     email: 'max.mustermann@example.com',
     isAdmin: true
 }
-
-const getRoleVariant = isAdmin => isAdmin ? 'default' : 'outline'
-const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
 </script>
 
 <template>
@@ -122,11 +119,8 @@ const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
                                 <p class="text-muted-foreground text-sm">{{ user.email }}</p>
                             </div>
                         </DrawerTitle>
-                        <DrawerDescription class="flex items-center justify-center gap-2">
-                            <Badge :variant="getRoleVariant(user.isAdmin)" class="mt-4">
-                                <Icon :name="getRoleIcon(user.isAdmin)" />
-                                <p>{{ user.isAdmin ? 'Administrator' : 'Benutzer' }}</p>
-                            </Badge>
+                        <DrawerDescription class="flex justify-center mt-4">
+                            <RoleBadge :user />
                         </DrawerDescription>
                     </DrawerHeader>
 

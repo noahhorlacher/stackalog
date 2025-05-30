@@ -100,9 +100,6 @@ const filteredUsers = computed(() => {
 	)
 })
 
-const getRoleVariant = isAdmin => isAdmin ? 'default' : 'outline'
-const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
-
 const formatDate = (dateString) => {
 	return new Date(dateString).toLocaleDateString('de-CH', {
 		year: 'numeric',
@@ -247,10 +244,7 @@ const resetForm = () => {
 						</div>
 					</TableCell>
 					<TableCell>
-						<Badge :variant="getRoleVariant(user.isAdmin)">
-							<Icon :name="getRoleIcon(user.isAdmin)" />
-							{{ user.isAdmin ? 'Administrator' : 'Benutzer' }}
-						</Badge>
+						<RoleBadge :user />
 					</TableCell>
 					<TableCell>
 						<Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
@@ -303,10 +297,7 @@ const resetForm = () => {
 					<span class="text-muted-foreground">{{ selectedUser.email }}</span>
 				</div>
 				<div class="flex justify-center gap-3">
-					<Badge :variant="getRoleVariant(selectedUser.isAdmin)">
-						<Icon :name="getRoleIcon(selectedUser.isAdmin)" />
-						{{ selectedUser.isAdmin ? 'Administrator' : 'Benutzer' }}
-					</Badge>
+					<RoleBadge :user="selectedUser" />
 					<Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
 						{{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
 					</Badge>
