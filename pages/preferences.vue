@@ -1,6 +1,6 @@
 <script setup>
 useSeoMeta({
-  title: 'Stackalog — Ihr Account'
+  title: 'Stackalog — Präferenzen'
 })
 
 const colorMode = useColorMode()
@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
     <div class="space-y-2 mb-6">
-      <h1 class="text-3xl font-bold">Ihr Account</h1>
+      <h1 class="text-3xl font-bold">Präferenzen</h1>
       <p class="text-muted-foreground">Verwalten Sie Ihren Account</p>
     </div>
 

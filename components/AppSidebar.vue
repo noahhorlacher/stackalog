@@ -21,17 +21,22 @@ const menuGroups = [
         ]
     },
     {
+        title: 'Ihr Account',
+        items: [
+            {
+                title: 'Präferenzen',
+                url: '/preferences',
+                icon: 'tabler:settings'
+            }
+        ]
+    },
+    {
         title: 'System',
         items: [
             {
                 title: 'Benutzerverwaltung',
                 url: '/users',
                 icon: 'tabler:user'
-            },
-                        {
-                title: 'Einstellungen',
-                url: '/preferences',
-                icon: 'tabler:settings'
             },
             {
                 title: 'Support',
@@ -130,11 +135,6 @@ const getRoleIcon = isAdmin => isAdmin ? 'tabler:shield-check' : 'tabler:user'
                             <Icon name="tabler:arrow-right-to-arc" />
                             <p>Abmelden</p>
                         </Button>
-                        <!-- <DrawerClose>
-                            <Button variant="outline">
-                                Abbrechen
-                            </Button>
-                        </DrawerClose> -->
                     </DrawerFooter>
 
                 </DrawerContent>
