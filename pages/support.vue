@@ -13,6 +13,16 @@ const supportHours = {
   sunday: null // closed
 }
 
+const supportContact = {
+  email: 'support@example.com',
+  phone: '+41 12 345 67 89'
+}
+
+const emergencyContact = {
+  email: 'security@example.com',
+  phone: '+41 23 456 78 90'
+}
+
 const supportOnline = ref(isSupportOnline(supportHours))
 // update support online
 setInterval(() => {
@@ -166,7 +176,7 @@ function isSupportOnline(hours) {
                   <Label>Anhänge</Label>
                   <div class="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Icon name="tabler:file-upload" class="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                    <p class="text-sm text-muted-foreground mb-2">Drag and droppen Sie Dateien hier, oder klicken Sie um nach Dateien zu suchen.</p>
+                    <p class="text-sm text-muted-foreground mb-2">Drag und droppen Sie Dateien hier, oder klicken Sie, um nach Dateien zu suchen.</p>
                     <input
                       type="file"
                       multiple
@@ -188,7 +198,7 @@ function isSupportOnline(hours) {
 
                 </div>
 
-                <Button type="submit" class="w-full" disabled={isSubmitting}>
+                <Button type="submit" class="w-full" :disabled="isSubmitting">
                     Supportanfrage abschicken
                 </Button>
               </form>
@@ -196,12 +206,12 @@ function isSupportOnline(hours) {
           </Card>
 
           <Alert>
-            <AlertTitle>
+            <AlertTitle class="flex items-center gap-2">
                 <Icon name="tabler:alert-circle" />
                 Dringende Sicherheitsprobleme
             </AlertTitle>
             <AlertDescription>
-              Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter security@company.com oder rufen Sie unsere Notfall-Hotline unter +1 (555) 999-0000 an.
+              Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter {{ emergencyContact.email }} oder rufen Sie unsere Notfall-Hotline unter {{ emergencyContact.phone }} an.
             </AlertDescription>
           </Alert>
         </div>
@@ -216,14 +226,14 @@ function isSupportOnline(hours) {
                 <Icon name="tabler:mail" class="text-muted-foreground" />
                 <div>
                   <p class="font-medium">Email</p>
-                  <p class="text-sm text-muted-foreground">support@example.com</p>
+                  <p class="text-sm text-muted-foreground">{{ supportContact.email }}</p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
                 <Icon name="tabler:phone" class="text-muted-foreground" />
                 <div>
                   <p class="font-medium">Telefon</p>
-                  <p class="text-sm text-muted-foreground">+1 (555) 123-4567</p>
+                  <p class="text-sm text-muted-foreground">{{ supportContact.phone }}</p>
                 </div>
               </div>
             </CardContent>
