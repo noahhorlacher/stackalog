@@ -62,7 +62,7 @@ const saveStack = () => {
       <p class="text-muted-foreground">Ihre Ordner</p>
     </div>
 
-    	<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-12">
+	<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-12">
 		<div class="relative flex-1 max-w-md">
 			<Icon name="tabler:search"
 				class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -74,7 +74,7 @@ const saveStack = () => {
 		</Button>
 	</div>
 
-    <div class="flex gap-8 flex-wrap">
+    <div class="flex gap-8 flex-wrap items-stretch">
         <div v-if="filteredStacks.length === 0" class="text-center py-12 mx-auto">
             <Icon name="tabler:stack" class="mx-auto text-muted-foreground" />
             <h3 class="mt-2 text-sm font-medium">Keine Stacks gefunden</h3>

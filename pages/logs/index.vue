@@ -501,13 +501,13 @@ const saveLog = () => {
 								<DropdownMenuContent align="end">
 									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
 									<DropdownMenuItem @click="">
-										<Icon name="tabler:eye" />Anzeigen
+										<Icon name="tabler:eye" />Log anzeigen
 									</DropdownMenuItem>
 									<DropdownMenuItem @click="">
-										<Icon name="tabler:edit" />Bearbeiten
+										<Icon name="tabler:edit" />Log bearbeiten
 									</DropdownMenuItem>
 									<DropdownMenuItem @click="" variant="destructive">
-										<Icon name="tabler:trash" />Löschen
+										<Icon name="tabler:trash" />Log löschen
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>

@@ -250,7 +250,7 @@ const resetForm = () => {
 			</TableHeader>
 			<TableBody>
 				<TableRow v-for="(user, index) in filteredUsers" :key="`user-row-${index}`">
-					<TableCell class="py-6">
+					<TableCell class="py-3">
 						<div class="flex items-center gap-3">
 							<Avatar>
 								<AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}
@@ -284,13 +284,13 @@ const resetForm = () => {
 								<DropdownMenuContent align="end">
 									<DropdownMenuLabel>Aktionen</DropdownMenuLabel>
 									<DropdownMenuItem @click="viewUser(user)">
-										<Icon name="tabler:eye" />Anzeigen
+										<Icon name="tabler:eye" />Benutzer anzeigen
 									</DropdownMenuItem>
 									<DropdownMenuItem @click="editUser(user)">
-										<Icon name="tabler:edit" />Bearbeiten
+										<Icon name="tabler:edit" />Benutzer bearbeiten
 									</DropdownMenuItem>
 									<DropdownMenuItem @click="deleteUser(user)" variant="destructive">
-										<Icon name="tabler:trash" />Löschen
+										<Icon name="tabler:trash" />Benutzer löschen
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
