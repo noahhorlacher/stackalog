@@ -1,8 +1,9 @@
 <script setup>
-const router = useRouter()
 import { useSidebar } from "@/components/ui/sidebar";
 
 const { open } = useSidebar()
+const router = useRouter()
+const route = useRoute()
 
 const menuGroups = [
     {
@@ -57,6 +58,11 @@ const user = {
     email: 'max.mustermann@example.com',
     isAdmin: true
 }
+
+const activePath = ref(`/${route.fullPath.split('/')[1]}`)
+watch(() => route.fullPath, () => {
+    activePath.value = `/${route.fullPath.split('/')[1]}`
+})
 </script>
 
 <template>
@@ -73,7 +79,7 @@ const user = {
             <SidebarGroupContent>
                 <SidebarMenu>
                     <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton asChild :class="activePath == item.url ? 'bg-muted/50' : ''">
                             <NuxtLink :to="item.url">
                                 <icon :name="item.icon" />
                                 <p v-if="open">{{item.title}}</p>
