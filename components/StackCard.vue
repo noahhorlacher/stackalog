@@ -13,15 +13,10 @@ const props = defineProps({
 
 <template>
     <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
-        <Card class="w-48 hover:bg-muted/50 transition-colors">
+        <Card class="w-48 hover:bg-muted/50 transition-colors group">
             <div >
                 <CardHeader>
                     <CardTitle class="mb-6">
-                        <div class="bg-muted p-2 w-fit rounded-md mb-3">
-                            <div class="w-7 h-7"> 
-                                <Icon :name="stack.icon" size="28" />
-                            </div>
-                        </div>
                         <p>{{ stack.title }}</p>
                     </CardTitle>
                     <CardDescription class="flex flex-col gap-y-2">
@@ -41,7 +36,6 @@ const props = defineProps({
         <Card v-else class="w-48">
             <CardHeader>
                 <CardTitle class="mb-7">
-                    <Skeleton class="w-11 h-11 mb-3"></Skeleton>
                     <Skeleton class="h-4 w-full"></Skeleton>
                 </CardTitle>
                 <CardDescription>
