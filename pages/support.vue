@@ -48,6 +48,12 @@ function isSupportOnline(hours) {
 
   return now >= openTime && now <= closeTime
 }
+
+function isSubmitting() {
+  // This function should return true if the form is currently being submitted
+  // For now, we will just return false
+  return false
+}
 </script>
 
 <template>

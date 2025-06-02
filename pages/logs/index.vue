@@ -1,5 +1,9 @@
 <script setup>
 import { toast } from 'vue-sonner'
+import {
+  DateFormatter,
+  getLocalTimeZone,
+} from '@internationalized/date'
 
 useSeoMeta({
   title: 'Stackalog — Logs'
@@ -20,7 +24,16 @@ logs.value = logsData.value
 
 // Form data for add/edit
 const formData = reactive({
-  title: ''
+  title: '',
+  name: '',
+  category: 'Unkategorisiert',
+  subcategory: '',
+  status: 'Verfügbar',
+  assignedTo: '—',
+  location: 'Unbekannt',
+  purchaseDate: new Date().toISOString().split('T')[0],
+  value: 0,
+  serialNumber: ''
 })
 
 const filteredLogs = computed(() => {
@@ -33,7 +46,15 @@ const filteredLogs = computed(() => {
 })
 
 const resetForm = () => {
-  formData.title = ''
+  formData.name = ''
+  formData.category = 'Unkategorisiert'
+  formData.subcategory = ''
+  formData.status = 'Verfügbar'
+  formData.assignedTo = '—'
+  formData.location = 'Unknown'
+  formData.purchaseDate = new Date().toISOString().split('T')[0]
+  formData.value = 0
+  formData.serialNumber = ''
 }
 
 const openAddModal = () => {
@@ -52,18 +73,21 @@ const saveLog = () => {
   )
   const newId = `INV-${String(maxId + 1).padStart(3, '0')}`
 
-  const newLog = {
-    id: newId,
-    name: formData.title,
-    category: "Uncategorized",
-    subcategory: "",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Unknown",
-    purchaseDate: new Date().toISOString().split('T')[0],
-    value: 0,
-    serialNumber: `NEW-${newId}`,
-  }
+  $fetch('http://localhost:5000/api/logs/', {
+    method: 'POST',
+    body: formData
+  }).then(() => {
+    toast('Erfolg', {
+      description: 'Log erfolgreich hinzugefügt'
+    })
+  }).catch(err => {
+    toast('Error', {
+      description: err.message
+    })
+  })
+
+  const newLog = formData
+  newLog.id = newId
 
   logs.value.push(newLog)
   closeModals()
@@ -76,6 +100,10 @@ const paginatedLogs = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value
   const end = start + itemsPerPage.value
   return filteredLogs.value.slice(start, end)
+})
+
+const df = new DateFormatter('de-CH', {
+  dateStyle: 'long',
 })
 
 const totalPages = computed(() =>
@@ -257,11 +285,78 @@ watch(logSearchQuery, () => {
       <DialogHeader>
         <DialogTitle>Log hinzufügen</DialogTitle>
       </DialogHeader>
+
       <form @submit.prevent="saveLog" class="space-y-4">
         <div class="space-y-2">
-          <Label for="firstName">Titel</Label>
-          <Input id="firstName" v-model="formData.title" required placeholder="Log Titel eingeben" />
+          <Label for="name">Name</Label>
+          <Input id="name" v-model="formData.name" required placeholder="Log Name eingeben" />
         </div>
+        <div class="space-y-2">
+          <Label for="category">Kategorie</Label>
+          <Select v-model="formData.category" id="category" required>
+            <SelectTrigger>
+              <SelectValue placeholder="Kategorie auswählen" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Unkategorisiert">Unkategorisiert</SelectItem>
+              <SelectItem value="Hardware">Hardware</SelectItem>
+              <SelectItem value="Software">Software</SelectItem>
+              <SelectItem value="Netzwerk">Netzwerk</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="space-y-2">
+          <Label for="subcategory">Unterkategorie</Label>
+          <Input id="subcategory" v-model="formData.subcategory" placeholder="Optional Unterkategorie eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="status">Status</Label>
+          <Select v-model="formData.status" id="status" required>
+            <SelectTrigger>
+              <SelectValue placeholder="Status auswählen" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Verfügbar">Verfügbar</SelectItem>
+              <SelectItem value="Verwendet">Verwendet</SelectItem>
+              <SelectItem value="In Reparatur">In Reparatur</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="space-y-2">
+          <Label for="assignedTo">Zugewiesen an</Label>
+          <Input id="assignedTo" v-model="formData.assignedTo" placeholder="Optional Person eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="location">Ort</Label>
+          <Input id="location" v-model="formData.location" placeholder="Optional Ort eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="purchaseDate">Kaufdatum</Label>
+          <Popover>
+            <PopoverTrigger as-child>
+              <Button
+                variant="outline"
+                :class="formData.buyData ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
+              >
+                <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
+                {{ formData.buyDate ? df.format(formData.buyDate.toDate(getLocalTimeZone())) : "Pick a date" }}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent class="w-auto p-0">
+              <Calendar v-model="value" initial-focus />
+            </PopoverContent>
+          </Popover>
+          <Input id="purchaseDate" type="date" v-model="formData.purchaseDate" required />
+        </div>
+        <div class="space-y-2">
+          <Label for="value">Wert (CHF)</Label>
+          <Input id="value" type="number" v-model.number="formData.value" required placeholder="Wert eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="serialNumber">Seriennummer</Label>
+          <Input id="serialNumber" v-model="formData.serialNumber" placeholder="Optional Seriennummer eingeben" />
+        </div>
+
         <DialogFooter class="gap-2">
           <Button type="button" variant="outline" @click="closeModals">
             Abbrechen
@@ -269,6 +364,7 @@ watch(logSearchQuery, () => {
           <Button type="submit">Log hinzufügen</Button>
         </DialogFooter>
       </form>
+
     </DialogContent>
   </Dialog>
 </template>

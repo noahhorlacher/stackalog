@@ -1,4 +1,6 @@
 <script setup>
+import { toast } from 'vue-sonner'
+
 useSeoMeta({
 	title: 'Stackalog — Stacks'
 })
@@ -48,14 +50,29 @@ const closeModals = () => {
 }
 
 const saveStack = () => {
-	const newLog = {
-		id: Math.max(...stacks.value.map(l => l.id)) + 1,
-		title: formData.title,
-		description: formData.description,
-		logs: []
-	}
-	stacks.value.push(newLog)
-	closeModals()
+	$fetch('http://localhost:5000/api/stacks/', {
+		method: 'POST',
+		body: formData
+	}).then(() => {
+		toast('Erfolg', {
+			description: 'Stack erfolgreich hinzugefügt'
+		})
+
+		const newLog = {
+			id: Math.max(...stacks.value.map(l => l.id)) + 1,
+			title: formData.title,
+			description: formData.description,
+			logs: []
+		}
+
+		stacks.value.push(newLog)
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'
+		})
+	}).finally(() => {
+		closeModals()
+	})
 }
 
 const currentPage = ref(1)
@@ -105,7 +122,7 @@ watch(stackSearchQuery, () => {
 		</CardContent>
 	</Card>
 
-	<div class="flex flex-row gap-8 justify-between flex-wrap">
+	<div class="flex flex-row gap-8 justify-center flex-wrap">
 		<div v-if="filteredStacks.length === 0" class="text-center py-12 mx-auto">
 			<Icon name="tabler:stack" class="mx-auto text-muted-foreground" />
 			<h3 class="mt-2 text-sm font-medium">Keine Stacks gefunden</h3>
