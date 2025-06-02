@@ -79,7 +79,7 @@ watch(() => route.fullPath, () => {
             <SidebarGroupContent>
                 <SidebarMenu>
                     <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
-                        <SidebarMenuButton asChild :class="activePath == item.url ? 'bg-muted/50' : ''">
+                        <SidebarMenuButton asChild :class="activePath == item.url ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground'" class="transition-colors">
                             <NuxtLink :to="item.url">
                                 <icon :name="item.icon" />
                                 <p v-if="open">{{item.title}}</p>
@@ -97,7 +97,7 @@ watch(() => route.fullPath, () => {
 
             <Drawer>
                 <DrawerTrigger class="w-full">
-                    <SidebarMenuButton v-if="open" class="cursor-pointer">
+                    <SidebarMenuButton v-if="open" class="cursor-pointer hover:bg-muted hover:text-foreground transition-colors">
                         <div class="flex flex-row items-center justify-start w-full gap-x-2">
                             <Avatar class="m-0 p-0">
                                 <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
