@@ -9,12 +9,12 @@ const showAddModal = ref(false)
 const stacks = ref([])
 
 
-onMounted(async () => {
-	const { data: stacksData, error: stacksError } = await useFetch('http://localhost:5000/api/stacks/')
-	if (stacksError.value) return console.error('Failed to fetch stacks:', stacksError.value)
-
-	stacks.value = stacksData.value.map(s => { return {...s, logs: []} })
+const { data: stacksData, error: stacksError } = await useFetch('http://localhost:5000/api/stacks/')
+if (stacksError.value) toast('Error', {
+	description: stacksError.value
 })
+
+stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } })
 
 // Form data for add/edit
 const formData = reactive({
@@ -126,8 +126,7 @@ watch(stackSearchQuery, () => {
 			{{ currentPage }}/{{ totalPages }}
 		</div>
 
-		<Button variant="outline" size="sm" :disabled="currentPage === totalPages"
-			@click="goToPage(currentPage + 1)">
+		<Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
 			<Icon name="tabler:chevron-right" />
 		</Button>
 	</div>

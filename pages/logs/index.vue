@@ -1,4 +1,6 @@
 <script setup>
+import { toast } from 'vue-sonner'
+
 useSeoMeta({
   title: 'Stackalog — Logs'
 })
@@ -6,320 +8,15 @@ useSeoMeta({
 const logSearchQuery = ref('')
 const showAddModal = ref(false)
 
-const logs = ref([
-  {
-    id: "INV-001",
-    name: 'MacBook Pro 16"',
-    category: "Elektronik",
-    subcategory: "Laptops",
-    status: "Verwendet",
-    assignedTo: "John Smith",
-    location: "Büroetage 2",
-    purchaseDate: "2023-08-15",
-    value: 2499,
-    serialNumber: "MBP2023001",
-    icon: 'tabler:device-laptop',
-  },
-  {
-    id: "INV-002",
-    name: "Herman Miller Aeron Stuhl",
-    category: "Möbel",
-    subcategory: "Bürostühle",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Lagerraum A",
-    purchaseDate: "2023-06-20",
-    value: 1395,
-    serialNumber: "HM-AC-2023-002",
-    icon: 'tabler:armchair',
-  },
-  {
-    id: "INV-003",
-    name: "Toyota Camry 2023",
-    category: "Fortbewegungsmittel",
-    subcategory: "Firmenfahrzeuge",
-    status: "Verwendet",
-    assignedTo: "Sarah Johnson",
-    location: "Parkgarage B",
-    purchaseDate: "2023-03-10",
-    value: 28500,
-    serialNumber: "TC2023-VIN-003",
-    icon: 'tabler:car',
-  },
-  {
-    id: "INV-004",
-    name: "iPhone 15 Pro",
-    category: "Elektronik",
-    subcategory: "Mobilgeräte",
-    status: "Verwendet",
-    assignedTo: "Mike Davis",
-    location: "Büroetage 3",
-    purchaseDate: "2023-09-22",
-    value: 1199,
-    serialNumber: "IP15P-2023-004",
-    icon: 'tabler:phone',
-  },
-  {
-    id: "INV-005",
-    name: 'Dell UltraSharp 27" Monitor',
-    category: "Elektronik",
-    subcategory: "Monitore",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "IT-Lager",
-    purchaseDate: "2023-07-05",
-    value: 549,
-    serialNumber: "DU27-2023-005",
-    icon: "tabler:user-screen",
-  },
-  {
-    id: "INV-006",
-    name: "HP LaserJet Pro Drucker",
-    category: "Elektronik",
-    subcategory: "Drucker",
-    status: "In Reparatur",
-    assignedTo: "—",
-    location: "Büroetage 1",
-    purchaseDate: "2023-04-18",
-    value: 299,
-    serialNumber: "HPLJ-2023-006",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-007",
-    name: "Stehschreibtisch",
-    category: "Möbel",
-    subcategory: "Schreibtische",
-    status: "Verwendet",
-    assignedTo: "Emily Chen",
-    location: "Büroetage 2",
-    purchaseDate: "2023-05-12",
-    value: 799,
-    serialNumber: "SD-2023-007",
-    icon: "tabler:armchair",
-  },
-  {
-    id: "INV-008",
-    name: "Honda Civic 2023",
-    category: "Fortbewegungsmittel",
-    subcategory: "Firmenfahrzeuge",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Parkgarage A",
-    purchaseDate: "2023-02-28",
-    value: 24900,
-    serialNumber: "HC2023-VIN-008",
-    icon: "tabler:car",
-  },
-  {
-    id: "INV-009",
-    name: "Industrieller Aktenvernichter",
-    category: "Büroausstattung",
-    subcategory: "Dokumentenmanagement",
-    status: "Verwendet",
-    assignedTo: "Personalabteilung",
-    location: "Büroetage 1",
-    purchaseDate: "2023-01-15",
-    value: 450,
-    serialNumber: "IPS-2023-009",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-010",
-    name: "Sicherheitshelme (Satz à 20)",
-    category: "Sicherheitsequipment",
-    subcategory: "Persönliche Schutzausrüstung",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Sicherheitslager",
-    purchaseDate: "2023-03-22",
-    value: 300,
-    serialNumber: "SHH-2023-010",
-    icon: "tabler:armchair",
-  },
-  {
-    id: "INV-011",
-    name: "DeWalt Akku-Bohrmaschinenset",
-    category: "Werkzeuge & Geräte",
-    subcategory: "Elektrowerkzeuge",
-    status: "Verwendet",
-    assignedTo: "Reparaturteam",
-    location: "Werkzeuglager",
-    purchaseDate: "2023-04-10",
-    value: 189,
-    serialNumber: "DCD-2023-011",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-012",
-    name: "Gewerbliche Kaffeemaschine",
-    category: "Küchenausstattung",
-    subcategory: "Geräte",
-    status: "Verwendet",
-    assignedTo: "—",
-    location: "Aufenthaltsraum Etage 2",
-    purchaseDate: "2023-02-14",
-    value: 1200,
-    serialNumber: "CCM-2023-012",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-013",
-    name: "Cisco Netzwerk-Switch 24-Port",
-    category: "Netzwerktechnik",
-    subcategory: "Netzwerkinfrastruktur",
-    status: "Verwendet",
-    assignedTo: "IT-Abteilung",
-    location: "Serverraum",
-    purchaseDate: "2023-06-08",
-    value: 850,
-    serialNumber: "CNS24-2023-013",
-    icon: "tabler:user-screen",
-  },
-  {
-    id: "INV-014",
-    name: "Überwachungskamerasystem",
-    category: "Sicherheitsequipment",
-    subcategory: "Überwachung",
-    status: "Verwendet",
-    assignedTo: "Sicherheitsteam",
-    location: "Gebäudeumgebung",
-    purchaseDate: "2023-01-30",
-    value: 2100,
-    serialNumber: "SCS-2023-014",
-    icon: "tabler:user-screen",
-  },
-  {
-    id: "INV-015",
-    name: "Erste-Hilfe-Kasten – Deluxe",
-    category: "Medizintechnik",
-    subcategory: "Notfallausrüstung",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Jede Etage",
-    purchaseDate: "2023-07-20",
-    value: 85,
-    serialNumber: "FAK-2023-015",
-    icon: "tabler:armchair",
-  },
-  {
-    id: "INV-016",
-    name: "Adobe Creative Suite Lizenz",
-    category: "Software",
-    subcategory: "Designsoftware",
-    status: "Verwendet",
-    assignedTo: "Designteam",
-    location: "Digitale Ressource",
-    purchaseDate: "2023-09-01",
-    value: 600,
-    serialNumber: "ACS-2023-016",
-    icon: "tabler:device-laptop",
-  },
-  {
-    id: "INV-017",
-    name: "Whiteboard – Mobil 6x4ft",
-    category: "Bürobedarf",
-    subcategory: "Präsentationsausstattung",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Konferenzraum A",
-    purchaseDate: "2023-05-18",
-    value: 320,
-    serialNumber: "WBM-2023-017",
-    icon: "tabler:user-screen",
-  },
-  {
-    id: "INV-018",
-    name: "Industrieller Staubsauger",
-    category: "Reinigungsgeräte",
-    subcategory: "Reparaturwerkzeuge",
-    status: "Verwendet",
-    assignedTo: "Reinigungspersonal",
-    location: "Putzschrank",
-    purchaseDate: "2023-03-05",
-    value: 280,
-    serialNumber: "IVC-2023-018",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-019",
-    name: "Schulungsunterlagen (Satz à 50)",
-    category: "Bücher & Materialien",
-    subcategory: "Schulungsressourcen",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Schulungsraum",
-    purchaseDate: "2023-08-10",
-    value: 150,
-    serialNumber: "TM-2023-019",
-    icon: "tabler:armchair",
-  },
-  {
-    id: "INV-020",
-    name: "Projektor – 4K Ultra HD",
-    category: "Präsentationsausstattung",
-    subcategory: "Audio-Visuell",
-    status: "Verwendet",
-    assignedTo: "Konferenzraum B",
-    location: "Konferenzraum B",
-    purchaseDate: "2023-04-25",
-    value: 1800,
-    serialNumber: "P4K-2023-020",
-    icon: "tabler:user-screen",
-  },
-  {
-    id: "INV-021",
-    name: "Bürokühlschrank",
-    category: "Küchenausstattung",
-    subcategory: "Geräte",
-    status: "Verwendet",
-    assignedTo: "—",
-    location: "Aufenthaltsraum Etage 1",
-    purchaseDate: "2023-01-20",
-    value: 650,
-    serialNumber: "OR-2023-021",
-    icon: "tabler:printer",
-  },
-  {
-    id: "INV-022",
-    name: "Feuerlöscher – Klasse ABC",
-    category: "Sicherheitsequipment",
-    subcategory: "Brandschutz",
-    status: "Verfügbar",
-    assignedTo: "—",
-    location: "Jede Etage",
-    purchaseDate: "2023-06-15",
-    value: 45,
-    serialNumber: "FE-2023-022",
-    icon: "tabler:armchair",
-  },
-  {
-    id: "INV-023",
-    name: "Microsoft Office 365 Lizenz",
-    category: "Software",
-    subcategory: "Produktivitätssoftware",
-    status: "Verwendet",
-    assignedTo: "Alle Mitarbeiter",
-    location: "Digitale Ressource",
-    purchaseDate: "2023-01-01",
-    value: 150,
-    serialNumber: "O365-2023-023",
-    icon: "tabler:device-laptop",
-  },
-  {
-    id: "INV-024",
-    name: "Gabelstapler – Elektrisch",
-    category: "Fortbewegungsmittel",
-    subcategory: "Industrielle Fortbewegungsmittel",
-    status: "In Reparatur",
-    assignedTo: "Lagerteam",
-    location: "Lagerhalle",
-    purchaseDate: "2022-11-10",
-    value: 15500,
-    serialNumber: "FE-2022-024",
-    icon: "tabler:car",
-  },
-])
+const logs = ref([])
+
+const { data: logsData, error: logsError } = await useFetch('http://localhost:5000/api/logs/')
+
+if(logsError.value) toast('Error', {
+  description: logsError.value
+})
+
+logs.value = logsData.value
 
 // Form data for add/edit
 const formData = reactive({
@@ -366,7 +63,6 @@ const saveLog = () => {
     purchaseDate: new Date().toISOString().split('T')[0],
     value: 0,
     serialNumber: `NEW-${newId}`,
-    icon: null, // You may want to assign a default icon
   }
 
   logs.value.push(newLog)
@@ -500,17 +196,8 @@ watch(logSearchQuery, () => {
           <TableRow v-for="(log, index) of paginatedLogs" :key="`log-${index}`">
             <TableCell class="font-mono">{{ log.id }}</TableCell>
             <TableCell>
-              <div class="flex items-center gap-3">
-                <div class="bg-muted p-2 rounded-md">
-                  <div class="h-7 w-7">
-                    <Icon :name="log.icon" size="28" />
-                  </div>
-                </div>
-                <div>
-                  <div class="font-semibold text-primary-foreground">{{ log.name }}</div>
-                  <div class="text-sm text-muted-foreground">{{ log.subcategory }}</div>
-                </div>
-              </div>
+                <div class="font-semibold text-primary-foreground">{{ log.name }}</div>
+                <div class="text-sm text-muted-foreground">{{ log.subcategory }}</div>
             </TableCell>
             <TableCell class="py-6">
               <Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">

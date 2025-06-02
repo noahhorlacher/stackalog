@@ -32,12 +32,12 @@ const formData = reactive({
 
 const users = ref([])
 
-onMounted(async () => {
-	const { data: usersData, error: usersError } = await useFetch('http://localhost:5000/api/users/')
-	if (usersError.value) return console.error('Failed to fetch users:', usersError.value)
-
-	users.value = usersData.value
+const { data: usersData, error: usersError } = await useFetch('http://localhost:5000/api/users/')
+if (usersError.value) toast('Error', {
+	description: usersError.value
 })
+
+users.value = usersData.value
 
 // Computed properties
 const filteredUsers = computed(() => {
