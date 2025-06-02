@@ -28,9 +28,32 @@ useSeoMeta({
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <Label for="password">Passwort</Label>
-              <NuxtLink href="/auth/forgot-password" class="text-sm text-blue-600 hover:underline">
-                Passwort vergessen?
-              </NuxtLink>
+                <AlertDialog class="mt-4">
+                  <AlertDialogTrigger asChild>
+                    <Button variant="link">
+                      Passwort vergessen?
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent class="sm:max-w-sm">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Passwort vergessen?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Kontaktiere unseren Support, um dein Passwort zurückzusetzen. Wir helfen dir gerne weiter! support@example.com
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Schließen</AlertDialogCancel>
+                    <AlertDialogAction as-child>
+                      <NuxtLink to="mailto:support@example.com">
+                        <Button variant="primary">
+                          E-Mail senden
+                        </Button>
+                      </NuxtLink>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+                </AlertDialog>
             </div>
             <Input id="password" type="password" required />
           </div>
@@ -39,14 +62,6 @@ useSeoMeta({
           </Button>
         </form>
       </CardContent>
-      <CardFooter>
-        <p class="text-center text-sm text-muted-foreground w-full">
-          Du hast noch kein Konto?
-          <NuxtLink to="/auth/sign-up" class="text-blue-600 hover:underline font-medium">
-            Registrieren
-          </NuxtLink>
-        </p>
-      </CardFooter>
     </Card>
   </div>
 </template>
