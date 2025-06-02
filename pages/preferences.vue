@@ -54,7 +54,7 @@ onMounted(() => {
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-2">
-              <Label htmlFor="firstName">Vorname und Mittelname(n)</Label>
+              <Label htmlFor="firstName">Vor- und Mittelname(n)</Label>
               <Input id="firstName" placeholder="Max" defaultValue="Max" />
             </div>
             <div class="space-y-2">
