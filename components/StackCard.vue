@@ -14,7 +14,7 @@ const props = defineProps({
 <template>
     <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
         <Card class="w-48 hover:bg-muted/50 transition-colors group">
-            <div >
+            <div>
                 <CardHeader>
                     <CardTitle class="mb-4">
                         <p>{{ stack.title }}</p>
@@ -27,24 +27,25 @@ const props = defineProps({
                         </div>
                         <div class="flex items-center justify-between">
                             <p class="text-muted-foreground">Wert</p>
-                            <p class="text-foreground font-bold">Fr. 10'514.00</p>
+                            <p class="text-foreground font-bold">Fr. {{stack.logs.reduce((a, log) => a + (log.value || 0),
+                                0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
                         </div>
                     </CardDescription>
                 </CardHeader>
             </div>
-            </Card>
-        </NuxtLink>
-        <Card v-else class="w-48">
-            <CardHeader>
-                <CardTitle class="mb-5">
-                    <Skeleton class="h-4 w-full"></Skeleton>
-                    <Skeleton class="h-2 mt-3 w-full"></Skeleton>
-                    <Skeleton class="h-2 mt-2 w-full"></Skeleton>
-                </CardTitle>
-                <CardDescription>
-                    <Skeleton class="h-3 mb-5"></Skeleton>
-                    <Skeleton class="h-3"></Skeleton>
-                </CardDescription>
-            </CardHeader>
         </Card>
+    </NuxtLink>
+    <Card v-else class="w-48">
+        <CardHeader>
+            <CardTitle class="mb-5">
+                <Skeleton class="h-4 w-full"></Skeleton>
+                <Skeleton class="h-2 mt-3 w-full"></Skeleton>
+                <Skeleton class="h-2 mt-2 w-full"></Skeleton>
+            </CardTitle>
+            <CardDescription>
+                <Skeleton class="h-3 mb-5"></Skeleton>
+                <Skeleton class="h-3"></Skeleton>
+            </CardDescription>
+        </CardHeader>
+    </Card>
 </template>

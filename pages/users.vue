@@ -313,7 +313,7 @@ watch(searchQuery, () => {
 		</Button>
 
 		<div class="text-sm text-muted-foreground">
-			Seite {{ currentPage }} von {{ totalPages }}
+			{{ currentPage }}/{{ totalPages }}
 		</div>
 
 		<Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">

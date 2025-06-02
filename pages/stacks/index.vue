@@ -11,12 +11,12 @@ const stacks = ref([
 	{ id: 1, title: 'Hauptgebäude', description: 'Zentrales Gebäude des Standorts', logs: [] },
 	{ id: 2, title: 'Schule', description: 'Schulgebäude für Ausbildungszwecke', logs: [] },
 	{ id: 3, title: 'Gebäude 2', description: 'Zweites Verwaltungs- oder Funktionsgebäude', logs: [] },
-	{ id: 4, title: 'Defekt', description: 'Geräte mit bekannten Störungen', logs: [1, 1, 1, 1] },
+	{ id: 4, title: 'Defekt', description: 'Geräte mit bekannten Störungen', logs: [] },
 	{ id: 5, title: 'Parkhaus', description: 'Mehrstöckige Parkeinrichtung für Fahrzeuge', logs: [] },
-	{ id: 6, title: 'Labor', description: 'Laborräume für Experimente und Forschung', logs: [0, 1] },
-	{ id: 7, title: 'Serverraum', description: 'Technikraum mit Serverinfrastruktur', logs: [1] },
+	{ id: 6, title: 'Labor', description: 'Laborräume für Experimente und Forschung', logs: [] },
+	{ id: 7, title: 'Serverraum', description: 'Technikraum mit Serverinfrastruktur', logs: [] },
 	{ id: 8, title: 'Eingangshalle', description: 'Haupteingang mit Empfangsbereich', logs: [] },
-	{ id: 9, title: 'Werkstatt', description: 'Technische Werkstatt für Reparaturen', logs: [0, 0, 1] },
+	{ id: 9, title: 'Werkstatt', description: 'Technische Werkstatt für Reparaturen', logs: [] },
 ])
 
 
@@ -126,7 +126,7 @@ watch(stackSearchQuery, () => {
 		</Button>
 
 		<div class="text-sm text-muted-foreground">
-			Seite {{ currentPage }} von {{ totalPages }}
+			{{ currentPage }}/{{ totalPages }}
 		</div>
 
 		<Button variant="outline" size="sm" :disabled="currentPage === totalPages"

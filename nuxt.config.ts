@@ -33,10 +33,7 @@ export default defineNuxtConfig({
       title: 'Stackalog',
       htmlAttrs: {
         lang: 'de',
-      },
-      link: [
-        { rel: 'icon', type: 'image/svg', href: '/favicon.svg' },
-      ]
+      }
     }
   }
 })

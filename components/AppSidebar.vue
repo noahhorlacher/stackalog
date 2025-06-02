@@ -66,7 +66,7 @@ watch(() => route.fullPath, () => {
 </script>
 
 <template>
-<Sidebar collapsible="icon">
+<Sidebar collapsible="icon" class="select-none">
     <SidebarHeader class="flex flex-row items-center">
         <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
         <img class="w-16 flex dark:hidden" src="/icon-black.svg" />

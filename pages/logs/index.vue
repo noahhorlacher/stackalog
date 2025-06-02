@@ -450,7 +450,7 @@ watch(logSearchQuery, () => {
           <Icon name="tabler:currency-frank" class="text-violet-400" size="25" />
         </div>
         <CardDescription>
-          <p class="text-3xl font-bold text-violet-400 mb-2">Fr. {{logs.reduce((a, log) => a + log.value,
+          <p class="text-3xl font-bold text-violet-400 mb-2">Fr. {{logs.reduce((a, log) => a + (log.value || 0),
             0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
           <p class="text-xs">Vermögensbewertung</p>
         </CardDescription>
@@ -555,7 +555,7 @@ watch(logSearchQuery, () => {
       </Button>
 
       <div class="text-sm text-muted-foreground">
-        Seite {{ currentPage }} von {{ totalPages }}
+        {{ currentPage }}/{{ totalPages }}
       </div>
 
       <Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
