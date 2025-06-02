@@ -16,8 +16,9 @@ const props = defineProps({
         <Card class="w-48 hover:bg-muted/50 transition-colors group">
             <div >
                 <CardHeader>
-                    <CardTitle class="mb-6">
+                    <CardTitle class="mb-4">
                         <p>{{ stack.title }}</p>
+                        <p class="text-xs mt-2 text-muted-foreground">{{ stack.description }}</p>
                     </CardTitle>
                     <CardDescription class="flex flex-col gap-y-2">
                         <div class="flex items-center justify-between">
@@ -35,8 +36,10 @@ const props = defineProps({
         </NuxtLink>
         <Card v-else class="w-48">
             <CardHeader>
-                <CardTitle class="mb-7">
+                <CardTitle class="mb-5">
                     <Skeleton class="h-4 w-full"></Skeleton>
+                    <Skeleton class="h-2 mt-3 w-full"></Skeleton>
+                    <Skeleton class="h-2 mt-2 w-full"></Skeleton>
                 </CardTitle>
                 <CardDescription>
                     <Skeleton class="h-3 mb-5"></Skeleton>
