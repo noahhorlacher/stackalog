@@ -507,7 +507,7 @@ watch(logSearchQuery, () => {
                   </div>
                 </div>
                 <div>
-                  <div class="font-semibold text-primary">{{ log.name }}</div>
+                  <div class="font-semibold text-primary-foreground">{{ log.name }}</div>
                   <div class="text-sm text-muted-foreground">{{ log.subcategory }}</div>
                 </div>
               </div>
