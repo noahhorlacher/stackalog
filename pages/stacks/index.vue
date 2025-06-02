@@ -61,6 +61,27 @@ const saveStack = () => {
 	stacks.value.push(newLog)
 	closeModals()
 }
+
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
+
+const paginatedStacks = computed(() => {
+	const start = (currentPage.value - 1) * itemsPerPage.value
+	const end = start + itemsPerPage.value
+	return filteredStacks.value.slice(start, end)
+})
+
+const totalPages = computed(() =>
+	Math.ceil(filteredStacks.value.length / itemsPerPage.value)
+)
+
+const goToPage = (page) => {
+	currentPage.value = page
+}
+
+watch(stackSearchQuery, () => {
+	currentPage.value = 1
+})
 </script>
 
 
@@ -96,7 +117,22 @@ const saveStack = () => {
 				{{ stackSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Stack hinzu' }}
 			</p>
 		</div>
-		<StackCard v-else v-for="(stack, index) of filteredStacks" :stack :key="`stack-${index}`" />
+		<StackCard v-else v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+	</div>
+	<!-- pagination -->
+	<div class="w-full flex mt-4 gap-2 justify-end items-center">
+		<Button variant="outline" size="sm" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
+			<Icon name="tabler:chevron-left" />
+		</Button>
+
+		<div class="text-sm text-muted-foreground">
+			Seite {{ currentPage }} von {{ totalPages }}
+		</div>
+
+		<Button variant="outline" size="sm" :disabled="currentPage === totalPages"
+			@click="goToPage(currentPage + 1)">
+			<Icon name="tabler:chevron-right" />
+		</Button>
 	</div>
 
 	<!-- Add Stack Dialog -->
@@ -112,7 +148,8 @@ const saveStack = () => {
 				</div>
 				<div class="space-y-2">
 					<Label for="description">Beschreibung</Label>
-					<Textarea id="description" v-model="formData.description" required placeholder="Stack beschreiben" />
+					<Textarea id="description" v-model="formData.description" required
+						placeholder="Stack beschreiben" />
 				</div>
 				<DialogFooter class="gap-2">
 					<Button type="button" variant="outline" @click="closeModals">
