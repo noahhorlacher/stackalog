@@ -66,82 +66,89 @@ watch(() => route.fullPath, () => {
 </script>
 
 <template>
-<Sidebar collapsible="icon" class="select-none">
-    <SidebarHeader class="flex flex-row items-center">
-        <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
-        <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
-        <p v-if="open">Stackalog</p>
-    </SidebarHeader>
+    <Sidebar collapsible="icon" class="select-none">
+        <SidebarHeader class="flex flex-row items-center">
+            <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
+            <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
+            <p v-if="open">Stackalog</p>
+        </SidebarHeader>
 
-    <SidebarContent>
-        <SidebarGroup v-for="menuGroup in menuGroups">
-            <SidebarGroupLabel v-if="open">{{ menuGroup.title }}</SidebarGroupLabel>
-            <SidebarGroupContent>
-                <SidebarMenu>
-                    <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
-                        <SidebarMenuButton asChild :class="activePath == item.url ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground'" class="transition-colors">
-                            <NuxtLink :to="item.url">
-                                <icon :name="item.icon" />
-                                <p v-if="open">{{item.title}}</p>
-                            </NuxtLink>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarGroupContent>
-        </SidebarGroup>
-    </SidebarContent>
+        <SidebarContent>
+            <SidebarGroup v-for="menuGroup in menuGroups">
+                <SidebarGroupLabel v-if="open">{{ menuGroup.title }}</SidebarGroupLabel>
+                <SidebarGroupContent>
+                    <SidebarMenu>
+                        <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
+                            <SidebarMenuButton asChild
+                                :class="activePath == item.url ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground'"
+                                class="transition-colors">
+                                <NuxtLink :to="item.url">
+                                    <icon :name="item.icon" />
+                                    <p v-if="open">{{ item.title }}</p>
+                                </NuxtLink>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarGroupContent>
+            </SidebarGroup>
+        </SidebarContent>
 
-    <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
+        <SidebarFooter>
+            <SidebarMenu>
+                <SidebarMenuItem>
 
-            <Drawer>
-                <DrawerTrigger class="w-full">
-                    <SidebarMenuButton v-if="open" class="cursor-pointer hover:bg-muted hover:text-foreground transition-colors">
-                        <div class="flex flex-row items-center justify-start w-full gap-x-2">
-                            <Avatar class="m-0 p-0">
-                                <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                                <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
-                            </Avatar>
-                            <p>{{ user.firstName + '&nbsp;' + user.lastName }}</p>
-                        </div>
-                    </SidebarMenuButton>
-                    <div v-else class="cursor-pointer">
-                        <Avatar class="m-0 p-0">
-                            <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
-                            <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
-                        </Avatar>
-                    </div>
-                </DrawerTrigger>
-                <DrawerContent>
-
-                    <DrawerHeader class="mt-8">
-                        <DrawerTitle class="flex text-center flex-col items-center justify-center gap-2">
-                            <Avatar class="h-16 w-16 mx-auto mb-4">
-                                <AvatarFallback class="text-xl">{{ user.firstName.toUpperCase().charAt(0) + user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <h4 class="text-lg font-medium">{{ user.firstName + '&nbsp;' + user.lastName }}</h4>
-                                <p class="text-muted-foreground text-sm">{{ user.email }}</p>
+                    <Drawer>
+                        <DrawerTrigger class="w-full">
+                            <SidebarMenuButton v-if="open"
+                                class="cursor-pointer hover:bg-muted hover:text-foreground transition-colors">
+                                <div class="flex flex-row items-center justify-start w-full gap-x-2">
+                                    <Avatar class="m-0 p-0">
+                                        <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
+                                        <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) +
+                                            user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
+                                    </Avatar>
+                                    <p>{{ user.firstName + '&nbsp;' + user.lastName }}</p>
+                                </div>
+                            </SidebarMenuButton>
+                            <div v-else class="cursor-pointer">
+                                <Avatar class="m-0 p-0">
+                                    <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
+                                    <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) +
+                                        user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
+                                </Avatar>
                             </div>
-                        </DrawerTitle>
-                        <DrawerDescription class="flex justify-center mt-4">
-                            <RoleBadge :user />
-                        </DrawerDescription>
-                    </DrawerHeader>
+                        </DrawerTrigger>
+                        <DrawerContent>
 
-                    <DrawerFooter class="mt-16">
-                        <Button class="w-fit mx-auto mb-8 cursor-pointer" @click="signOut">
-                            <Icon name="tabler:arrow-right-to-arc" />
-                            <p>Abmelden</p>
-                        </Button>
-                    </DrawerFooter>
+                            <DrawerHeader class="mt-8">
+                                <DrawerTitle class="flex text-center flex-col items-center justify-center gap-2">
+                                    <Avatar class="h-16 w-16 mx-auto mb-4">
+                                        <AvatarFallback class="text-xl">{{ user.firstName.toUpperCase().charAt(0) +
+                                            user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <h4 class="text-lg font-medium">{{ user.firstName + '&nbsp;' + user.lastName }}
+                                        </h4>
+                                        <p class="text-muted-foreground text-sm">{{ user.email }}</p>
+                                    </div>
+                                </DrawerTitle>
+                                <DrawerDescription class="flex justify-center mt-4">
+                                    <RoleBadge :user />
+                                </DrawerDescription>
+                            </DrawerHeader>
 
-                </DrawerContent>
+                            <DrawerFooter class="mt-16">
+                                <Button class="w-fit mx-auto mb-8 cursor-pointer" @click="signOut">
+                                    <Icon name="tabler:arrow-right-to-arc" />
+                                    <p>Abmelden</p>
+                                </Button>
+                            </DrawerFooter>
 
-            </Drawer>
-          </SidebarMenuItem>
-        </SidebarMenu>
-    </SidebarFooter>
-  </Sidebar>
+                        </DrawerContent>
+
+                    </Drawer>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarFooter>
+    </Sidebar>
 </template>
