@@ -1,6 +1,6 @@
 <script setup>
 useSeoMeta({
-  title: 'Stackalog — Benutzer'
+	title: 'Stackalog — Benutzer'
 })
 
 // Reactive data
@@ -187,6 +187,27 @@ const resetForm = () => {
 	formData.isAdmin = false
 	formData.status = 'Active'
 }
+
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
+
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return filteredUsers.value.slice(start, end)
+})
+
+const totalPages = computed(() =>
+  Math.ceil(filteredUsers.value.length / itemsPerPage.value)
+)
+
+const goToPage = (page) => {
+  currentPage.value = page
+}
+
+watch(searchQuery, () => {
+  currentPage.value = 1
+})
 </script>
 
 <template>
@@ -201,8 +222,10 @@ const resetForm = () => {
 		<CardContent>
 			<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
 				<div class="relative flex-1 max-w-md">
-					<Icon name="tabler:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-					<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..." class="pl-10" />
+					<Icon name="tabler:search"
+						class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+					<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..."
+						class="pl-10" />
 				</div>
 				<Button @click="openAddModal" class="flex items-center">
 					<Icon name="tabler:plus" />
@@ -233,11 +256,12 @@ const resetForm = () => {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				<TableRow v-for="(user, index) in filteredUsers" :key="`user-row-${index}`">
+				<TableRow v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`">
 					<TableCell class="py-3">
 						<div class="flex items-center gap-3">
 							<Avatar>
-								<AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase() }}
+								<AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() +
+									user.lastName.charAt(0).toUpperCase() }}
 								</AvatarFallback>
 							</Avatar>
 							<div>
@@ -282,6 +306,21 @@ const resetForm = () => {
 		</Table>
 	</div>
 
+	<!-- pagination -->
+	<div class="w-full flex mt-4 gap-2 justify-end items-center">
+		<Button variant="outline" size="sm" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
+			<Icon name="tabler:chevron-left" />
+		</Button>
+
+		<div class="text-sm text-muted-foreground">
+			Seite {{ currentPage }} von {{ totalPages }}
+		</div>
+
+		<Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
+			<Icon name="tabler:chevron-right" />
+		</Button>
+	</div>
+
 	<!-- View User Dialog -->
 	<Dialog v-model:open="showViewModal">
 		<DialogContent class="sm:max-w-md">
@@ -293,7 +332,8 @@ const resetForm = () => {
 				<div class="text-center mb-4">
 					<Avatar class="h-16 w-16 mx-auto mb-4">
 						<AvatarFallback class="text-xl">
-							{{ selectedUser.firstName.charAt(0).toUpperCase() + selectedUser.lastName.charAt(0).toUpperCase() }}
+							{{ selectedUser.firstName.charAt(0).toUpperCase() +
+								selectedUser.lastName.charAt(0).toUpperCase() }}
 						</AvatarFallback>
 					</Avatar>
 					<h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
@@ -321,7 +361,8 @@ const resetForm = () => {
 			<form @submit.prevent="saveUser" class="space-y-4">
 				<div class="space-y-2">
 					<Label for="firstName">Vorname</Label>
-					<Input id="firstName" v-model="formData.firstName" required placeholder="Vor- und Mittelnamen eingeben" />
+					<Input id="firstName" v-model="formData.firstName" required
+						placeholder="Vor- und Mittelnamen eingeben" />
 				</div>
 				<div class="space-y-2">
 					<Label for="lastName">Nachname</Label>
@@ -329,7 +370,8 @@ const resetForm = () => {
 				</div>
 				<div class="space-y-2">
 					<Label for="email">Email Adresse</Label>
-					<Input id="email" v-model="formData.email" type="email" required placeholder="Email Adresse eingeben" />
+					<Input id="email" v-model="formData.email" type="email" required
+						placeholder="Email Adresse eingeben" />
 				</div>
 				<div class="space-y-2">
 					<Label for="role">Administratorberechtigungen</Label>
@@ -364,7 +406,8 @@ const resetForm = () => {
 		<AlertDialogContent>
 			<AlertDialogHeader>
 				<AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
-				<p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName }}</strong>
+				<p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName
+						}}</strong>
 					löschen möchten?</p>
 				<AlertDialogDescription>
 					Diese Aktion kann nicht rückgängig gemacht werden.

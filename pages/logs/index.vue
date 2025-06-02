@@ -549,19 +549,19 @@ watch(logSearchQuery, () => {
     </div>
 
     <!-- pagination -->
-      <div class="w-full flex mt-4 gap-2 justify-end items-center">
-        <Button variant="outline" size="sm" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
-          <Icon name="tabler:chevron-left" />
-        </Button>
+    <div class="w-full flex mt-4 gap-2 justify-end items-center">
+      <Button variant="outline" size="sm" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
+        <Icon name="tabler:chevron-left" />
+      </Button>
 
-        <div class="text-sm text-muted-foreground">
-          Seite {{ currentPage }} von {{ totalPages }}
-        </div>
-
-        <Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
-          <Icon name="tabler:chevron-right" />
-        </Button>
+      <div class="text-sm text-muted-foreground">
+        Seite {{ currentPage }} von {{ totalPages }}
       </div>
+
+      <Button variant="outline" size="sm" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
+        <Icon name="tabler:chevron-right" />
+      </Button>
+    </div>
   </div>
 
   <!-- Add Log Dialog -->
