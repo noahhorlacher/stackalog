@@ -30,63 +30,14 @@ const formData = reactive({
 	status: 'Active'
 })
 
-// Mock user data
-const users = ref([
-	{
-		id: 1,
-		firstName: 'John',
-		lastName: 'Doe',
-		email: 'john.doe@example.com',
-		isAdmin: true,
-		status: 'Active',
-		joinedAt: '2024-01-15'
-	},
-	{
-		id: 2,
-		firstName: 'Jane',
-		lastName: 'Smith',
-		email: 'jane.smith@example.com',
-		isAdmin: false,
-		status: 'Active',
-		joinedAt: '2024-02-20'
-	},
-	{
-		id: 3,
-		firstName: 'Mike',
-		lastName: 'Johnson',
-		email: 'mike.johnson@example.com',
-		isAdmin: false,
-		status: 'Inactive',
-		joinedAt: '2024-01-10'
-	},
-	{
-		id: 4,
-		firstName: 'Sarah',
-		lastName: 'Wilson',
-		email: 'sarah.wilson@example.com',
-		isAdmin: true,
-		status: 'Active',
-		joinedAt: '2024-03-05'
-	},
-	{
-		id: 5,
-		firstName: 'David',
-		lastName: 'Brown',
-		email: 'david.brown@example.com',
-		isAdmin: false,
-		status: 'Active',
-		joinedAt: '2024-02-28'
-	},
-	{
-		id: 6,
-		firstName: 'Lisa',
-		lastName: 'Davis',
-		email: 'lisa.davis@example.com',
-		isAdmin: false,
-		status: 'Active',
-		joinedAt: '2024-03-12'
-	}
-])
+const users = ref([])
+
+onMounted(async () => {
+	const { data: usersData, error: usersError } = await useFetch('http://localhost:5000/api/users/')
+	if (usersError.value) return console.error('Failed to fetch users:', usersError.value)
+
+	users.value = usersData.value
+})
 
 // Computed properties
 const filteredUsers = computed(() => {
@@ -251,7 +202,6 @@ watch(searchQuery, () => {
 				<TableRow>
 					<TableHead>Benutzer</TableHead>
 					<TableHead>Rolle</TableHead>
-					<TableHead>Status</TableHead>
 					<TableHead class="text-right pr-6">Aktionen</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -272,11 +222,6 @@ watch(searchQuery, () => {
 					</TableCell>
 					<TableCell>
 						<RoleBadge :user />
-					</TableCell>
-					<TableCell>
-						<Badge :variant="user.status === 'Active' ? 'default' : 'secondary'">
-							{{ user.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-						</Badge>
 					</TableCell>
 					<TableCell class="text-right">
 						<div class="flex justify-end">
@@ -341,9 +286,6 @@ watch(searchQuery, () => {
 				</div>
 				<div class="flex justify-center gap-3">
 					<RoleBadge :user="selectedUser" />
-					<Badge :variant="selectedUser.status === 'Active' ? 'default' : 'secondary'">
-						{{ selectedUser.status === 'Active' ? 'Aktiv' : 'Inaktiv' }}
-					</Badge>
 				</div>
 				<div class="flex justify-center mt-8">
 					<span class="text-muted-foreground text-sm">Erstellt: {{ formatDate(selectedUser.joinedAt) }}</span>
@@ -376,18 +318,6 @@ watch(searchQuery, () => {
 				<div class="space-y-2">
 					<Label for="role">Administratorberechtigungen</Label>
 					<Checkbox v-model="formData.isAdmin" />
-				</div>
-				<div class="space-y-2">
-					<Label for="status">Status</Label>
-					<Select v-model="formData.status">
-						<SelectTrigger>
-							<SelectValue placeholder="Select status" />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="Active">Aktiv</SelectItem>
-							<SelectItem value="Inactive">Inaktiv</SelectItem>
-						</SelectContent>
-					</Select>
 				</div>
 				<DialogFooter class="gap-2">
 					<Button type="button" variant="outline" @click="closeModals">
