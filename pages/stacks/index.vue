@@ -109,7 +109,7 @@ watch(stackSearchQuery, () => {
 		</CardContent>
 	</Card>
 
-	<div class="grid grid-cols-5 gap-8 place-items-center">
+	<div class="flex flex-row gap-8 justify-between flex-wrap">
 		<div v-if="filteredStacks.length === 0" class="text-center py-12 mx-auto">
 			<Icon name="tabler:stack" class="mx-auto text-muted-foreground" />
 			<h3 class="mt-2 text-sm font-medium">Keine Stacks gefunden</h3>
@@ -119,6 +119,7 @@ watch(stackSearchQuery, () => {
 		</div>
 		<StackCard v-else v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
 	</div>
+
 	<!-- pagination -->
 	<div class="w-full flex mt-4 gap-2 justify-end items-center">
 		<Button variant="outline" size="sm" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
