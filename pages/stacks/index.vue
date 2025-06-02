@@ -6,19 +6,15 @@ useSeoMeta({
 const stackSearchQuery = ref('')
 const showAddModal = ref(false)
 
-const stacks = ref([
-	{ id: null, title: 'Skeleton Test', description: 'Testeintrag ohne Funktion', logs: [] },
-	{ id: 1, title: 'Hauptgebäude', description: 'Zentrales Gebäude des Standorts', logs: [] },
-	{ id: 2, title: 'Schule', description: 'Schulgebäude für Ausbildungszwecke', logs: [] },
-	{ id: 3, title: 'Gebäude 2', description: 'Zweites Verwaltungs- oder Funktionsgebäude', logs: [] },
-	{ id: 4, title: 'Defekt', description: 'Geräte mit bekannten Störungen', logs: [] },
-	{ id: 5, title: 'Parkhaus', description: 'Mehrstöckige Parkeinrichtung für Fahrzeuge', logs: [] },
-	{ id: 6, title: 'Labor', description: 'Laborräume für Experimente und Forschung', logs: [] },
-	{ id: 7, title: 'Serverraum', description: 'Technikraum mit Serverinfrastruktur', logs: [] },
-	{ id: 8, title: 'Eingangshalle', description: 'Haupteingang mit Empfangsbereich', logs: [] },
-	{ id: 9, title: 'Werkstatt', description: 'Technische Werkstatt für Reparaturen', logs: [] },
-])
+const stacks = ref([])
 
+
+onMounted(async () => {
+	const { data: stacksData, error: stacksError } = await useFetch('http://localhost:5000/api/stacks/')
+	if (stacksError.value) return console.error('Failed to fetch stacks:', stacksError.value)
+
+	stacks.value = stacksData.value.map(s => { return {...s, logs: []} })
+})
 
 // Form data for add/edit
 const formData = reactive({
