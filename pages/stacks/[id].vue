@@ -3,13 +3,16 @@ useSeoMeta({
   title: 'Stackalog — Stack'
 })
 
-const stack = {
-    id: 1,
-    title: 'Hauptgebäude',
-    logs: [
+const stack = ref({
+    id: null,
+    title: '',
+    logs: []
+})
 
-    ]
-}
+const { params } = useRoute()
+const { data: stackData, error: stackError } = await useFetch(`http://localhost:5000/api/stacks/${params.id}`)
+
+stack.value = stackData.value
 </script>
 
 <template>
@@ -25,12 +28,8 @@ const stack = {
         </BreadcrumbList>
     </Breadcrumb>
 
-    <div class="relative mt-6 mb-12">
-        <Icon name="tabler:search" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-            type="text"
-            placeholder="Suchen..."
-            class="pl-10 pr-4"
-        />
-    </div>
+    <div class="space-y-2 my-6">
+		<h1 class="text-3xl font-bold">{{ stack.title }}</h1>
+		<p class="text-muted-foreground">{{ stack.description }}</p>
+	</div>
 </template>
