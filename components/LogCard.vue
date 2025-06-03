@@ -6,7 +6,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
+const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
 </script>
 
 <template>
@@ -15,11 +15,13 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
             <ContextMenuTrigger class="w-fit">
                 <Card class="w-60 pt-4 text-center text-sm hover:bg-muted/50 transition-colors">
                     <CardHeader>
-                        <CardTitle class="flex flex-col items-center gap-2">
-                            <p class="break-all">INV-{{ log.id }}</p>
+                        <CardTitle class="gap-2 mb-4 font-mono bg-muted/80 w-fit mx-auto px-2 py-1 rounded">
+                            <p class="break-all">INV-{{ String(log.id).padStart(5, '0') }}</p>
                         </CardTitle>
-                        <CardDescription class="text-xs text-muted-foreground break-all">
+                        <CardDescription class="text-lg text-foreground break-all">
                             {{ log.name }}
+                            <p class="text-sm text-muted-foreground">Fr. {{ log.value.toLocaleString('de-CH', {
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -41,16 +43,13 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
                             <p class="font-bold">{{ log.location }}</p>
                         </div>
                     </CardContent>
-                    <CardFooter>
-                        <div class="flex justify-end w-full">
-                            <p class="text-lg font-bold text-violet-400">Fr. {{ log.value.toLocaleString('de-CH', {
-                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
-                        </div>
-                    </CardFooter>
                 </Card>
             </ContextMenuTrigger>
             <ContextMenuContent align="end">
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
+                <ContextMenuItem @click="emit('addLogToStack', log)">
+                    <Icon name="tabler:plus" />Zu Stack hinzufügen
+                </ContextMenuItem>
                 <ContextMenuItem @click="emit('viewLog', user)">
                     <Icon name="tabler:eye" />Log anzeigen
                 </ContextMenuItem>
