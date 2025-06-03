@@ -12,11 +12,13 @@ const stacks = ref([])
 
 
 const { data: stacksData, error: stacksError } = await useFetch('http://localhost:5000/api/stacks/')
-if (stacksError.value) toast('Error', {
-	description: stacksError.value
+if (stacksError.value){
+	toast('Fehler', {
+	description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
 })
-
-stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } })
+} else {
+	stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } })
+}
 
 // Form data for add/edit
 const formData = reactive({

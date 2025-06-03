@@ -35,11 +35,13 @@ const formData = reactive({
 const users = ref([])
 
 const { data: usersData, error: usersError } = await useFetch('http://localhost:5000/api/users/')
-if (usersError.value) toast('Error', {
-	description: usersError.value
-})
-
-users.value = usersData.value
+if (usersError.value) {
+	toast('Fehler', {
+		description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'
+	})
+} else {	
+	users.value = usersData.value
+}
 
 // Computed properties
 const filteredUsers = computed(() => {
