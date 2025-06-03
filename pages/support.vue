@@ -423,33 +423,185 @@ function isSubmitting() {
       </TabsContent>
 
       <!-- FAQ section -->
-       <TabsContent value="faq">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Frequently Asked Questions</CardTitle>
-                <CardDescription>Find answers to common questions about our platform</CardDescription>
-              </CardHeader>
-              <CardContent>
-                  <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem v-for="(faq, index) in faqItems" :key="`faq-${index}`" :value="`faq-item-${index}`">
-                        <AccordionTrigger className="text-left">
-                          <div className="flex items-center">
-                            {{ faq.question }}
-                            <Badge variant="outline" className="ml-2 text-xs">
-                              {{ faq.category }}
-                            </Badge>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground">{{ faq.answer }}</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                  </Accordion>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+      <TabsContent value="faq">
+        <div class="grid gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Frequently Asked Questions</CardTitle>
+              <CardDescription>Find answers to common questions about our platform</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Accordion type="single" collapsible class="w-full">
+                <AccordionItem v-for="(faq, index) in faqItems" :key="`faq-${index}`" :value="`faq-item-${index}`">
+                  <AccordionTrigger class="text-left">
+                    <div class="flex items-center">
+                      {{ faq.question }}
+                      <Badge variant="outline" class="ml-2 text-xs">
+                        {{ faq.category }}
+                      </Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p class="text-muted-foreground">{{ faq.answer }}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
+        </div>
+      </TabsContent>
+
+      <!-- documentation section -->
+      <TabsContent value="documentation">
+        <div class="grid gap-6 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>Getting Started</CardTitle>
+              <CardDescription>Essential guides for new users</CardDescription>
+            </CardHeader>
+            <CardContent class="grid gap-3">
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Platform Overview</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Account Setup Guide</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>User Management Basics</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Dashboard Navigation</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>First Steps Checklist</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+            </CardContent>
+            <CardFooter>
+              <Button variant="outline" class="w-full">
+                View All Guides
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>User Management</CardTitle>
+              <CardDescription>Learn how to manage users effectively</CardDescription>
+            </CardHeader>
+            <CardContent class="grid gap-3">
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Adding New Users</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>User Roles & Permissions</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Bulk User Operations</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>User Activity Monitoring</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Security Best Practices</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+            </CardContent>
+            <CardFooter>
+              <Button variant="outline" class="w-full">
+                View All Guides
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Advanced Features</CardTitle>
+              <CardDescription>Detailed documentation for power users</CardDescription>
+            </CardHeader>
+            <CardContent class="grid gap-3">
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>API Documentation</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Webhooks & Integrations</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Custom Reports</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Automation Workflows</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+              <a href="#" class="flex items-center justify-between hover:underline">
+                <span>Data Export & Import</span>
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+              </a>
+            </CardContent>
+            <CardFooter>
+              <Button variant="outline" class="w-full">
+                View All Guides
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+
+        <Card class="mt-6">
+          <CardHeader>
+            <CardTitle>Video Tutorials</CardTitle>
+            <CardDescription>Learn visually with our step-by-step video guides</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="grid gap-6 md:grid-cols-3">
+              <div class="space-y-3">
+                <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
+                  <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
+                </div>
+                <h3 class="font-medium">Getting Started with User Management</h3>
+                <p class="text-sm text-muted-foreground">
+                  Learn the basics of managing users, roles, and permissions.
+                </p>
+              </div>
+              <div class="space-y-3">
+                <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
+                  <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
+                </div>
+                <h3 class="font-medium">Advanced Filtering and Searching</h3>
+                <p class="text-sm text-muted-foreground">
+                  Master the search and filter capabilities to find users quickly.
+                </p>
+              </div>
+              <div class="space-y-3">
+                <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
+                  <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
+                </div>
+                <h3 class="font-medium">Bulk Operations and Data Export</h3>
+                <p class="text-sm text-muted-foreground">
+                  Learn how to perform actions on multiple users and export data.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" class="w-full">
+              View All Tutorials
+            </Button>
+          </CardFooter>
+        </Card>
+
+      </TabsContent>
+
     </Tabs>
 
   </div>
