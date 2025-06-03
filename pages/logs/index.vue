@@ -210,38 +210,10 @@ watch(logSearchQuery, () => {
       </p>
     </div>
     <div v-else class="mx-auto w-full max-w-7xl">
-      <ScrollArea class="h-[600px] w-full">
-        <Table class="w-full">
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Details</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Zuweisung</TableHead>
-              <TableHead>Ort</TableHead>
-              <TableHead>Wert</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow v-for="(log, index) of paginatedLogs" :key="`log-${index}`">
-              <TableCell class="font-mono">{{ log.id }}</TableCell>
-              <TableCell>
-                  <div class="font-semibold text-primary-foreground">{{ log.name }}</div>
-                  <div class="text-sm text-muted-foreground">{{ log.subcategory }}</div>
-              </TableCell>
-              <TableCell class="py-6">
-                <Badge :variant="log.status == 'Verfügbar' ? 'default' : 'outline'" class="border font-medium px-3 py-1">
-                  {{ log.status }}</Badge>
-              </TableCell>
-              <TableCell class="text-muted-foreground">{{ log.assignedTo }}</TableCell>
-              <TableCell class="text-muted-foreground">{{ log.location }}</TableCell>
-              <TableCell class="font-semibold">Fr. {{ log.value.toLocaleString('de-CH', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }) }}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+      <ScrollArea class="h-[600px]">
+        <div class="flex flex-wrap gap-8 justify-center items-start">
+          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" />
+        </div>
       </ScrollArea>
 
       <!-- pagination -->

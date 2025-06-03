@@ -134,8 +134,10 @@ watch(stackSearchQuery, () => {
 	</div>
 	
 	<!-- stacks -->
-	<ScrollArea v-else class="h-[600px] flex flex-row gap-8 justify-center flex-wrap">
-		<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+	<ScrollArea v-else class="h-[600px]">
+		<div class="flex flex-wrap gap-8 justify-center items-start">
+			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+		</div>
 	</ScrollArea>
 
 	<!-- pagination -->

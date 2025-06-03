@@ -200,16 +200,12 @@ watch(searchQuery, () => {
 	</div>
 
 	<!-- users -->
-	<div v-else class="flex flex-row gap-8 justify-center flex-wrap">
-		<ScrollArea class="h-[600px]" v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`">
-			<UserCard
-				:user
-				@viewUser="viewUser"
-				@editUser="editUser"
-				@deleteUser="deleteUser"
-			/>
-		</ScrollArea>
-	</div>
+	<ScrollArea v-else class="h-[600px]">
+		<div class="flex flex-wrap gap-8 justify-center items-start">
+			<UserCard v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`" :user @viewUser="viewUser"
+				@editUser="editUser" @deleteUser="deleteUser" />
+		</div>
+	</ScrollArea>
 
 	<!-- pagination -->
 	<div class="w-full flex mt-4 gap-2 justify-end items-center">
