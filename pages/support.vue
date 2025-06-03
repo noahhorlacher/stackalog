@@ -27,75 +27,75 @@ const securityContact = {
 const faqItems = [
   {
     category: "account",
-    question: "How do I reset my password?",
+    question: "Wie setze ich mein Passwort zurück?",
     answer:
-      "To reset your password, click on the 'Forgot Password' link on the login page. You will receive an email with instructions to create a new password. Make sure to check your spam folder if you don't see the email in your inbox.",
+      "Um Ihr Passwort zurückzusetzen, klicken Sie auf der Anmeldeseite auf den Link 'Passwort vergessen'. Sie erhalten eine E-Mail mit Anweisungen zum Erstellen eines neuen Passworts. Überprüfen Sie auch Ihren Spam-Ordner, falls Sie die E-Mail nicht im Posteingang finden.",
   },
   {
     category: "account",
-    question: "How do I change my email address?",
+    question: "Wie ändere ich meine E-Mail-Adresse?",
     answer:
-      "You can change your email address in your account settings. Go to your profile, click on 'Edit Profile', and update your email address. You'll need to verify the new email address before the change takes effect.",
+      "Sie können Ihre E-Mail-Adresse in den Kontoeinstellungen ändern. Gehen Sie zu Ihrem Profil, klicken Sie auf 'Profil bearbeiten' und aktualisieren Sie Ihre E-Mail-Adresse. Die neue E-Mail-Adresse muss verifiziert werden, bevor die Änderung wirksam wird.",
   },
   {
     category: "account",
-    question: "Can I have multiple user accounts?",
+    question: "Kann ich mehrere Benutzerkonten haben?",
     answer:
-      "No, our policy allows only one account per user. Creating multiple accounts may result in account suspension. If you need additional access for team members, consider using our team management features instead.",
+      "Nein, unsere Richtlinie erlaubt nur ein Konto pro Nutzer. Das Erstellen mehrerer Konten kann zur Sperrung führen. Wenn Sie zusätzlichen Zugriff für Teammitglieder benötigen, verwenden Sie bitte unsere Teamverwaltungsfunktionen.",
   },
   {
     category: "billing",
-    question: "How do I update my billing information?",
+    question: "Wie aktualisiere ich meine Zahlungsinformationen?",
     answer:
-      "To update your billing information, go to 'Account Settings' > 'Billing' and click on 'Update Payment Method'. You can add a new card or edit your existing payment details there.",
+      "Um Ihre Zahlungsinformationen zu aktualisieren, gehen Sie zu 'Kontoeinstellungen' > 'Abrechnung' und klicken Sie auf 'Zahlungsmethode aktualisieren'. Dort können Sie eine neue Karte hinzufügen oder bestehende Zahlungsdetails bearbeiten.",
   },
   {
     category: "billing",
-    question: "When will I be charged for my subscription?",
+    question: "Wann werde ich für mein Abonnement belastet?",
     answer:
-      "Your subscription is billed at the beginning of each billing cycle. For monthly plans, you'll be charged on the same date each month. For annual plans, you'll be charged once a year on your subscription anniversary.",
+      "Ihr Abonnement wird zu Beginn jedes Abrechnungszeitraums berechnet. Bei monatlichen Plänen erfolgt die Abrechnung jeweils am gleichen Datum. Bei jährlichen Plänen einmal im Jahr am Jahrestag Ihres Abonnements.",
   },
   {
     category: "billing",
-    question: "How do I cancel my subscription?",
+    question: "Wie kündige ich mein Abonnement?",
     answer:
-      "To cancel your subscription, go to 'Account Settings' > 'Billing' > 'Subscription' and click on 'Cancel Subscription'. Your access will continue until the end of your current billing period.",
+      "Um Ihr Abonnement zu kündigen, gehen Sie zu 'Kontoeinstellungen' > 'Abrechnung' > 'Abonnement' und klicken Sie auf 'Abonnement kündigen'. Ihr Zugang bleibt bis zum Ende des aktuellen Abrechnungszeitraums bestehen.",
   },
   {
     category: "features",
-    question: "How do I create a new user?",
+    question: "Wie erstelle ich einen neuen Benutzer?",
     answer:
-      "To create a new user, go to the User Management page and click on the 'Add User' button. Fill in the required information and click 'Create User'. The new user will receive an email invitation to set up their account.",
+      "Um einen neuen Benutzer zu erstellen, gehen Sie zur Benutzerverwaltungsseite und klicken Sie auf die Schaltfläche 'Benutzer hinzufügen'. Füllen Sie die erforderlichen Informationen aus und klicken Sie auf 'Benutzer erstellen'. Der neue Benutzer erhält eine E-Mail-Einladung zur Einrichtung seines Kontos.",
   },
   {
     category: "features",
-    question: "What's the difference between user roles?",
+    question: "Was ist der Unterschied zwischen Benutzerrollen?",
     answer:
-      "We offer three user roles: Admin, Moderator, and User. Admins have full access to all features and settings. Moderators can manage content but cannot change system settings. Users have basic access to use the platform but cannot modify settings or other users.",
+      "Wir bieten drei Benutzerrollen an: Admin, Moderator und Benutzer. Admins haben vollständigen Zugriff auf alle Funktionen und Einstellungen. Moderatoren können Inhalte verwalten, aber keine Systemeinstellungen ändern. Benutzer haben grundlegenden Zugriff auf die Plattform, können aber keine Einstellungen oder andere Benutzer ändern.",
   },
   {
     category: "features",
-    question: "How do I export user data?",
+    question: "Wie exportiere ich Benutzerdaten?",
     answer:
-      "To export user data, go to the User Management page, use the filters to select the users you want to export, then click on the 'Export' button. You can choose between CSV, Excel, or PDF formats for your export.",
+      "Um Benutzerdaten zu exportieren, gehen Sie zur Benutzerverwaltungsseite, filtern Sie die gewünschten Benutzer und klicken Sie auf die Schaltfläche 'Exportieren'. Sie können zwischen CSV-, Excel- oder PDF-Formaten wählen.",
   },
   {
     category: "technical",
-    question: "Which browsers are supported?",
+    question: "Welche Browser werden unterstützt?",
     answer:
-      "Our platform supports the latest versions of Chrome, Firefox, Safari, and Edge. Internet Explorer is not supported. For the best experience, we recommend keeping your browser updated to the latest version.",
+      "Unsere Plattform unterstützt die neuesten Versionen von Chrome, Firefox, Safari und Edge. Internet Explorer wird nicht unterstützt. Für die beste Erfahrung empfehlen wir, Ihren Browser stets auf dem neuesten Stand zu halten.",
   },
   {
     category: "technical",
-    question: "Is there a mobile app available?",
+    question: "Gibt es eine mobile App?",
     answer:
-      "Yes, we offer mobile apps for both iOS and Android. You can download them from the App Store or Google Play Store. Our mobile apps provide most of the functionality available on the web platform.",
+      "Ja, wir bieten mobile Apps für iOS und Android an. Sie können sie im App Store oder im Google Play Store herunterladen. Die mobilen Apps bieten die meisten Funktionen der Webplattform.",
   },
   {
     category: "technical",
-    question: "How secure is my data?",
+    question: "Wie sicher sind meine Daten?",
     answer:
-      "We take security very seriously. All data is encrypted in transit and at rest. We use industry-standard security practices, regular security audits, and maintain compliance with relevant data protection regulations.",
+      "Sicherheit hat bei uns höchste Priorität. Alle Daten werden während der Übertragung und im Ruhezustand verschlüsselt. Wir verwenden branchenübliche Sicherheitsstandards, führen regelmäßige Audits durch und halten uns an geltende Datenschutzvorschriften.",
   },
 ]
 
