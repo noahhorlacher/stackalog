@@ -2,13 +2,11 @@
 const props = defineProps({
     stack: {
         type: Object,
-        default: {
-            title: '',
-            logs: [],
-            id: null
-        }
+        required: true
     }
 })
+
+const emit = defineEmits(['viewStack', 'editStack', 'deleteStack'])
 </script>
 
 <template>
@@ -41,13 +39,13 @@ const props = defineProps({
             </ContextMenuTrigger>
             <ContextMenuContent align="end">
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
-                <ContextMenuItem @click="emit('viewUser', user)">
+                <ContextMenuItem @click="emit('viewStack', user)">
                     <Icon name="tabler:eye" />Stack anzeigen
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('editUser', user)">
+                <ContextMenuItem @click="emit('editStack', user)">
                     <Icon name="tabler:edit" />Stack bearbeiten
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('deleteUser', user)" variant="destructive">
+                <ContextMenuItem @click="emit('deleteStack', user)" variant="destructive">
                     <Icon name="tabler:trash" />Stack löschen
                 </ContextMenuItem>
             </ContextMenuContent>
