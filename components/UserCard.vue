@@ -6,7 +6,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
+const emit = defineEmits(['viewUser', 'editUser', 'deleteUser'])
 </script>
 
 <template>
@@ -34,13 +34,13 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
             </ContextMenuTrigger>
             <ContextMenuContent align="end">
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
-                <ContextMenuItem @click="emit('viewLog', user)">
+                <ContextMenuItem @click="emit('viewUser', user)">
                     <Icon name="tabler:eye" />Benutzer anzeigen
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('editLog', user)">
+                <ContextMenuItem @click="emit('editUser', user)">
                     <Icon name="tabler:edit" />Benutzer bearbeiten
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('deleteLog', user)" variant="destructive">
+                <ContextMenuItem @click="emit('deleteUser', user)" variant="destructive">
                     <Icon name="tabler:trash" />Benutzer löschen
                 </ContextMenuItem>
             </ContextMenuContent>
