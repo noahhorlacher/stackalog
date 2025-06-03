@@ -427,8 +427,8 @@ function isSubmitting() {
         <div class="grid gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Frequently Asked Questions</CardTitle>
-              <CardDescription>Find answers to common questions about our platform</CardDescription>
+              <CardTitle>Häufig gestellte Fragen</CardTitle>
+              <CardDescription>Finden Sie Antworten auf häufige Fragen zu unserer Plattform</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible class="w-full">
@@ -456,102 +456,102 @@ function isSubmitting() {
         <div class="grid gap-6 md:grid-cols-3">
           <Card>
             <CardHeader>
-              <CardTitle>Getting Started</CardTitle>
-              <CardDescription>Essential guides for new users</CardDescription>
+              <CardTitle>Erste Schritte</CardTitle>
+              <CardDescription>Wichtige Anleitungen für neue Benutzer</CardDescription>
             </CardHeader>
             <CardContent class="grid gap-3">
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Platform Overview</span>
+                <span>Plattformübersicht</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Account Setup Guide</span>
+                <span>Anleitung zur Kontoeinrichtung</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>User Management Basics</span>
+                <span>Grundlagen der Benutzerverwaltung</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Dashboard Navigation</span>
+                <span>Navigation im Dashboard</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>First Steps Checklist</span>
+                <span>Checkliste für erste Schritte</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
             </CardContent>
             <CardFooter>
               <Button variant="outline" class="w-full">
-                View All Guides
+                Alle Anleitungen anzeigen
               </Button>
             </CardFooter>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>User Management</CardTitle>
-              <CardDescription>Learn how to manage users effectively</CardDescription>
+              <CardTitle>Benutzerverwaltung</CardTitle>
+              <CardDescription>Erfahren Sie, wie Sie Benutzer effektiv verwalten</CardDescription>
             </CardHeader>
             <CardContent class="grid gap-3">
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Adding New Users</span>
+                <span>Neue Benutzer hinzufügen</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>User Roles & Permissions</span>
+                <span>Benutzerrollen & Berechtigungen</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Bulk User Operations</span>
+                <span>Mehrfachaktionen für Benutzer</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>User Activity Monitoring</span>
+                <span>Benutzeraktivitäten überwachen</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Security Best Practices</span>
+                <span>Sicherheitsbestimmungen</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
             </CardContent>
             <CardFooter>
               <Button variant="outline" class="w-full">
-                View All Guides
+                Alle Anleitungen anzeigen
               </Button>
             </CardFooter>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Advanced Features</CardTitle>
-              <CardDescription>Detailed documentation for power users</CardDescription>
+              <CardTitle>Erweiterte Funktionen</CardTitle>
+              <CardDescription>Detaillierte Dokumentation für erfahrene Nutzer</CardDescription>
             </CardHeader>
             <CardContent class="grid gap-3">
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>API Documentation</span>
+                <span>API-Dokumentation</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Webhooks & Integrations</span>
+                <span>Webhooks & Integrationen</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Custom Reports</span>
+                <span>Benutzerdefinierte Berichte</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Automation Workflows</span>
+                <span>Automatisierungs-Workflows</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
               <a href="#" class="flex items-center justify-between hover:underline">
-                <span>Data Export & Import</span>
+                <span>Datenexport & -import</span>
                 <Icon name="tabler:external-link" class="h-4 w-4" />
               </a>
             </CardContent>
             <CardFooter>
               <Button variant="outline" class="w-full">
-                View All Guides
+                Alle Anleitungen anzeigen
               </Button>
             </CardFooter>
           </Card>
@@ -559,8 +559,8 @@ function isSubmitting() {
 
         <Card class="mt-6">
           <CardHeader>
-            <CardTitle>Video Tutorials</CardTitle>
-            <CardDescription>Learn visually with our step-by-step video guides</CardDescription>
+            <CardTitle>Video-Tutorials</CardTitle>
+            <CardDescription>Lernen Sie mit unseren Schritt-für-Schritt-Videoguides</CardDescription>
           </CardHeader>
           <CardContent>
             <div class="grid gap-6 md:grid-cols-3">
@@ -568,39 +568,39 @@ function isSubmitting() {
                 <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
                   <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
                 </div>
-                <h3 class="font-medium">Getting Started with User Management</h3>
+                <h3 class="font-medium">Erste Schritte mit der Benutzerverwaltung</h3>
                 <p class="text-sm text-muted-foreground">
-                  Learn the basics of managing users, roles, and permissions.
+                  Erlernen Sie die Grundlagen zur Verwaltung von Benutzern, Rollen und Berechtigungen.
                 </p>
               </div>
               <div class="space-y-3">
                 <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
                   <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
                 </div>
-                <h3 class="font-medium">Advanced Filtering and Searching</h3>
+                <h3 class="font-medium">Erweiterte Filter- und Suchfunktionen</h3>
                 <p class="text-sm text-muted-foreground">
-                  Master the search and filter capabilities to find users quickly.
+                  Nutzen Sie die Filter- und Suchfunktionen effektiv, um Benutzer schnell zu finden.
                 </p>
               </div>
               <div class="space-y-3">
                 <div class="aspect-video bg-muted rounded-md flex items-center justify-center">
                   <Icon name="tabler:file-text" class="h-10 w-10 text-muted-foreground opacity-50" />
                 </div>
-                <h3 class="font-medium">Bulk Operations and Data Export</h3>
+                <h3 class="font-medium">Mehrfachaktionen und Datenexport</h3>
                 <p class="text-sm text-muted-foreground">
-                  Learn how to perform actions on multiple users and export data.
+                  Erfahren Sie, wie Sie Aktionen für mehrere Benutzer durchführen und Daten exportieren.
                 </p>
               </div>
             </div>
           </CardContent>
           <CardFooter>
             <Button variant="outline" class="w-full">
-              View All Tutorials
+              Alle Tutorials anzeigen
             </Button>
           </CardFooter>
         </Card>
-
       </TabsContent>
+
 
     </Tabs>
 
