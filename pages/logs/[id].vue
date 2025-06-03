@@ -52,7 +52,7 @@ log.value = logData.value
         <p class="text-muted-foreground text-sm">Kategorie</p>
         <Badge>{{ log.category }}</Badge>
         <p class="text-muted-foreground text-sm">Unterkategorie</p>
-        <Badge variant="outline">{{ log.subcategory }}</Badge>
+        <Badge variant="secondary">{{ log.subcategory }}</Badge>
         <p class="text-muted-foreground text-sm">Status</p>
         <Badge>{{ log.status }}</Badge>
         <p class="text-muted-foreground text-sm">Wert</p>
