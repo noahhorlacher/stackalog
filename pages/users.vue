@@ -199,7 +199,7 @@ watch(searchQuery, () => {
 
 
 	<!-- users -->
-	<div v-else class="max-h-[800px] w-full overflow-y-scroll">
+	<div v-else class="max-h-[800px] w-full overflow-y-scroll flex flex-row justify-center items-start gap-8 flex-wrap">
 		<UserCard v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`" :user @viewUser="viewUser" @editUser="editUser" @deleteUser="deleteUser" />
 	</div>
 

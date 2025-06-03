@@ -11,7 +11,7 @@ const emit = defineEmits(['viewUser', 'editUser', 'deleteUser'])
 
 <template>
     <ContextMenu>
-        <ContextMenuTrigger>
+        <ContextMenuTrigger class="w-fit">
             <Card class="w-60 py-4 text-center text-sm hover:bg-muted/50 transition-colors">
                 <CardHeader>
                     <CardTitle class="flex flex-col items-center gap-2">
