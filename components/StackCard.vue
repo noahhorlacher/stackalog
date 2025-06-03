@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
     <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
-        <Card class="w-48 hover:bg-muted/50 transition-colors group">
+        <Card class="w-48 hover:bg-muted/50 transition-colors">
             <div>
                 <CardHeader>
                     <CardTitle class="mb-4">

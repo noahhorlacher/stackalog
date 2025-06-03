@@ -157,12 +157,12 @@ watch(logSearchQuery, () => {
     <Card class="hover:shadow-md shadow-yellow-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Verwendet</p>
+          <p class="text-sm text-muted-foreground">Defekt</p>
           <Icon name="tabler:users" class="text-yellow-400" size="25" />
         </div>
         <CardDescription>
-          <p class="text-3xl font-bold text-yellow-400 mb-2">{{logs.filter(l => l.status === "Verwendet").length}}</p>
-          <p class="text-xs">Momentan im Gebrauch</p>
+          <p class="text-3xl font-bold text-yellow-400 mb-2">{{logs.filter(l => ["Defekt", "In Reparatur"].includes(l.status)).length}}</p>
+          <p class="text-xs">Defekt oder in Reparatur</p>
         </CardDescription>
       </CardContent>
     </Card>
