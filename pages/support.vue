@@ -18,10 +18,86 @@ const supportContact = {
   phone: '+41 12 345 67 89'
 }
 
-const emergencyContact = {
+const securityContact = {
   email: 'security@example.com',
   phone: '+41 23 456 78 90'
 }
+
+// FAQ data
+const faqItems = [
+  {
+    category: "account",
+    question: "How do I reset my password?",
+    answer:
+      "To reset your password, click on the 'Forgot Password' link on the login page. You will receive an email with instructions to create a new password. Make sure to check your spam folder if you don't see the email in your inbox.",
+  },
+  {
+    category: "account",
+    question: "How do I change my email address?",
+    answer:
+      "You can change your email address in your account settings. Go to your profile, click on 'Edit Profile', and update your email address. You'll need to verify the new email address before the change takes effect.",
+  },
+  {
+    category: "account",
+    question: "Can I have multiple user accounts?",
+    answer:
+      "No, our policy allows only one account per user. Creating multiple accounts may result in account suspension. If you need additional access for team members, consider using our team management features instead.",
+  },
+  {
+    category: "billing",
+    question: "How do I update my billing information?",
+    answer:
+      "To update your billing information, go to 'Account Settings' > 'Billing' and click on 'Update Payment Method'. You can add a new card or edit your existing payment details there.",
+  },
+  {
+    category: "billing",
+    question: "When will I be charged for my subscription?",
+    answer:
+      "Your subscription is billed at the beginning of each billing cycle. For monthly plans, you'll be charged on the same date each month. For annual plans, you'll be charged once a year on your subscription anniversary.",
+  },
+  {
+    category: "billing",
+    question: "How do I cancel my subscription?",
+    answer:
+      "To cancel your subscription, go to 'Account Settings' > 'Billing' > 'Subscription' and click on 'Cancel Subscription'. Your access will continue until the end of your current billing period.",
+  },
+  {
+    category: "features",
+    question: "How do I create a new user?",
+    answer:
+      "To create a new user, go to the User Management page and click on the 'Add User' button. Fill in the required information and click 'Create User'. The new user will receive an email invitation to set up their account.",
+  },
+  {
+    category: "features",
+    question: "What's the difference between user roles?",
+    answer:
+      "We offer three user roles: Admin, Moderator, and User. Admins have full access to all features and settings. Moderators can manage content but cannot change system settings. Users have basic access to use the platform but cannot modify settings or other users.",
+  },
+  {
+    category: "features",
+    question: "How do I export user data?",
+    answer:
+      "To export user data, go to the User Management page, use the filters to select the users you want to export, then click on the 'Export' button. You can choose between CSV, Excel, or PDF formats for your export.",
+  },
+  {
+    category: "technical",
+    question: "Which browsers are supported?",
+    answer:
+      "Our platform supports the latest versions of Chrome, Firefox, Safari, and Edge. Internet Explorer is not supported. For the best experience, we recommend keeping your browser updated to the latest version.",
+  },
+  {
+    category: "technical",
+    question: "Is there a mobile app available?",
+    answer:
+      "Yes, we offer mobile apps for both iOS and Android. You can download them from the App Store or Google Play Store. Our mobile apps provide most of the functionality available on the web platform.",
+  },
+  {
+    category: "technical",
+    question: "How secure is my data?",
+    answer:
+      "We take security very seriously. All data is encrypted in transit and at rest. We use industry-standard security practices, regular security audits, and maintain compliance with relevant data protection regulations.",
+  },
+]
 
 const supportOnline = ref(isSupportOnline(supportHours))
 // update support online
@@ -80,6 +156,8 @@ function isSubmitting() {
           Dokumentation
         </TabsTrigger>
       </TabsList>
+
+      <!-- contact section -->
       <TabsContent value="contact">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div class="lg:col-span-2 space-y-6">
@@ -223,8 +301,9 @@ function isSubmitting() {
                 Dringende Sicherheitsprobleme
               </AlertTitle>
               <AlertDescription>
-                Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter {{ emergencyContact.email }}
-                oder rufen Sie unsere Notfall-Hotline unter {{ emergencyContact.phone }} an.
+                Bei dringenden Sicherheitsproblemen kontaktieren Sie uns bitte umgehend unter {{ securityContact.email
+                }}
+                oder rufen Sie unsere Notfall-Hotline unter {{ securityContact.phone }} an.
               </AlertDescription>
             </Alert>
           </div>
@@ -342,6 +421,35 @@ function isSubmitting() {
           </div>
         </div>
       </TabsContent>
+
+      <!-- FAQ section -->
+       <TabsContent value="faq">
+          <div className="grid gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Frequently Asked Questions</CardTitle>
+                <CardDescription>Find answers to common questions about our platform</CardDescription>
+              </CardHeader>
+              <CardContent>
+                  <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem v-for="(faq, index) in faqItems" :key="`faq-${index}`" :value="`faq-item-${index}`">
+                        <AccordionTrigger className="text-left">
+                          <div className="flex items-center">
+                            {{ faq.question }}
+                            <Badge variant="outline" className="ml-2 text-xs">
+                              {{ faq.category }}
+                            </Badge>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground">{{ faq.answer }}</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                  </Accordion>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
     </Tabs>
 
   </div>
