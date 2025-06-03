@@ -80,7 +80,7 @@ watch(() => route.fullPath, () => {
                     <SidebarMenu>
                         <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
                             <SidebarMenuButton asChild
-                                :class="activePath == item.url ? 'bg-primary text-primary-foreground hover:bg-primary/80' : 'hover:bg-muted hover:text-foreground'"
+                                :class="activePath == item.url ? 'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground' : 'hover:bg-muted hover:text-foreground'"
                                 class="transition-colors"
                             >
                                 <NuxtLink :to="item.url">
