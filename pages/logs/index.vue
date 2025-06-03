@@ -210,8 +210,8 @@ watch(logSearchQuery, () => {
       </p>
     </div>
     <div v-else class="mx-auto w-full max-w-7xl">
-      <ScrollArea class="h-[600px]">
-        <Table>
+      <ScrollArea class="h-[600px] w-full">
+        <Table class="w-full">
           <TableHeader>
             <TableRow>
               <TableHead>ID</TableHead>
@@ -220,7 +220,6 @@ watch(logSearchQuery, () => {
               <TableHead>Zuweisung</TableHead>
               <TableHead>Ort</TableHead>
               <TableHead>Wert</TableHead>
-              <TableHead class="text-right pr-6">Aktionen</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -240,27 +239,6 @@ watch(logSearchQuery, () => {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
               }) }}</TableCell>
-              <TableCell class="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Button variant="ghost" class="h-8 w-8 p-0 mr-3">
-                      <Icon name="tabler:dots" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
-                    <DropdownMenuItem @click="">
-                      <Icon name="tabler:eye" />Log anzeigen
-                    </DropdownMenuItem>
-                    <DropdownMenuItem @click="">
-                      <Icon name="tabler:edit" />Log bearbeiten
-                    </DropdownMenuItem>
-                    <DropdownMenuItem @click="" variant="destructive">
-                      <Icon name="tabler:trash" />Log löschen
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -124,16 +124,19 @@ watch(stackSearchQuery, () => {
 		</CardContent>
 	</Card>
 
-	<div class="flex flex-row gap-8 justify-center flex-wrap">
-		<div v-if="filteredStacks.length === 0" class="text-center py-12 mx-auto">
-			<Icon name="tabler:stack" class="mx-auto text-muted-foreground" />
-			<h3 class="mt-2 text-sm font-medium">Keine Stacks gefunden</h3>
-			<p class="mt-1 text-sm text-muted-foreground">
-				{{ stackSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Stack hinzu' }}
-			</p>
-		</div>
-		<StackCard v-else v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+	<!-- empty state -->
+	<div v-if="filteredStacks.length === 0" class="text-center py-12 mx-auto">
+		<Icon name="tabler:stack" class="mx-auto text-muted-foreground" />
+		<h3 class="mt-2 text-sm font-medium">Keine Stacks gefunden</h3>
+		<p class="mt-1 text-sm text-muted-foreground">
+			{{ stackSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Stack hinzu' }}
+		</p>
 	</div>
+	
+	<!-- stacks -->
+	<ScrollArea v-else class="h-[600px] flex flex-row gap-8 justify-center flex-wrap">
+		<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+	</ScrollArea>
 
 	<!-- pagination -->
 	<div class="w-full flex mt-4 gap-2 justify-end items-center">

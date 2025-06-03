@@ -39,7 +39,7 @@ if (usersError.value) {
 	toast('Fehler', {
 		description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'
 	})
-} else {	
+} else {
 	users.value = usersData.value
 }
 
@@ -147,32 +147,32 @@ const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
 const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value
-  const end = start + itemsPerPage.value
-  return filteredUsers.value.slice(start, end)
+	const start = (currentPage.value - 1) * itemsPerPage.value
+	const end = start + itemsPerPage.value
+	return filteredUsers.value.slice(start, end)
 })
 
 const totalPages = computed(() =>
-  Math.ceil(filteredUsers.value.length / itemsPerPage.value)
+	Math.ceil(filteredUsers.value.length / itemsPerPage.value)
 )
 
 const goToPage = (page) => {
-  currentPage.value = page
+	currentPage.value = page
 }
 
 watch(searchQuery, () => {
-  currentPage.value = 1
+	currentPage.value = 1
 })
 </script>
 
 <template>
-	<!-- Header -->
+	<!-- header -->
 	<div class="space-y-2 mb-6">
 		<h1 class="text-3xl font-bold">Benutzerverwaltung</h1>
 		<p class="text-muted-foreground">Verwalten Sie Benutzer und ihre Berechtigungen</p>
 	</div>
 
-	<!-- Search and Add User Section -->
+	<!-- search and add user section -->
 	<Card class="mb-12">
 		<CardContent>
 			<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
@@ -199,10 +199,16 @@ watch(searchQuery, () => {
 		</p>
 	</div>
 
-
 	<!-- users -->
-	<div v-else class="max-h-[800px] w-full overflow-y-scroll flex flex-row justify-center items-start gap-8 flex-wrap">
-		<UserCard v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`" :user @viewUser="viewUser" @editUser="editUser" @deleteUser="deleteUser" />
+	<div v-else class="flex flex-row gap-8 justify-center flex-wrap">
+		<ScrollArea class="h-[600px]" v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`">
+			<UserCard
+				:user
+				@viewUser="viewUser"
+				@editUser="editUser"
+				@deleteUser="deleteUser"
+			/>
+		</ScrollArea>
 	</div>
 
 	<!-- pagination -->
@@ -291,7 +297,7 @@ watch(searchQuery, () => {
 			<AlertDialogHeader>
 				<AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
 				<p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName
-						}}</strong>
+				}}</strong>
 					löschen möchten?</p>
 				<AlertDialogDescription>
 					Diese Aktion kann nicht rückgängig gemacht werden.
