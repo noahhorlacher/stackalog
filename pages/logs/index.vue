@@ -1,9 +1,6 @@
 <script setup>
 import { toast } from 'vue-sonner'
-import {
-  DateFormatter,
-  getLocalTimeZone,
-} from '@internationalized/date'
+import { parseDate, CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 useSeoMeta({
   title: 'Stackalog — Logs'
@@ -33,10 +30,12 @@ const formData = reactive({
   status: 'Verfügbar',
   assignedTo: '—',
   location: 'Unbekannt',
-  purchaseDate: new Date().toISOString().split('T')[0],
+  purchaseDate: parseDate(new Date().toISOString().split('T')[0]),
   value: 0,
   serialNumber: ''
 })
+
+const dateFormatter = new DateFormatter('de-CH', { dateStyle: 'medium' })
 
 const filteredLogs = computed(() => {
   if (!logSearchQuery.value.trim()) return logs.value
@@ -54,7 +53,7 @@ const resetForm = () => {
   formData.status = 'Verfügbar'
   formData.assignedTo = '—'
   formData.location = 'Unknown'
-  formData.purchaseDate = new Date().toISOString().split('T')[0]
+  formData.purchaseDate = parseDate(new Date().toISOString().split('T')[0])
   formData.value = 0
   formData.serialNumber = ''
 }
@@ -70,15 +69,15 @@ const closeModals = () => {
 }
 
 const saveLog = () => {
-  const maxId = Math.max(
-    ...logs.value.map(log => parseInt(log.id.replace('INV-', ''), 10))
-  )
-  const newId = `INV-${String(maxId + 1).padStart(3, '0')}`
-
   $fetch('http://localhost:5000/api/logs/', {
     method: 'POST',
     body: formData
-  }).then(() => {
+  }).then(response => {
+    const newLog = formData
+    // newLog.id = newId
+
+    logs.value.push(newLog)
+    
     toast('Erfolg', {
       description: 'Log erfolgreich hinzugefügt'
     })
@@ -86,13 +85,7 @@ const saveLog = () => {
     toast('Error', {
       description: err.message
     })
-  })
-
-  const newLog = formData
-  newLog.id = newId
-
-  logs.value.push(newLog)
-  closeModals()
+  }).finally(closeModals)
 }
 
 const currentPage = ref(1)
@@ -102,10 +95,6 @@ const paginatedLogs = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value
   const end = start + itemsPerPage.value
   return filteredLogs.value.slice(start, end)
-})
-
-const df = new DateFormatter('de-CH', {
-  dateStyle: 'long',
 })
 
 const totalPages = computed(() =>
@@ -201,7 +190,9 @@ watch(logSearchQuery, () => {
     </CardContent>
   </Card>
 
+
   <div class="flex gap-8 flex-wrap">
+    <!-- empty state -->
     <div v-if="filteredLogs.length === 0" class="text-center py-12 mx-auto">
       <Icon name="tabler:logs" class="mx-auto text-muted-foreground" />
       <h3 class="mt-2 text-sm font-medium">Keine Logs gefunden</h3>
@@ -209,6 +200,8 @@ watch(logSearchQuery, () => {
         {{ logSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Log hinzu' }}
       </p>
     </div>
+
+    <!-- logs -->
     <div v-else class="mx-auto w-full max-w-7xl">
       <ScrollArea class="h-[600px]">
         <div class="flex flex-wrap gap-8 justify-center items-start">
@@ -285,24 +278,32 @@ watch(logSearchQuery, () => {
           <Label for="location">Ort</Label>
           <Input id="location" v-model="formData.location" placeholder="Optional Ort eingeben" />
         </div>
+
         <div class="space-y-2">
           <Label for="purchaseDate">Kaufdatum</Label>
           <Popover>
             <PopoverTrigger as-child>
               <Button
                 variant="outline"
-                :class="formData.buyData ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
+                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
               >
                 <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
-                {{ formData.buyDate ? df.format(formData.buyDate.toDate(getLocalTimeZone())) : "Pick a date" }}
+                {{ formData.purchaseDate ? dateFormatter.format(formData.purchaseDate.toDate(getLocalTimeZone())) : "Kaufdatum wählen" }}
               </Button>
             </PopoverTrigger>
             <PopoverContent class="w-auto p-0">
-              <Calendar v-model="value" initial-focus />
+              <Calendar
+                :model-value="formData.purchaseDate"
+                calendar-label="Kaufdatum"
+                initial-focus
+                :min-value="parseDate('1900-01-01')"
+                :max-value="parseDate(new Date().toISOString().split('T')[0])"
+                @update:model-value="v => formData.purchaseDate = v"
+                />
             </PopoverContent>
           </Popover>
-          <Input id="purchaseDate" type="date" v-model="formData.purchaseDate" required />
         </div>
+
         <div class="space-y-2">
           <Label for="value">Wert (CHF)</Label>
           <Input id="value" type="number" v-model.number="formData.value" required placeholder="Wert eingeben" />
