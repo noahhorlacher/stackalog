@@ -1,5 +1,13 @@
 # THIS IS A WORK IN PROGRESS!
 
+## Roadmap
+
+- Basic CRUD
+- Auth
+- Add logs to stacks
+- Generate PDF report
+- Export CSV & XLSX
+
 ## Setup
 
 Make sure to install dependencies:
