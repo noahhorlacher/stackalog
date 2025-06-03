@@ -209,8 +209,8 @@ watch(logSearchQuery, () => {
         {{ logSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Log hinzu' }}
       </p>
     </div>
-    <div v-else>
-      <ScrollArea class="max-h-[700px] w-full">
+    <div v-else class="mx-auto w-full max-w-7xl">
+      <ScrollArea class="h-[600px]">
         <Table>
           <TableHeader>
             <TableRow>
