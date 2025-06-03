@@ -207,7 +207,7 @@ watch(logSearchQuery, () => {
         {{ logSearchQuery ? 'Passen Sie Ihre Suche an' : 'Fügen Sie Ihren ersten Log hinzu' }}
       </p>
     </div>
-    <div v-else class="max-h-[700px] w-full overflow-y-scroll">
+    <ScrollArea v-else class="max-h-[700px] w-full">
       <Table>
         <TableHeader>
           <TableRow>
@@ -261,7 +261,7 @@ watch(logSearchQuery, () => {
           </TableRow>
         </TableBody>
       </Table>
-    </div>
+    </ScrollArea>
 
     <!-- pagination -->
     <div class="w-full flex mt-4 gap-2 justify-end items-center">

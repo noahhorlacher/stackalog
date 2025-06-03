@@ -32,8 +32,7 @@ const emit = defineEmits(['viewUser', 'editUser', 'deleteUser'])
             </Card>
         </ContextMenuTrigger>
         <ContextMenuContent align="end">
-            <ContextMenuLabel>Aktionen</ContextMenuLabel>
-            <ContextMenuSeparator />
+            <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
             <ContextMenuItem @click="emit('viewUser', user)">
                 <Icon name="tabler:eye" />Benutzer anzeigen
             </ContextMenuItem>
