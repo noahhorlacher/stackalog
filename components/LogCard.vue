@@ -36,7 +36,7 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
 
                         <div class="flex justify-between items-center text-xs mt-8">
                             <p class="text-muted-foreground">Zuweisung</p>
-                            <p class="font-bold">{{ log.assignedTo }}</p>
+                            <p class="font-bold">{{ log.assignedTo || '—' }}</p>
                         </div>
                         <div class="flex justify-between items-center text-xs">
                             <p class="text-muted-foreground">Ort</p>
