@@ -10,7 +10,7 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
 </script>
 
 <template>
-    <NuxtLink>
+    <NuxtLink :to="`/logs/${log.id}`">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
                 <Card class="w-60 pt-4 text-center text-sm hover:bg-muted/50 transition-colors">

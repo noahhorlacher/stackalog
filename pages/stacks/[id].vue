@@ -11,6 +11,15 @@ const stack = ref({
 
 const { params } = useRoute()
 const { data: stackData, error: stackError } = await useFetch(`http://localhost:5000/api/stacks/${params.id}`)
+if (stackError.value) {
+    toast('Fehler', {
+        description: 'Fehler beim Laden des Stacks. Kontaktieren Sie den Support.'
+    })
+} else if (!stackData.value) {
+    toast('Nicht gefunden', {
+        description: 'Der angeforderte Stack wurde nicht gefunden.'
+    })
+}
 
 stack.value = stackData.value
 </script>
