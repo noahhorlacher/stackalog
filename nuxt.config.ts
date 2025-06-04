@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/color-mode'
   ],
+  ssr: false,
   nitro: {
     experimental: {
       database: true,
