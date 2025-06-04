@@ -18,7 +18,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                         <CardHeader>
                             <CardTitle class="mb-4 break-all flex items-center gap-4">
                                 <div
-                                    class="flex items-center bg-gradient-to-br from-cyan-500 to-sky-500 p-3 rounded-md shadow-md shadow-sky-500/20">
+                                    class="flex items-center bg-gradient-to-br from-blue-500 to-violet-500 p-3 rounded-md shadow-md shadow-violet-500/30">
                                     <Icon name="tabler:stack" class="text-white" size="24" />
                                 </div>
                                 <div>

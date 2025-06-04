@@ -67,9 +67,9 @@ watch(() => route.fullPath, () => {
 
 <template>
     <Sidebar collapsible="icon" class="select-none">
-        <SidebarHeader class="flex flex-row items-center">
-            <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
-            <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
+        <SidebarHeader class="flex flex-row items-center gap-4">
+            <img class="w-12 rounded-md hidden dark:flex bg-gradient-to-br from-blue-500 to-violet-500 shadow-lg shadow-violet-500/30" src="/icon-white.svg" />
+            <img class="w-12 rounded-md flex dark:hidden bg-gradient-to-br from-blue-500 to-violet-500 shadow-lg shadow-violet-500/30" src="/icon-black.svg" />
             <div v-if="open">
                 <p class="text-sm">Stackalog</p>
                 <p class="text-xs text-muted-foreground">v 1.0.0</p>
