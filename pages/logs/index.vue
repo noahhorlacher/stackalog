@@ -275,6 +275,7 @@ watch(logSearchQuery, () => {
             <SelectContent>
               <SelectItem value="Verfügbar">Verfügbar</SelectItem>
               <SelectItem value="Verwendet">Verwendet</SelectItem>
+              <SelectItem value="Defekt">Defekt</SelectItem>
               <SelectItem value="In Reparatur">In Reparatur</SelectItem>
             </SelectContent>
           </Select>
