@@ -53,7 +53,7 @@ const closeModals = () => {
 }
 
 const saveStack = () => {
-	$fetch('http://localhost:5000/api/stacks/', {
+	$fetch('/api/stacks/', {
 		method: 'POST',
 		body: formData
 	}).then(() => {
@@ -69,6 +69,25 @@ const saveStack = () => {
 		}
 
 		stacks.value.push(newLog)
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'
+		})
+	}).finally(() => {
+		closeModals()
+	})
+}
+
+const deleteStack = (stack) => {
+	$fetch('/api/stacks/' + stack.id, {
+		method: 'DELETE'
+	}).then(() => {
+		toast('Erfolg', {
+			description: 'Stack erfolgreich gelöscht'
+		})
+
+		const index = stacks.value.findIndex(s => s.id === stack.id)
+		stacks.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
 			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'
@@ -137,7 +156,7 @@ watch(stackSearchQuery, () => {
 	<!-- stacks -->
 	<ScrollArea v-else class="h-[600px]">
 		<div class="flex flex-wrap gap-8 justify-center items-start">
-			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" />
+			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" @deleteStack="deleteStack" />
 		</div>
 	</ScrollArea>
 
