@@ -90,7 +90,7 @@ const deleteStack = (stack) => {
 		stacks.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
-			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'
+			description: err.message || 'Beim Löschen des Stacks ist ein Fehler aufgetreten'
 		})
 	}).finally(() => {
 		closeModals()

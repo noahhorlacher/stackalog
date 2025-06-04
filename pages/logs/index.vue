@@ -69,7 +69,7 @@ const closeModals = () => {
 }
 
 const saveLog = () => {
-  $fetch('http://localhost:5000/api/logs/', {
+  $fetch('/api/logs/', {
     method: 'POST',
     body: formData
   }).then(response => {
@@ -86,6 +86,25 @@ const saveLog = () => {
       description: err.message
     })
   }).finally(closeModals)
+}
+
+const deleteLog = (log) => {
+	$fetch('/api/logs/' + log.id, {
+		method: 'DELETE'
+	}).then(() => {
+		toast('Erfolg', {
+			description: 'Log erfolgreich gelöscht'
+		})
+
+		const index = logs.value.findIndex(l => l.id === log.id)
+		logs.value.splice(index, 1)
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Löschen des Logs ist ein Fehler aufgetreten'
+		})
+	}).finally(() => {
+		closeModals()
+	})
 }
 
 const currentPage = ref(1)
@@ -205,7 +224,7 @@ watch(logSearchQuery, () => {
     <div v-else class="mx-auto w-full max-w-7xl">
       <ScrollArea class="h-[600px]">
         <div class="flex flex-wrap gap-8 justify-center items-start">
-          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" />
+          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="deleteLog" />
         </div>
       </ScrollArea>
 
