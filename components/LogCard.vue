@@ -50,13 +50,13 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
                 <ContextMenuItem @click="emit('addLogToStack', log)">
                     <Icon name="tabler:plus" />Zu Stack hinzufügen
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('viewLog', user)">
+                <ContextMenuItem @click="emit('viewLog', log)">
                     <Icon name="tabler:eye" />Log anzeigen
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('editLog', user)">
+                <ContextMenuItem @click="emit('editLog', log)">
                     <Icon name="tabler:edit" />Log bearbeiten
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('deleteLog', user)" variant="destructive">
+                <ContextMenuItem @click="emit('deleteLog', log)" variant="destructive">
                     <Icon name="tabler:trash" />Log löschen
                 </ContextMenuItem>
             </ContextMenuContent>
