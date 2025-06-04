@@ -1,5 +1,7 @@
 # THIS IS A WORK IN PROGRESS!
 
+Install [the API](https://github.com/noahhorlacher/stackalog-api) first
+
 ## Roadmap
 
 - Basic CRUD
