@@ -58,8 +58,8 @@ const getStatusIcon = () => {
                                 </TooltipContent>
                             </Tooltip>
                         </CardTitle>
-                        <CardDescription class="text-lg text-foreground break-all">
-                            {{ log.name || 'Unbekannt' }}
+                        <CardDescription class="text-lg text-foreground">
+                            <p>{{ log.name || 'Unbekannt' }}</p>
                             <p class="text-sm text-violet-400">{{ log.value ? 'Fr. ' + log.value.toLocaleString('de-CH', {
                                 minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unbekannt' }}</p>
                         </CardDescription>
