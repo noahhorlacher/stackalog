@@ -70,7 +70,10 @@ watch(() => route.fullPath, () => {
         <SidebarHeader class="flex flex-row items-center">
             <img class="w-16 hidden dark:flex" src="/icon-white.svg" />
             <img class="w-16 flex dark:hidden" src="/icon-black.svg" />
-            <p v-if="open">Stackalog</p>
+            <div v-if="open">
+                <p class="text-sm">Stackalog</p>
+                <p class="text-xs text-muted-foreground">v 1.0.0</p>
+            </div>
         </SidebarHeader>
 
         <SidebarContent>
@@ -80,9 +83,8 @@ watch(() => route.fullPath, () => {
                     <SidebarMenu>
                         <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
                             <SidebarMenuButton asChild
-                                :class="activePath == item.url ? 'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground' : 'hover:bg-muted hover:text-foreground'"
-                                class="transition-colors"
-                            >
+                                :class="activePath == item.url ? 'bg-gradient-to-r from-blue-500 to-violet-500 shadow-lg shadow-violet-500/30 text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground' : 'hover:bg-muted hover:text-foreground'"
+                                class="transition-colors">
                                 <NuxtLink :to="item.url">
                                     <icon :name="item.icon" />
                                     <p v-if="open">{{ item.title }}</p>
@@ -100,17 +102,19 @@ watch(() => route.fullPath, () => {
 
                     <Drawer>
                         <DrawerTrigger class="w-full">
-                            <SidebarMenuButton v-if="open"
-                                class="cursor-pointer hover:bg-muted hover:text-foreground transition-colors">
-                                <div class="flex flex-row items-center justify-start w-full gap-x-2">
-                                    <Avatar class="m-0 p-0">
+                            <div v-if="open" class="cursor-pointer px-3 py-2 rounded-md bg-muted/50 hover:bg-muted hover:text-foreground transition-colors">
+                                <div class="flex flex-row items-center justify-start w-full gap-x-4">
+                                    <Avatar class="m-0 p-0 w-12 h-12">
                                         <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
                                         <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) +
                                             user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                                     </Avatar>
-                                    <p>{{ user.firstName + '&nbsp;' + user.lastName }}</p>
+                                    <div class="text-left">
+                                        <p class="text-sm">{{ user.firstName + '&nbsp;' + user.lastName }}</p>
+                                        <p class="text-muted-foreground text-xs">{{ user.isAdmin ? 'Administrator' : 'Benutzer' }}</p>
+                                    </div>
                                 </div>
-                            </SidebarMenuButton>
+                            </div>
                             <div v-else class="cursor-pointer">
                                 <Avatar class="m-0 p-0">
                                     <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->

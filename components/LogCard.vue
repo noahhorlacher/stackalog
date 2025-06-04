@@ -20,7 +20,7 @@ const emit = defineEmits(['editLog', 'deleteLog', 'addLogToStack'])
                         </CardTitle>
                         <CardDescription class="text-lg text-foreground break-all">
                             {{ log.name || 'Unbekannt' }}
-                            <p class="text-sm text-muted-foreground">{{ log.value ? 'Fr. ' + log.value.toLocaleString('de-CH', {
+                            <p class="text-sm text-violet-400">{{ log.value ? 'Fr. ' + log.value.toLocaleString('de-CH', {
                                 minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unbekannt' }}</p>
                         </CardDescription>
                     </CardHeader>

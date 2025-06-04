@@ -23,11 +23,11 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                             <CardDescription class="flex flex-col gap-y-2">
                                 <div class="flex items-center justify-between">
                                     <p class="text-muted-foreground">Logs</p>
-                                    <p class="text-foreground font-bold">{{ stack.logs.length }}</p>
+                                    <p class="text-foreground font-bold bg-muted/50 px-3 py-0 rounded">{{ stack.logs.length }}</p>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <p class="text-muted-foreground">Wert</p>
-                                    <p class="text-foreground font-bold">Fr. {{stack.logs.reduce((a, log) => a +
+                                    <p class="text-violet-400 font-bold">Fr. {{stack.logs.reduce((a, log) => a +
                                         (log.value || 0),
                                         0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2
                                         })}}</p>
