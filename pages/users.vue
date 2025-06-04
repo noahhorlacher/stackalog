@@ -34,7 +34,7 @@ const formData = reactive({
 
 const users = ref([])
 
-const { data: usersData, error: usersError } = await useFetch('http://localhost:5000/api/users/')
+const { data: usersData, error: usersError } = await useFetch('/api/users/')
 if (usersError.value) {
 	toast('Fehler', {
 		description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'

@@ -1,0 +1,686 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "logs": {
+      "name": "logs",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subcategory": {
+          "autoincrement": false,
+          "name": "subcategory",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "autoincrement": false,
+          "name": "status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assignedTo": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "assignedTo",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "location",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "purchaseDate": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "purchaseDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "value": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "value",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "serialNumber": {
+          "autoincrement": false,
+          "name": "serialNumber",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "serialNumber": {
+          "name": "serialNumber",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_2": {
+          "name": "serialNumber_2",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_3": {
+          "name": "serialNumber_3",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_4": {
+          "name": "serialNumber_4",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_5": {
+          "name": "serialNumber_5",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_6": {
+          "name": "serialNumber_6",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_7": {
+          "name": "serialNumber_7",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_8": {
+          "name": "serialNumber_8",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_9": {
+          "name": "serialNumber_9",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_10": {
+          "name": "serialNumber_10",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_11": {
+          "name": "serialNumber_11",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_12": {
+          "name": "serialNumber_12",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_13": {
+          "name": "serialNumber_13",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_14": {
+          "name": "serialNumber_14",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_15": {
+          "name": "serialNumber_15",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_16": {
+          "name": "serialNumber_16",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_17": {
+          "name": "serialNumber_17",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_18": {
+          "name": "serialNumber_18",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_19": {
+          "name": "serialNumber_19",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_20": {
+          "name": "serialNumber_20",
+          "columns": [
+            "serialNumber"
+          ]
+        },
+        "serialNumber_21": {
+          "name": "serialNumber_21",
+          "columns": [
+            "serialNumber"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "stacks": {
+      "name": "stacks",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "autoincrement": false,
+          "name": "title",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "autoincrement": false,
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isAdmin": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "isAdmin",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedAt": {
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "email": {
+          "name": "email",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_2": {
+          "name": "email_2",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_3": {
+          "name": "email_3",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_4": {
+          "name": "email_4",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_5": {
+          "name": "email_5",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_6": {
+          "name": "email_6",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_7": {
+          "name": "email_7",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_8": {
+          "name": "email_8",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_9": {
+          "name": "email_9",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_10": {
+          "name": "email_10",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_11": {
+          "name": "email_11",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_12": {
+          "name": "email_12",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_13": {
+          "name": "email_13",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_14": {
+          "name": "email_14",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_15": {
+          "name": "email_15",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_16": {
+          "name": "email_16",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_17": {
+          "name": "email_17",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_18": {
+          "name": "email_18",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_19": {
+          "name": "email_19",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_20": {
+          "name": "email_20",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_21": {
+          "name": "email_21",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_22": {
+          "name": "email_22",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_23": {
+          "name": "email_23",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_24": {
+          "name": "email_24",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_25": {
+          "name": "email_25",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_26": {
+          "name": "email_26",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_27": {
+          "name": "email_27",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_28": {
+          "name": "email_28",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_29": {
+          "name": "email_29",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_30": {
+          "name": "email_30",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_31": {
+          "name": "email_31",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_32": {
+          "name": "email_32",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_33": {
+          "name": "email_33",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_34": {
+          "name": "email_34",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_35": {
+          "name": "email_35",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_36": {
+          "name": "email_36",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_37": {
+          "name": "email_37",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_38": {
+          "name": "email_38",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_39": {
+          "name": "email_39",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_40": {
+          "name": "email_40",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_41": {
+          "name": "email_41",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_42": {
+          "name": "email_42",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_43": {
+          "name": "email_43",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_44": {
+          "name": "email_44",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_45": {
+          "name": "email_45",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_46": {
+          "name": "email_46",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_47": {
+          "name": "email_47",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_48": {
+          "name": "email_48",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_49": {
+          "name": "email_49",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_50": {
+          "name": "email_50",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_51": {
+          "name": "email_51",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_52": {
+          "name": "email_52",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_53": {
+          "name": "email_53",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_54": {
+          "name": "email_54",
+          "columns": [
+            "email"
+          ]
+        },
+        "email_55": {
+          "name": "email_55",
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}

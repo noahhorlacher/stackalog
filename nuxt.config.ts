@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  ssr: false,
   vite: {
     plugins: [
       tailwindcss()
@@ -17,6 +16,20 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/color-mode'
   ],
+  nitro: {
+    experimental: {
+      database: true,
+      tasks: true
+    },
+    database: {
+      default: {
+        connector: 'mysql2',
+        options: {
+          name: 'stackalog',
+        }
+      }
+    },
+  },
   shadcn: {
     prefix: ''
   },

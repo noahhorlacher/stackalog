@@ -1,5 +1,11 @@
 # THIS IS A WORK IN PROGRESS!
 
+Powered by:
+- Nuxt 3
+- Drizzle ORM
+- shadcn-vue
+- Tailwind
+
 ## Roadmap
 
 - Basic CRUD with Nitro

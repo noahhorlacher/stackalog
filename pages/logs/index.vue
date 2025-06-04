@@ -11,7 +11,7 @@ const showAddModal = ref(false)
 
 const logs = ref([])
 
-const { data: logsData, error: logsError } = await useFetch('http://localhost:5000/api/logs/')
+const { data: logsData, error: logsError } = await useFetch('/api/logs/')
 
 if(logsError.value){
   toast('Fehler', {

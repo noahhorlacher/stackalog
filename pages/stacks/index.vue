@@ -11,7 +11,8 @@ const showAddModal = ref(false)
 const stacks = ref([])
 
 
-const { data: stacksData, error: stacksError } = await useFetch('http://localhost:5000/api/stacks/')
+const { data: stacksData, error: stacksError } = await useFetch('/api/stacks/')
+
 if (stacksError.value){
 	toast('Fehler', {
 	description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
