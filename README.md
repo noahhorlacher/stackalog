@@ -1,5 +1,11 @@
 # THIS IS A WORK IN PROGRESS!
 
+Stackalog is a Swiss inventory management app, so expect the German language and the Frank currency.
+It allows you to log your inventory items (called logs) and create folders (called stacks).
+You can then **stack** your **logs**, in other words, create folders, where one log can be in many stacks.
+
+## Tech stack
+
 Powered with (insert quirky emoji) by:
 - Nuxt 3
 - Nitro server (integrated in Nuxt)
