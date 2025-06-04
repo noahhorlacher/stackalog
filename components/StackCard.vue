@@ -16,7 +16,7 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
                 <Card class="w-48 hover:bg-muted/50 transition-colors">
                     <div>
                         <CardHeader>
-                            <CardTitle class="mb-4">
+                            <CardTitle class="mb-4 break-all">
                                 <p>{{ stack.title }}</p>
                                 <p class="text-xs mt-2 text-muted-foreground">{{ stack.description }}</p>
                             </CardTitle>
