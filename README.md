@@ -10,8 +10,10 @@ Powered with (insert quirky emoji) by:
 ## Roadmap
 
 - Basic CRUD with Nitro ✅
-- Add logs to stacks
 - Update routes for logs, stacks & users
+- Password generation
+- Add logs to stacks with search
+- User, category & subcategory suggestions with combobox
 - Auth with Nitro
 - Generate PDF report
 - Export CSV & XLSX
