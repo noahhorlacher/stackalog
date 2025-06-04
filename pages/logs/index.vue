@@ -23,7 +23,6 @@ if(logsError.value){
   
 // Form data for add/edit
 const formData = reactive({
-  title: '',
   name: '',
   category: 'Unkategorisiert',
   subcategory: '',
@@ -71,10 +70,14 @@ const closeModals = () => {
 const saveLog = () => {
   $fetch('/api/logs/', {
     method: 'POST',
-    body: formData
+    body: {
+      ...formData,
+      purchaseDate: formData.purchaseDate.toDate(getLocalTimeZone())
+    }
   }).then(response => {
-    const newLog = formData
-    // newLog.id = newId
+    const newLog = { ...formData, id: response.id }
+
+    console.log('New log created:', newLog)
 
     logs.value.push(newLog)
     

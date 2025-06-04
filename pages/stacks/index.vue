@@ -56,26 +56,19 @@ const saveStack = () => {
 	$fetch('/api/stacks/', {
 		method: 'POST',
 		body: formData
-	}).then(() => {
+	}).then(response => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich hinzugefügt'
 		})
 
-		const newLog = {
-			id: Math.max(...stacks.value.map(l => l.id)) + 1,
-			title: formData.title,
-			description: formData.description,
-			logs: []
-		}
+		const newLog = { ...formData, id: response.id }
 
 		stacks.value.push(newLog)
 	}).catch(err => {
 		toast('Fehler', {
 			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'
 		})
-	}).finally(() => {
-		closeModals()
-	})
+	}).finally(closeModals)
 }
 
 const deleteStack = (stack) => {

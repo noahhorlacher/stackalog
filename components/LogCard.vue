@@ -16,21 +16,21 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
                 <Card class="w-60 pt-4 text-center text-sm hover:bg-muted/50 transition-colors">
                     <CardHeader>
                         <CardTitle class="gap-2 mb-4 font-mono bg-muted/80 w-fit mx-auto px-2 py-1 rounded">
-                            <p class="break-all">INV-{{ String(log.id).padStart(5, '0') }}</p>
+                            <p class="break-all">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt' }}</p>
                         </CardTitle>
                         <CardDescription class="text-lg text-foreground break-all">
-                            {{ log.name }}
-                            <p class="text-sm text-muted-foreground">Fr. {{ log.value.toLocaleString('de-CH', {
-                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
+                            {{ log.name || 'Unbekannt' }}
+                            <p class="text-sm text-muted-foreground">{{ log.value ? 'Fr. ' + log.value.toLocaleString('de-CH', {
+                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unbekannt' }}</p>
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div class="flex justify-center gap-2 items-center">
                             <Badge class="text-xs">
-                                {{ log.category }}
+                                {{ log.category || 'Unbekannt' }}
                             </Badge>
                             <Badge variant="secondary" class="text-xs">
-                                {{ log.subcategory }}
+                                {{ log.subcategory || 'Unbekannt' }}
                             </Badge>
                         </div>
 
