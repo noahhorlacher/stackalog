@@ -18,7 +18,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                         <CardHeader>
                             <CardTitle class="mb-4 break-all flex items-center gap-4">
                                 <div
-                                    class="flex items-center gap-2 bg-gradient-to-br from-blue-500 to-violet-500 p-3 rounded-md shadow-md shadow-violet-500/20">
+                                    class="flex items-center bg-gradient-to-br from-cyan-500 to-sky-500 p-3 rounded-md shadow-md shadow-sky-500/20">
                                     <Icon name="tabler:stack" class="text-white" size="24" />
                                 </div>
                                 <div>
@@ -32,9 +32,12 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                     <CardContent class="p-2">
                                         <div class="flex items-center justify-between mb-2">
                                             <p class="text-muted-foreground text-md font-bold">Totaler Wert</p>
-                                            <Icon name="tabler:currency-frank" class="text-violet-400" />
+                                            <div
+                                                class="flex items-center bg-gradient-to-br from-blue-500 to-violet-500 p-1 rounded-md shadow-md shadow-violet-500/20">
+                                                <Icon name="tabler:currency-frank" class="text-white" size="16" />
+                                            </div>
                                         </div>
-                                        <p class="text-violet-400 font-bold text-2xl">Fr. {{stack.logs.reduce((a, log) =>
+                                        <p class="font-bold text-2xl">Fr. {{stack.logs.reduce((a, log) =>
                                             a + (log.value || 0), 0).toLocaleString('de-CH', {
                                                 minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
@@ -46,7 +49,10 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                     <CardContent class="p-2">
                                         <div class="flex items-center justify-between mb-2">
                                             <p class="text-muted-foreground text-xs">Logs</p>
-                                            <Icon name="tabler:logs" class="text-muted-foreground" />
+                                            <div
+                                                class="flex items-center bg-gradient-to-br from-green-500 to-emerald-500 p-1 rounded-md shadow-md shadow-emerald-500/20">
+                                                <Icon name="tabler:logs" class="text-white" size="16" />
+                                            </div>
                                         </div>
 
                                         <p class="text-foreground font-bold text-lg">{{ stack.logs.length }}</p>
