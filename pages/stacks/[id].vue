@@ -1,4 +1,6 @@
 <script setup>
+import { toast } from 'vue-sonner'
+
 useSeoMeta({
   title: 'Stackalog — Stack'
 })
@@ -10,7 +12,7 @@ const stack = ref({
 })
 
 const { params } = useRoute()
-const { data: stackData, error: stackError } = await useFetch(`http://localhost:5000/api/stacks/${params.id}`)
+const { data: stackData, error: stackError } = await useFetch(`/api/stacks/${params.id}`)
 if (stackError.value) {
     toast('Fehler', {
         description: 'Fehler beim Laden des Stacks. Kontaktieren Sie den Support.'

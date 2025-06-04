@@ -1,4 +1,6 @@
 <script setup>
+import { toast } from 'vue-sonner'
+
 useSeoMeta({
     title: 'Stackalog — Log'
 })
@@ -18,14 +20,11 @@ const log = ref({
 })
 
 const { params } = useRoute()
-const { data: logData, error: logError } = await useFetch(`http://localhost:5000/api/logs/${params.id}`)
+const { data: logData, error: logError } = await useFetch(`/api/logs/${params.id}`)
+
 if (logError.value) {
     toast('Fehler', {
         description: 'Fehler beim Laden des Logs. Kontaktieren Sie den Support.'
-    })
-} else if (!logData.value) {
-    toast('Nicht gefunden', {
-        description: 'Der angeforderte Log wurde nicht gefunden.'
     })
 }
 
