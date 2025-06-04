@@ -37,15 +37,15 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog'])
                     </div>
                 </Card>
             </ContextMenuTrigger>
-            <ContextMenuContent align="end">
+            <ContextMenuContent>
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
-                <ContextMenuItem @click="emit('viewLog', user)">
+                <ContextMenuItem @click="emit('viewStack', user)">
                     <Icon name="tabler:eye" />Stack anzeigen
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('editLog', user)">
+                <ContextMenuItem @click="emit('editStack', user)">
                     <Icon name="tabler:edit" />Stack bearbeiten
                 </ContextMenuItem>
-                <ContextMenuItem @click="emit('deleteLog', user)" variant="destructive">
+                <ContextMenuItem @click="emit('deleteStack', user)" variant="destructive">
                     <Icon name="tabler:trash" />Stack löschen
                 </ContextMenuItem>
             </ContextMenuContent>
