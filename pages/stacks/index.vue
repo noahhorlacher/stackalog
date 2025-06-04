@@ -7,6 +7,8 @@ useSeoMeta({
 
 const stackSearchQuery = ref('')
 const showAddModal = ref(false)
+const showEditModal = ref(false)
+const selectedStack = ref(null)
 
 const stacks = ref([])
 
@@ -14,7 +16,7 @@ const stacks = ref([])
 const { data: stacksData, error: stacksError } = await useFetch('/api/stacks/')
 if (stacksError.value){
 	toast('Fehler', {
-	description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
+	description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'
 })
 } else {
 	stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } }).reverse()
@@ -38,7 +40,9 @@ const filteredStacks = computed(() => {
 
 const resetForm = () => {
 	formData.title = ''
+	formData.description = ''
 	formData.logs = []
+	selectedStack.value = null
 }
 
 const openAddModal = () => {
@@ -46,8 +50,17 @@ const openAddModal = () => {
 	showAddModal.value = true
 }
 
+const openEditModal = stack => {
+	resetForm()
+	showEditModal.value = true
+	selectedStack.value = stack.id
+	formData.title = stack.title
+	formData.description = stack.description
+}
+
 const closeModals = () => {
 	showAddModal.value = false
+	showEditModal.value = false
 	resetForm()
 }
 
@@ -70,23 +83,43 @@ const saveStack = () => {
 	}).finally(closeModals)
 }
 
-const deleteStack = (stack) => {
-	$fetch('/api/stacks/' + stack.id, {
+const deleteStack = stack => {
+	$fetch('/api/stacks/' + stack.value.id, {
 		method: 'DELETE'
 	}).then(() => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich gelöscht'
 		})
 
-		const index = stacks.value.findIndex(s => s.id === stack.id)
+		const index = stacks.value.findIndex(s => s.id === stack.value.id)
 		stacks.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
 			description: err.message || 'Beim Löschen des Stacks ist ein Fehler aufgetreten'
 		})
-	}).finally(() => {
-		closeModals()
-	})
+	}).finally(closeModals)
+}
+
+const updateStack = () => {
+	console.log('Updating stack:', selectedStack.value, formData)
+
+	$fetch('/api/stacks/' + selectedStack.value, {
+		method: 'PUT',
+		body: formData
+	}).then(() => {
+		toast('Erfolg', {
+			description: 'Stack erfolgreich aktualisiert'
+		})
+
+		const index = stacks.value.findIndex(s => s.id === selectedStack.value)
+		if (index !== -1) {
+			stacks.value[index] = { ...stacks.value[index], ...formData }
+		}
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Aktualisieren des Stacks ist ein Fehler aufgetreten'
+		})
+	}).finally(closeModals)
 }
 
 const currentPage = ref(1)
@@ -148,7 +181,7 @@ watch(stackSearchQuery, () => {
 	<!-- stacks -->
 	<ScrollArea v-else class="h-[600px]">
 		<div class="flex flex-wrap gap-8 justify-center items-start">
-			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" @deleteStack="deleteStack" />
+			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" @deleteStack="deleteStack" @editStack="openEditModal" />
 		</div>
 	</ScrollArea>
 
@@ -188,6 +221,32 @@ watch(stackSearchQuery, () => {
 						Abbrechen
 					</Button>
 					<Button type="submit">Stack hinzufügen</Button>
+				</DialogFooter>
+			</form>
+		</DialogContent>
+	</Dialog>
+
+	<!-- Edit Stack Dialog -->
+	<Dialog v-model:open="showEditModal">
+		<DialogContent class="sm:max-w-md">
+			<DialogHeader>
+				<DialogTitle>Stack bearbeiten</DialogTitle>
+			</DialogHeader>
+			<form @submit.prevent="updateStack" class="space-y-4">
+				<div class="space-y-2">
+					<Label for="title">Titel</Label>
+					<Input id="title" v-model="formData.title" required placeholder="Stack Titel eingeben" />
+				</div>
+				<div class="space-y-2">
+					<Label for="description">Beschreibung</Label>
+					<Textarea id="description" v-model="formData.description" required
+						placeholder="Stack beschreiben" />
+				</div>
+				<DialogFooter class="gap-2">
+					<Button type="button" variant="outline" @click="closeModals">
+						Abbrechen
+					</Button>
+					<Button type="submit">Änderungen speichern</Button>
 				</DialogFooter>
 			</form>
 		</DialogContent>
