@@ -10,9 +10,9 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    const result = await useDrizzle().update(tables.stacks)
+    const result = await useDrizzle().update(tables.users)
         .set(body)
-        .where(eq(tables.stacks.id, id))
+        .where(eq(tables.users.id, id))
 
     return result[0]
 })

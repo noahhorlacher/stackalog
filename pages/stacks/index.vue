@@ -84,14 +84,14 @@ const saveStack = () => {
 }
 
 const deleteStack = stack => {
-	$fetch('/api/stacks/' + stack.value.id, {
+	$fetch('/api/stacks/' + stack.id, {
 		method: 'DELETE'
 	}).then(() => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich gelöscht'
 		})
 
-		const index = stacks.value.findIndex(s => s.id === stack.value.id)
+		const index = stacks.value.findIndex(s => s.id === stack.id)
 		stacks.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
