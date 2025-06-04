@@ -40,7 +40,7 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
                         </div>
                         <div class="flex justify-between items-center text-xs">
                             <p class="text-muted-foreground">Ort</p>
-                            <p class="font-bold">{{ log.location }}</p>
+                            <p class="font-bold">{{ log.location || 'Unbekannt' }}</p>
                         </div>
                     </CardContent>
                 </Card>

@@ -52,7 +52,7 @@ const resetForm = () => {
   formData.subcategory = ''
   formData.status = 'Verfügbar'
   formData.assignedTo = '—'
-  formData.location = 'Unknown'
+  formData.location = 'Unbekannt'
   formData.purchaseDate = parseDate(new Date().toISOString().split('T')[0])
   formData.value = 0
   formData.serialNumber = ''
