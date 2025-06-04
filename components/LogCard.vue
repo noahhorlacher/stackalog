@@ -7,6 +7,36 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['editLog', 'deleteLog', 'addLogToStack'])
+
+const getStatusColor = () => {
+    switch (props.log.status) {
+        case 'Verfügbar':
+            return 'text-green-400';
+        case 'In Reparatur':
+            return 'text-yellow-400';
+        case 'Verwendet':
+            return 'text-violet-400';
+        case 'Defekt':
+            return 'text-red-400';
+        default:
+            return 'text-muted-foreground';
+    }
+}
+
+const getStatusIcon = () => {
+    switch (props.log.status) {
+        case 'Verfügbar':
+            return 'tabler:check';
+        case 'In Reparatur':
+            return 'tabler:tools';
+        case 'Verwendet':
+            return 'tabler:clock';
+        case 'Defekt':
+            return 'tabler:alert-triangle';
+        default:
+            return 'tabler:question-mark';
+    }
+}
 </script>
 
 <template>
@@ -15,8 +45,18 @@ const emit = defineEmits(['editLog', 'deleteLog', 'addLogToStack'])
             <ContextMenuTrigger class="w-fit">
                 <Card class="w-60 pt-4 text-center text-sm hover:bg-muted/50 transition-colors">
                     <CardHeader>
-                        <CardTitle class="gap-2 mb-4 font-mono bg-muted/80 w-fit mx-auto px-2 py-1 rounded">
-                            <p class="break-all">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt' }}</p>
+                        <CardTitle class="mb-4 gap-2 flex justify-between items-center w-full">
+                            <p class="break-all font-mono bg-muted/80 px-2 py-1 rounded">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt' }}</p>
+                            <Tooltip>
+                                <TooltipTrigger class="cursor-pointer">
+                                    <div :class="['font-light p-2 pr-0', getStatusColor() ]">
+                                        <Icon :name="getStatusIcon()" />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{{ log.status || 'Unbekannt' }}</p>
+                                </TooltipContent>
+                            </Tooltip>
                         </CardTitle>
                         <CardDescription class="text-lg text-foreground break-all">
                             {{ log.name || 'Unbekannt' }}

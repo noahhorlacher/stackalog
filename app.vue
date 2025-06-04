@@ -15,10 +15,12 @@ watch(colorMode, () => {
 
 <template>
   <div vaul-drawer-wrapper class="bg-background">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-    <Toaster />
+    <TooltipProvider>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <Toaster />
+    </TooltipProvider>
   </div>
 </template>
 
