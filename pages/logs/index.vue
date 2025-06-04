@@ -12,13 +12,12 @@ const showAddModal = ref(false)
 const logs = ref([])
 
 const { data: logsData, error: logsError } = await useFetch('/api/logs/')
-
 if(logsError.value){
   toast('Fehler', {
     description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
   })
 } else {
-  logs.value = logsData.value
+  logs.value = logsData.value.reverse()
 }
   
 // Form data for add/edit
@@ -77,9 +76,7 @@ const saveLog = () => {
   }).then(response => {
     const newLog = { ...formData, id: response.id }
 
-    console.log('New log created:', newLog)
-
-    logs.value.push(newLog)
+    logs.value.unshift(newLog)
     
     toast('Erfolg', {
       description: 'Log erfolgreich hinzugefügt'
@@ -263,21 +260,11 @@ watch(logSearchQuery, () => {
         </div>
         <div class="space-y-2">
           <Label for="category">Kategorie</Label>
-          <Select v-model="formData.category" id="category" required>
-            <SelectTrigger>
-              <SelectValue placeholder="Kategorie auswählen" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Unkategorisiert">Unkategorisiert</SelectItem>
-              <SelectItem value="Hardware">Hardware</SelectItem>
-              <SelectItem value="Software">Software</SelectItem>
-              <SelectItem value="Netzwerk">Netzwerk</SelectItem>
-            </SelectContent>
-          </Select>
+          <Input id="category" v-model="formData.category" placeholder="Kategorie eingeben" />
         </div>
         <div class="space-y-2">
           <Label for="subcategory">Unterkategorie</Label>
-          <Input id="subcategory" v-model="formData.subcategory" placeholder="Optional Unterkategorie eingeben" />
+          <Input id="subcategory" v-model="formData.subcategory" placeholder="Unterkategorie eingeben" />
         </div>
         <div class="space-y-2">
           <Label for="status">Status</Label>

@@ -12,13 +12,12 @@ const stacks = ref([])
 
 
 const { data: stacksData, error: stacksError } = await useFetch('/api/stacks/')
-
 if (stacksError.value){
 	toast('Fehler', {
 	description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
 })
 } else {
-	stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } })
+	stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } }).reverse()
 }
 
 // Form data for add/edit
@@ -63,7 +62,7 @@ const saveStack = () => {
 
 		const newLog = { ...formData, id: response.id }
 
-		stacks.value.push(newLog)
+		stacks.value.unshift(newLog)
 	}).catch(err => {
 		toast('Fehler', {
 			description: err.message || 'Beim Hinzufügen des Stacks ist ein Fehler aufgetreten'

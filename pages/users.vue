@@ -28,8 +28,7 @@ const showFormModal = computed({
 const formData = reactive({
 	name: '',
 	email: '',
-	role: 'Viewer',
-	status: 'Active'
+	role: 'Viewer'
 })
 
 const users = ref([])
@@ -40,7 +39,7 @@ if (usersError.value) {
 		description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'
 	})
 } else {
-	users.value = usersData.value
+	users.value = usersData.value.reverse()
 }
 
 // Computed properties
@@ -100,7 +99,7 @@ const saveUser = () => {
 			status: formData.status,
 			joinedAt: new Date().toISOString().split('T')[0]
 		}
-		users.value.push(newUser)
+		users.value.unshift(newUser)
 	} else if (showEditModal.value) {
 		// Edit existing user
 		const index = users.value.findIndex(u => u.id === selectedUser.value.id)
