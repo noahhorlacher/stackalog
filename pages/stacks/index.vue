@@ -171,7 +171,7 @@ watch(stackSearchQuery, () => {
 				</div>
 				<CardDescription>
 					<p class="text-3xl font-bold text-blue-400 mb-2">{{ stacks.length }}</p>
-					<p class="text-xs">von allen Kategorien</p>
+					<p class="text-xs">Gesamtanzahl der Ordner</p>
 				</CardDescription>
 			</CardContent>
 		</Card>
@@ -205,6 +205,7 @@ watch(stackSearchQuery, () => {
 		</Card>
 	</div>
 
+	<!-- search -->
 	<Card class="mb-12">
 		<CardContent>
 			<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
