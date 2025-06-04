@@ -13,25 +13,45 @@ const emit = defineEmits(['editStack', 'deleteStack'])
     <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
-                <Card class="w-48 hover:bg-muted/50 transition-colors">
+                <Card class="w-86 hover:bg-muted/50 transition-colors">
                     <div>
                         <CardHeader>
-                            <CardTitle class="mb-4 break-all">
-                                <p>{{ stack.title }}</p>
-                                <p class="text-xs mt-2 text-muted-foreground">{{ stack.description }}</p>
+                            <CardTitle class="mb-4 break-all flex items-center gap-4">
+                                <div
+                                    class="flex items-center gap-2 bg-gradient-to-br from-blue-500 to-violet-500 p-3 rounded-md shadow-md shadow-violet-500/20">
+                                    <Icon name="tabler:stack" class="text-white" size="24" />
+                                </div>
+                                <div>
+                                    <p class="text-lg">{{ stack.title }}</p>
+                                    <p class="text-xs font-light text-muted-foreground">{{ stack.description }}</p>
+                                </div>
                             </CardTitle>
-                            <CardDescription class="flex flex-col gap-y-2">
-                                <div class="flex items-center justify-between">
-                                    <p class="text-muted-foreground">Logs</p>
-                                    <p class="text-foreground font-bold bg-muted/50 px-3 py-0 rounded">{{ stack.logs.length }}</p>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <p class="text-muted-foreground">Wert</p>
-                                    <p class="text-violet-400 font-bold">Fr. {{stack.logs.reduce((a, log) => a +
-                                        (log.value || 0),
-                                        0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2
-                                        })}}</p>
-                                </div>
+                            <CardDescription class="flex flex-col gap-4">
+
+                                <Card class="bg-muted p-2">
+                                    <CardContent class="p-2">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <p class="text-muted-foreground text-md font-bold">Totaler Wert</p>
+                                            <Icon name="tabler:currency-frank" class="text-violet-400" />
+                                        </div>
+                                        <p class="text-violet-400 font-bold text-2xl">Fr. {{stack.logs.reduce((a, log) =>
+                                            a + (log.value || 0), 0).toLocaleString('de-CH', {
+                                                minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                            })}}</p>
+                                    </CardContent>
+                                </Card>
+
+                                <Card class="bg-muted p-2">
+                                    <CardContent class="p-2">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <p class="text-muted-foreground text-xs">Logs</p>
+                                            <Icon name="tabler:logs" class="text-muted-foreground" />
+                                        </div>
+
+                                        <p class="text-foreground font-bold text-lg">{{ stack.logs.length }}</p>
+                                    </CardContent>
+                                </Card>
                             </CardDescription>
                         </CardHeader>
                     </div>
