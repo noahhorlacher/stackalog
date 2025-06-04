@@ -45,7 +45,7 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
                     </CardContent>
                 </Card>
             </ContextMenuTrigger>
-            <ContextMenuContent align="end">
+            <ContextMenuContent>
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
                 <ContextMenuItem @click="emit('addLogToStack', log)">
                     <Icon name="tabler:plus" />Zu Stack hinzufügen
