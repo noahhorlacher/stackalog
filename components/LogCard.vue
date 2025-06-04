@@ -6,7 +6,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
+const emit = defineEmits(['editLog', 'deleteLog', 'addLogToStack'])
 </script>
 
 <template>
@@ -49,9 +49,6 @@ const emit = defineEmits(['viewLog', 'editLog', 'deleteLog', 'addLogToStack'])
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
                 <ContextMenuItem @click="emit('addLogToStack', log)">
                     <Icon name="tabler:plus" />Zu Stack hinzufügen
-                </ContextMenuItem>
-                <ContextMenuItem @click="emit('viewLog', log)">
-                    <Icon name="tabler:eye" />Log anzeigen
                 </ContextMenuItem>
                 <ContextMenuItem @click="emit('editLog', log)">
                     <Icon name="tabler:edit" />Log bearbeiten

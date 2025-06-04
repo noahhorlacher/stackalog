@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     'shadcn-nuxt',
     '@nuxtjs/google-fonts',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    'nuxt-auth-utils'
   ],
   ssr: false,
   nitro: {

@@ -6,11 +6,11 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['viewUser', 'editUser', 'deleteUser'])
+const emit = defineEmits(['editUser', 'deleteUser'])
 </script>
 
 <template>
-    <NuxtLink>
+    <NuxtLink :to="`/users/${user.id}`" class="w-fit">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
                 <Card class="w-60 py-4 text-center text-sm hover:bg-muted/50 transition-colors">
@@ -34,9 +34,6 @@ const emit = defineEmits(['viewUser', 'editUser', 'deleteUser'])
             </ContextMenuTrigger>
             <ContextMenuContent>
                 <ContextMenuLabel class="text-xs text-muted-foreground">Aktionen</ContextMenuLabel>
-                <ContextMenuItem @click="emit('viewUser', user)">
-                    <Icon name="tabler:eye" />Benutzer anzeigen
-                </ContextMenuItem>
                 <ContextMenuItem @click="emit('editUser', user)">
                     <Icon name="tabler:edit" />Benutzer bearbeiten
                 </ContextMenuItem>
