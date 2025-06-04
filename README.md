@@ -1,10 +1,8 @@
 # THIS IS A WORK IN PROGRESS!
 
-Install [the API](https://github.com/noahhorlacher/stackalog-api) first
-
 ## Roadmap
 
-- Basic CRUD
+- Basic CRUD with Nitro
 - Auth
 - Add logs to stacks
 - Generate PDF report
