@@ -140,7 +140,7 @@ watch(logSearchQuery, () => {
     <Card class="hover:shadow-md shadow-blue-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Total</p>
+          <p class="text-sm text-muted-foreground">Totale Logs</p>
           <Icon name="tabler:logs" class="text-blue-400" size="25" />
         </div>
         <CardDescription>

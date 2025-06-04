@@ -12,6 +12,16 @@ const selectedStack = ref(null)
 
 const stacks = ref([])
 
+const logs = ref([])
+
+const { data: logsData, error: logsError } = await useFetch('/api/logs/')
+if(logsError.value){
+  toast('Fehler', {
+    description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
+  })
+} else {
+  logs.value = logsData.value.reverse()
+}
 
 const { data: stacksData, error: stacksError } = await useFetch('/api/stacks/')
 if (stacksError.value){
@@ -149,6 +159,50 @@ watch(stackSearchQuery, () => {
 	<div class="space-y-2 mb-6">
 		<h1 class="text-3xl font-bold">Stacks</h1>
 		<p class="text-muted-foreground">Ihre Ordner</p>
+	</div>
+
+	<!-- stats -->
+	<div class="mb-8 grid grid-cols-3 gap-4">
+		<Card class="hover:shadow-md shadow-blue-600 hover:-translate-y-[3px] transition-all">
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Totale Stacks</p>
+					<Icon name="tabler:stack" class="text-blue-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-blue-400 mb-2">{{ stacks.length }}</p>
+					<p class="text-xs">von allen Kategorien</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+
+		<Card class="hover:shadow-md shadow-emerald-600 hover:-translate-y-[3px] transition-all">
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Totale Logs</p>
+					<Icon name="tabler:logs" class="text-emerald-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-emerald-400 mb-2">{{logs.length}}
+					</p>
+					<p class="text-xs">In allen Kategorien</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
+
+		<Card class="hover:shadow-md shadow-violet-600 hover:-translate-y-[3px] transition-all">
+			<CardContent>
+				<div class="flex justify-between font-bold items-center mb-2">
+					<p class="text-sm text-muted-foreground">Totaler Wert</p>
+					<Icon name="tabler:currency-frank" class="text-violet-400" size="25" />
+				</div>
+				<CardDescription>
+					<p class="text-3xl font-bold text-violet-400 mb-2">Fr. {{logs.reduce((a, log) => a + (log.value || 0),
+						0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
+					<p class="text-xs">Vermögensbewertung aller Logs</p>
+				</CardDescription>
+			</CardContent>
+		</Card>
 	</div>
 
 	<Card class="mb-12">
