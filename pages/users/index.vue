@@ -269,15 +269,24 @@ function copyPassword() {
 							placeholder="Passwort"
 							class="pl-10 pr-12"
 						/>
-						<Button
-							type="button"
-							variant="ghost"
-							class="absolute right-0"
-							@click="copyPassword"
-							tabindex="-1"
-						>
-							<Icon name="tabler:copy" class="h-4 w-4" />
-						</Button>
+						<div class="absolute right-0 flex items-center">
+							<Button
+								type="button"
+								variant="ghost"
+								@click="generateSafePassword(12)"
+								tabindex="-1"
+							>
+								<Icon name="tabler:refresh" class="h-4 w-4" />
+							</Button>
+							<Button
+								type="button"
+								variant="ghost"
+								@click="copyPassword"
+								tabindex="-1"
+							>
+								<Icon name="tabler:copy" class="h-4 w-4" />
+							</Button>
+						</div>
 					</div>
 					<p class="text-muted-foreground text-sm">Leiten Sie das Passwort an den Benutzer weiter. Es kann später zurückgesetzt, jedoch nicht mehr abgerufen werden.</p>
 				</div>
