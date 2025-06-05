@@ -34,7 +34,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                             <p class="text-muted-foreground text-md font-bold">Totaler Wert</p>
                                             <div
                                                 class="flex items-center bg-gradient-to-br from-blue-500 to-violet-500 p-1 rounded-md shadow-md shadow-violet-500/20">
-                                                <Icon name="tabler:currency-frank" class="text-white" size="16" />
+                                                <Icon name="tabler:wallet" class="text-white" size="16" />
                                             </div>
                                         </div>
                                         <p class="font-bold text-2xl">Fr. {{stack.logs.reduce((a, log) =>

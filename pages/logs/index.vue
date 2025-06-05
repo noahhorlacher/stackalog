@@ -208,59 +208,30 @@ watch(logSearchQuery, () => {
 
   <!-- stats -->
   <div class="mb-8 grid grid-cols-4 gap-4">
-    <Card class="hover:shadow-md bg-gradient-to-br from-cyan-600/5 to-blue-600/5 shadow-blue-600 hover:-translate-y-[3px] transition-all">
-      <CardContent>
-        <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Totale Logs</p>
-          <Icon name="tabler:logs" class="text-blue-400" size="25" />
-        </div>
-        <CardDescription>
-          <p class="text-3xl font-bold text-blue-400 mb-2">{{ logs.length }}</p>
-          <p class="text-xs">In allen Kategorien</p>
-        </CardDescription>
-      </CardContent>
-    </Card>
+    <StatCard icon="tabler:logs">
+			<template #title>Totale Logs</template>
+			<template #description>In allen Kategorien</template>
+			<template #value>{{ logs.length }}</template>
+		</StatCard>
 
-    <Card class="hover:shadow-md bg-gradient-to-br from-green-600/5 to-emerald-600/5 shadow-emerald-600 hover:-translate-y-[3px] transition-all">
-      <CardContent>
-        <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Verfügbar</p>
-          <Icon name="tabler:graph" class="text-emerald-400" size="25" />
-        </div>
-        <CardDescription>
-          <p class="text-3xl font-bold text-emerald-400 mb-2">{{logs.filter(l => l.status === "Verfügbar").length}}
-          </p>
-          <p class="text-xs">Bereit für den Einsatz</p>
-        </CardDescription>
-      </CardContent>
-    </Card>
+    <StatCard color="green" icon="tabler:graph">
+			<template #title>Verfügbar</template>
+			<template #description>Bereit für den Einsatz</template>
+			<template #value>{{ logs.filter(l => l.status === "Verfügbar").length }}</template>
+		</StatCard>
 
-    <Card class="hover:shadow-md bg-gradient-to-br from-orange-600/5 to-yellow-600/5 shadow-yellow-600 hover:-translate-y-[3px] transition-all">
-      <CardContent>
-        <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Defekt</p>
-          <Icon name="tabler:users" class="text-yellow-400" size="25" />
-        </div>
-        <CardDescription>
-          <p class="text-3xl font-bold text-yellow-400 mb-2">{{logs.filter(l => ["Defekt", "In Reparatur"].includes(l.status)).length}}</p>
-          <p class="text-xs">Defekt oder in Reparatur</p>
-        </CardDescription>
-      </CardContent>
-    </Card>
+    <StatCard color="yellow" icon="tabler:users">
+			<template #title>Defekt</template>
+			<template #description>Defekt oder in Reparatur</template>
+			<template #value>{{ logs.filter(l => ["Defekt", "In Reparatur"].includes(l.status)).length }}</template>
+		</StatCard>
 
-    <Card class="hover:shadow-md bg-gradient-to-br from-indigo-600/5 to-violet-600/5 shadow-violet-600 hover:-translate-y-[3px] transition-all">
-      <CardContent>
-        <div class="flex justify-between font-bold items-center mb-2">
-          <p class="text-sm text-muted-foreground">Totaler Wert</p>
-          <Icon name="tabler:currency-frank" class="text-violet-400" size="25" />
-        </div>
-        <CardDescription>
-          <p class="text-3xl font-bold text-violet-400 mb-2">Fr. {{logs.reduce((a, log) => a + (log.value || 0),
-            0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
-          <p class="text-xs">Vermögensbewertung</p>
-        </CardDescription>
-      </CardContent>
-    </Card>
+    <StatCard color="violet" icon="tabler:wallet">
+			<template #title>Totaler Wert</template>
+			<template #description>Vermögensbewertung</template>
+			<template #value>Fr. {{ logs.reduce((a, log) => a + (log.value || 0),
+            0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</template>
+		</StatCard>
   </div>
 
   <!-- search -->

@@ -77,11 +77,11 @@ watch(() => route.fullPath, () => {
         </SidebarHeader>
 
         <SidebarContent>
-            <SidebarGroup v-for="menuGroup in menuGroups">
+            <SidebarGroup v-for="(menuGroup, index) in menuGroups" :key="`menugroup-${index}`">
                 <SidebarGroupLabel v-if="open">{{ menuGroup.title }}</SidebarGroupLabel>
                 <SidebarGroupContent>
                     <SidebarMenu>
-                        <SidebarMenuItem v-for="item of menuGroup.items" :key="item.title">
+                        <SidebarMenuItem v-for="(item, index) of menuGroup.items" :key="`sidebar-item-${index}`">
                             <SidebarMenuButton asChild
                                 :class="activePath == item.url ? 'bg-gradient-to-r from-blue-500 to-violet-500 shadow-lg shadow-violet-500/30 text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground' : 'hover:bg-muted hover:text-foreground'"
                                 class="transition-colors">
@@ -105,7 +105,6 @@ watch(() => route.fullPath, () => {
                             <div v-if="open" class="cursor-pointer px-3 py-2 rounded-md bg-muted/50 hover:bg-muted hover:text-foreground transition-colors">
                                 <div class="flex flex-row items-center justify-start w-full gap-x-4">
                                     <Avatar class="m-0 p-0 w-12 h-12">
-                                        <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
                                         <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) +
                                             user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                                     </Avatar>
@@ -117,7 +116,6 @@ watch(() => route.fullPath, () => {
                             </div>
                             <div v-else class="cursor-pointer">
                                 <Avatar class="m-0 p-0">
-                                    <!-- <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" /> -->
                                     <AvatarFallback class="text-sm">{{ user.firstName.toUpperCase().charAt(0) +
                                         user.lastName.toUpperCase().charAt(0) }}</AvatarFallback>
                                 </Avatar>
