@@ -55,7 +55,7 @@ useSeoMeta({
                 </AlertDialogContent>
                 </AlertDialog>
             </div>
-            <Input id="password" type="password" required />
+            <Input id="password" type="password" placeholder="••••••••" required />
           </div>
           <Button type="submit" class="w-full">
             Anmelden
