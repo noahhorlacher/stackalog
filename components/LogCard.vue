@@ -43,12 +43,12 @@ const getStatusIcon = () => {
     <NuxtLink :to="`/logs/${log.id}`">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
-                <Card class="w-86 pt-4 text-center text-sm hover:bg-muted/50 transition-all shadow-foreground/8 shadow-sm hover:shadow-xl">
+                <Card class="w-86 pt-4 text-center text-sm hover:bg-muted/50 transition-all group shadow-foreground/8 shadow-sm hover:shadow-xl">
                     <CardHeader>
                         <CardTitle class="mb-4 gap-2 flex justify-between items-center w-full">
-                            <div class="flex items-center gap-2 font-mono bg-muted/80 px-2 py-1 rounded">
-                                <div :class="getStatusColor()" class="w-2 h-2 animate-pulse bg-current rounded-full">
-                                </div>
+                            <div class="relative flex items-center gap-2 font-mono bg-muted/80 px-2 py-1 rounded">
+                                <div :class="getStatusColor()" class="absolute animate-pulse group-hover:animate-none left-2 w-2 h-2 bg-current rounded-full"></div>
+                                <div :class="getStatusColor()" class="w-2 h-2 animate-pulse group-hover:animate-ping bg-current rounded-full"></div>
                                 <p class="break-all">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt'
                                     }}</p>
                             </div>
