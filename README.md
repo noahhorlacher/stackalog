@@ -21,10 +21,14 @@ Powered with (insert quirky emoji) by:
 - Add logs to stacks with search
 - User, category & subcategory suggestions with combobox
 - Auth with Nitro
-- Generate PDF report
+- Add filters to search
+- Generate PDF report (from stack or log search)
 - Export CSV & XLSX
 - Generate barcode
 - Generate QR code
+- Update FAQ and create documentation
+- Create promotional website
+- Create video tutorials
 
 ## Setup
 
