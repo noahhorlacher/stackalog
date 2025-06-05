@@ -13,7 +13,7 @@ const emit = defineEmits(['editUser', 'deleteUser'])
     <NuxtLink :to="`/users/${user.id}`" class="w-fit">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
-                <Card class="w-60 py-4 text-center text-sm hover:bg-muted/50 transition-colors">
+                <Card class="w-60 py-4 text-center text-sm hover:bg-muted/50 transition-all shadow-foreground/8 shadow-sm hover:shadow-xl">
                     <CardHeader>
                         <CardTitle class="flex flex-col items-center gap-2">
                             <Avatar>

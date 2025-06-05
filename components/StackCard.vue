@@ -13,7 +13,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
     <NuxtLink v-if="stack.id !== undefined && stack.id !== null" :to="`/stacks/${stack.id}`">
         <ContextMenu>
             <ContextMenuTrigger class="w-fit">
-                <Card class="w-86 hover:bg-muted/50 transition-colors">
+                <Card class="w-86 hover:bg-muted/50 transition-all shadow-foreground/8 shadow-sm hover:shadow-xl">
                     <div>
                         <CardHeader>
                             <CardTitle class="mb-4 break-all flex items-center gap-4">
