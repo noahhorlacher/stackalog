@@ -26,28 +26,21 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                     <p class="text-xs font-light text-muted-foreground">{{ stack.description }}</p>
                                 </div>
                             </CardTitle>
-                            <CardDescription class="flex flex-col gap-4">
-
-                                <Card class="bg-muted p-2">
-                                    <CardContent class="p-2">
-                                        <div class="flex items-center justify-between mb-2">
+                            <CardDescription class="flex flex-col gap-0">
+                                        <div class="flex items-center justify-between">
                                             <p class="text-muted-foreground text-md font-bold">Totaler Wert</p>
                                             <div
                                                 class="flex items-center bg-gradient-to-br from-blue-500 to-violet-500 p-1 rounded-md shadow-md shadow-violet-500/20">
                                                 <Icon name="tabler:wallet" class="text-white" size="16" />
                                             </div>
                                         </div>
-                                        <p class="font-bold text-2xl">Fr. {{stack.logs.reduce((a, log) =>
+                                        <p class="font-bold text-2xl text-foreground">Fr. {{stack.logs.reduce((a, log) =>
                                             a + (log.value || 0), 0).toLocaleString('de-CH', {
                                                 minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                             })}}</p>
-                                    </CardContent>
-                                </Card>
 
-                                <Card class="bg-muted p-2">
-                                    <CardContent class="p-2">
-                                        <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center justify-between mt-2">
                                             <p class="text-muted-foreground text-xs">Logs</p>
                                             <div
                                                 class="flex items-center bg-gradient-to-br from-green-500 to-emerald-500 p-1 rounded-md shadow-md shadow-emerald-500/20">
@@ -56,8 +49,6 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                         </div>
 
                                         <p class="text-foreground font-bold text-lg">{{ stack.logs.length }}</p>
-                                    </CardContent>
-                                </Card>
                             </CardDescription>
                         </CardHeader>
                     </div>
