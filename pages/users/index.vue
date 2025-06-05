@@ -291,7 +291,7 @@ watch(searchQuery, () => {
 		<AlertDialogContent>
 			<AlertDialogHeader>
 				<AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
-				<p>Sind Sie sich sicher, dass Sie <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName
+				<p>Sind Sie sich sicher, dass Sie den Benutzer <strong>{{ selectedUser?.firstName + ' ' + selectedUser?.lastName
 				}}</strong>
 					löschen möchten?</p>
 				<AlertDialogDescription>
