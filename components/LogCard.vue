@@ -53,14 +53,15 @@ const getStatusIcon = () => {
                                     }}</p>
                             </div>
                             <div class="flex justify-center gap-2 items-center">
-                                <Badge v-if="log.category === 'Unkategorisiert'" class="text-xs">
+                                <Badge v-if="!log.category || log.category === 'Unkategorisiert'" class="text-xs">
                                     {{ log.category || 'Unkategorisiert' }}
+                                </Badge>
+                                <Badge v-else-if="!log.subcategory" variant="secondary" class="text-xs">
+                                    {{ log.category }} 
                                 </Badge>
                                 <div v-else>
                                     <Badge variant="secondary" class="text-xs">
-                                        <p>{{ log.category || 'Unkategorisiert' }}</p>
-                                        <Icon name="tabler:chevron-right" />
-                                        <p>{{ log.subcategory || 'Nicht Unterkategorisiert' }}</p>
+                                        <p>{{ log.subcategory }}</p>
                                     </Badge>
                                 </div>
                             </div>
@@ -68,7 +69,7 @@ const getStatusIcon = () => {
                         <CardDescription class="text-lg text-foreground mt-4">
                             <Tooltip>
                                 <TooltipTrigger class="cursor-pointer">
-                                    <div :class="['font-light p-2 w-12 h-12 items-center flex justify-center rounded-lg shadow-current/30 shadow-md', getStatusColor()]">
+                                    <div :class="['font-light p-2 w-12 h-12 items-center flex justify-center rounded-lg shadow-current/30 shadow-lg', getStatusColor()]">
                                         <Icon class="text-black" :name="getStatusIcon()" />
                                     </div>
                                 </TooltipTrigger>
