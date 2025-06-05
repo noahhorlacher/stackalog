@@ -83,7 +83,7 @@ const closeModals = () => {
 const saveStack = () => {
 	$fetch('/api/stacks/', {
 		method: 'POST',
-		body: formData
+		body: { ...formData }
 	}).then(response => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich hinzugefügt'

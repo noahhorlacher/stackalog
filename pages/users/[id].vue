@@ -39,8 +39,8 @@ user.value = userData.value
     </Breadcrumb>
 
     <div class="space-y-2 my-6">
-        <Avatar>
-            <AvatarFallback>{{ user.firstName.charAt(0).toUpperCase() +
+        <Avatar class="h-16 w-16 mb-4">
+            <AvatarFallback class="text-xl">{{ user.firstName.charAt(0).toUpperCase() +
                 user.lastName.charAt(0).toUpperCase() }}
             </AvatarFallback>
         </Avatar>

@@ -46,6 +46,7 @@ const filteredUsers = computed(() => {
 
 const openAddModal = () => {
 	resetForm()
+	generateSafePassword()
 	showAddModal.value = true
 }
 
@@ -65,37 +66,25 @@ const openDeleteModal = user => {
 }
 
 const saveUser = () => {
-	if (showAddModal.value) {
-		// Add new user
-		const newUser = {
-			id: Math.max(...users.value.map(u => u.id)) + 1,
-			firstName: formData.firstName,
-			lastName: formData.lastName,
-			email: formData.email,
-			isAdmin: formData.isAdmin,
-			status: formData.status,
-			joinedAt: new Date().toISOString().split('T')[0]
-		}
-		users.value.unshift(newUser)
-	} else if (showEditModal.value) {
-		// Edit existing user
-		const index = users.value.findIndex(u => u.id === selectedUser.value.id)
-		if (index !== -1) {
-			users.value[index] = {
-				...users.value[index],
-				firstName: formData.firstName,
-				lastName: formData.lastName,
-				email: formData.email,
-				isAdmin: formData.isAdmin,
-				status: formData.status
-			}
-		}
-	}
-	closeModals()
+	$fetch('/api/users/', {
+		method: 'POST',
+		body: { ...formData, password: safePassword.value }
+	}).then(response => {
+		toast('Erfolg', {
+			description: 'Benutzer erfolgreich hinzugefügt'
+		})
+
+		const newLog = { ...formData, id: response.id }
+
+		users.value.unshift(newLog)
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Hinzufügen des Benutzers ist ein Fehler aufgetreten'
+		})
+	}).finally(closeModals)
 }
 
 const updateUser = () => {
-	console.log('Updating user:', formData)
 	$fetch('/api/users/' + selectedUser.value.id, {
 		method: 'PUT',
 		body: { ...formData }
@@ -138,6 +127,7 @@ const resetForm = () => {
 	formData.email = ''
 	formData.isAdmin = false
 	formData.status = 'Active'
+	safePassword.value = ''
 }
 
 const currentPage = ref(1)
@@ -170,6 +160,18 @@ function generateSafePassword(length = 12) {
 		password += charset[randomIndex]
 	}
 	safePassword.value = password
+}
+
+function copyPassword() {
+	navigator.clipboard.writeText(safePassword.value).then(() => {
+		toast('Erfolg', {
+			description: 'Passwort in die Zwischenablage kopiert'
+		})
+	}).catch(err => {
+		toast('Fehler', {
+			description: 'Fehler beim Kopieren des Passworts: ' + err.message
+		})
+	})
 }
 </script>
 
@@ -254,6 +256,30 @@ function generateSafePassword(length = 12) {
 				<div class="gap-x-2 flex items-center">
 					<Checkbox v-model="formData.isAdmin" />
 					<Label for="role">Administratorberechtigungen</Label>
+				</div>
+				<div class="space-y-2">
+					<Label for="password">Passwort</Label>
+					<div class="relative flex items-center">
+						<Icon name="tabler:key" class="absolute left-3 text-muted-foreground h-4 w-4" />
+						<Input
+							id="password"
+							v-model="safePassword"
+							readonly
+							required
+							placeholder="Passwort"
+							class="pl-10 pr-12"
+						/>
+						<Button
+							type="button"
+							variant="ghost"
+							class="absolute right-0"
+							@click="copyPassword"
+							tabindex="-1"
+						>
+							<Icon name="tabler:copy" class="h-4 w-4" />
+						</Button>
+					</div>
+					<p class="text-muted-foreground text-sm">Leiten Sie das Passwort an den Benutzer weiter. Es kann später zurückgesetzt, jedoch nicht mehr abgerufen werden.</p>
 				</div>
 				<DialogFooter class="gap-2">
 					<Button type="button" variant="outline" @click="closeModals">

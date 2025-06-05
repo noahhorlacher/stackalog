@@ -17,10 +17,11 @@ Powered with (insert quirky emoji) by:
 
 - Basic CRUD with Nitro ✅
 - Update routes for logs, stacks & users ✅
-- Password generation
+- Password generation ✅
 - Add logs to stacks with search
 - Auth with Nitro
 - Preferences functionality
+- Reset Password
 - User, category & subcategory suggestions with combobox
 - Add filters to search
 - Generate PDF report (from stack or log search)
