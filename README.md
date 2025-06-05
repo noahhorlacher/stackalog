@@ -3,6 +3,7 @@
 Stackalog is a Swiss inventory management app, so expect the German language and the Frank currency.
 It allows you to log your inventory items (called logs) and create folders (called stacks).
 You can then **stack** your **logs**, in other words, create folders, where one log can be in many stacks.
+These stacks with logs are your catalog – *cough cough* I mean, your stackalog.
 
 ## Tech stack
 
