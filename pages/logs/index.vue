@@ -208,7 +208,7 @@ watch(logSearchQuery, () => {
 
   <!-- stats -->
   <div class="mb-8 grid grid-cols-4 gap-4">
-    <Card class="hover:shadow-md shadow-blue-600 hover:-translate-y-[3px] transition-all">
+    <Card class="hover:shadow-md bg-gradient-to-br from-cyan-600/5 to-blue-600/5 shadow-blue-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
           <p class="text-sm text-muted-foreground">Totale Logs</p>
@@ -221,7 +221,7 @@ watch(logSearchQuery, () => {
       </CardContent>
     </Card>
 
-    <Card class="hover:shadow-md shadow-emerald-600 hover:-translate-y-[3px] transition-all">
+    <Card class="hover:shadow-md bg-gradient-to-br from-green-600/5 to-emerald-600/5 shadow-emerald-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
           <p class="text-sm text-muted-foreground">Verfügbar</p>
@@ -235,7 +235,7 @@ watch(logSearchQuery, () => {
       </CardContent>
     </Card>
 
-    <Card class="hover:shadow-md shadow-yellow-600 hover:-translate-y-[3px] transition-all">
+    <Card class="hover:shadow-md bg-gradient-to-br from-orange-600/5 to-yellow-600/5 shadow-yellow-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
           <p class="text-sm text-muted-foreground">Defekt</p>
@@ -248,7 +248,7 @@ watch(logSearchQuery, () => {
       </CardContent>
     </Card>
 
-    <Card class="hover:shadow-md shadow-violet-600 hover:-translate-y-[3px] transition-all">
+    <Card class="hover:shadow-md bg-gradient-to-br from-indigo-600/5 to-violet-600/5 shadow-violet-600 hover:-translate-y-[3px] transition-all">
       <CardContent>
         <div class="flex justify-between font-bold items-center mb-2">
           <p class="text-sm text-muted-foreground">Totaler Wert</p>
