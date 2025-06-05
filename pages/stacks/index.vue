@@ -9,6 +9,7 @@ const stackSearchQuery = ref('')
 const showAddModal = ref(false)
 const showEditModal = ref(false)
 const selectedStack = ref(null)
+const showDeleteModal = ref(false)
 
 const stacks = ref([])
 
@@ -63,9 +64,14 @@ const openAddModal = () => {
 const openEditModal = stack => {
 	resetForm()
 	showEditModal.value = true
-	selectedStack.value = stack.id
+	selectedStack.value = stack
 	formData.title = stack.title
 	formData.description = stack.description
+}
+
+const openDeleteModal = stack => {
+	selectedStack.value = stack
+	showDeleteModal.value = true
 }
 
 const closeModals = () => {
@@ -93,15 +99,15 @@ const saveStack = () => {
 	}).finally(closeModals)
 }
 
-const deleteStack = stack => {
-	$fetch('/api/stacks/' + stack.id, {
+const deleteStack = () => {
+	$fetch('/api/stacks/' + selectedStack.value.id, {
 		method: 'DELETE'
 	}).then(() => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich gelöscht'
 		})
 
-		const index = stacks.value.findIndex(s => s.id === stack.id)
+		const index = stacks.value.findIndex(s => s.id === selectedStack.value.id)
 		stacks.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
@@ -111,9 +117,7 @@ const deleteStack = stack => {
 }
 
 const updateStack = () => {
-	console.log('Updating stack:', selectedStack.value, formData)
-
-	$fetch('/api/stacks/' + selectedStack.value, {
+	$fetch('/api/stacks/' + selectedStack.value.id, {
 		method: 'PUT',
 		body: formData
 	}).then(() => {
@@ -121,7 +125,7 @@ const updateStack = () => {
 			description: 'Stack erfolgreich aktualisiert'
 		})
 
-		const index = stacks.value.findIndex(s => s.id === selectedStack.value)
+		const index = stacks.value.findIndex(s => s.id === selectedStack.value.id)
 		if (index !== -1) {
 			stacks.value[index] = { ...stacks.value[index], ...formData }
 		}
@@ -236,7 +240,7 @@ watch(stackSearchQuery, () => {
 	<!-- stacks -->
 	<ScrollArea v-else class="h-[600px]">
 		<div class="flex flex-wrap gap-8 justify-center items-start">
-			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" @deleteStack="deleteStack" @editStack="openEditModal" />
+			<StackCard v-for="(stack, index) of paginatedStacks" :stack :key="`stack-${index}`" @deleteStack="openDeleteModal" @editStack="openEditModal" />
 		</div>
 	</ScrollArea>
 
@@ -306,4 +310,23 @@ watch(stackSearchQuery, () => {
 			</form>
 		</DialogContent>
 	</Dialog>
+
+		<!-- Delete Confirmation Dialog -->
+	<AlertDialog v-model:open="showDeleteModal">
+		<AlertDialogContent>
+			<AlertDialogHeader>
+				<AlertDialogTitle>Stack löschen</AlertDialogTitle>
+				<p>Sind Sie sich sicher, dass Sie den Stack <strong>{{ selectedStack.title }}</strong> löschen möchten?</p>
+				<AlertDialogDescription>
+					Diese Aktion kann nicht rückgängig gemacht werden.
+				</AlertDialogDescription>
+			</AlertDialogHeader>
+			<AlertDialogFooter>
+				<AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
+				<AlertDialogAction @click="deleteStack" class="bg-destructive text-white hover:bg-destructive/90">
+					Stack löschen
+				</AlertDialogAction>
+			</AlertDialogFooter>
+		</AlertDialogContent>
+	</AlertDialog>
 </template>
