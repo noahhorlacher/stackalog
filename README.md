@@ -16,11 +16,12 @@ Powered with (insert quirky emoji) by:
 ## Roadmap
 
 - Basic CRUD with Nitro ✅
-- Update routes for logs, stacks & users
+- Update routes for logs, stacks & users ✅
 - Password generation
 - Add logs to stacks with search
-- User, category & subcategory suggestions with combobox
 - Auth with Nitro
+- Preferences functionality
+- User, category & subcategory suggestions with combobox
 - Add filters to search
 - Generate PDF report (from stack or log search)
 - Export CSV & XLSX
