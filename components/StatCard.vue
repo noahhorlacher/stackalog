@@ -54,7 +54,7 @@ const colorClasses = computed(() => colorMap[props.color] || colorMap.blue)
 
 <template>
   <Card
-    class="rounded-md relative gap-0 pt-6 pb-8 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-0 shadow-2xl transition-all duration-500 overflow-hidden group"
+    class="rounded-md relative gap-0 pt-6 pb-8 px-6 bg-gradient-to-br from-bg via-muted-foreground/8 to-bg border-0 shadow-2xl transition-all duration-500 overflow-hidden group"
     :class="colorClasses.cardShadow"
   >
     <!-- glow -->
@@ -93,12 +93,12 @@ const colorClasses = computed(() => colorMap[props.color] || colorMap.blue)
     <CardContent class="p-0 mt-2">
       <div class="space-y-4">
         <div class="flex items-baseline space-x-2">
-          <span class="xl:text-4xl font-bold text-white">
+          <span class="xl:text-4xl font-bold text-foreground">
             <slot name="value" />
           </span>
         </div>
-        <div class="pt-4 border-t border-gray-700/50">
-          <p class="text-sm text-gray-400">
+        <div class="pt-4 border-t border-muted-foreground">
+          <p class="text-sm text-muted-foreground">
             <slot name="description" />
           </p>
         </div>
