@@ -8,6 +8,8 @@ useSeoMeta({
 
 const logSearchQuery = ref('')
 const showAddModal = ref(false)
+const selectedLog = ref(null)
+const showDeleteModal = ref(false)
 
 const logs = ref([])
 
@@ -61,6 +63,11 @@ const openAddModal = () => {
   showAddModal.value = true
 }
 
+const openDeleteModal = stack => {
+	selectedLog.value = stack
+	showDeleteModal.value = true
+}
+
 const closeModals = () => {
   showAddModal.value = false
   resetForm()
@@ -88,15 +95,15 @@ const saveLog = () => {
   }).finally(closeModals)
 }
 
-const deleteLog = (log) => {
-	$fetch('/api/logs/' + log.id, {
+const deleteLog = () => {
+	$fetch('/api/logs/' + selectedLog.value.id, {
 		method: 'DELETE'
 	}).then(() => {
 		toast('Erfolg', {
 			description: 'Log erfolgreich gelöscht'
 		})
 
-		const index = logs.value.findIndex(l => l.id === log.id)
+		const index = logs.value.findIndex(l => l.id === selectedLog.value.id)
 		logs.value.splice(index, 1)
 	}).catch(err => {
 		toast('Fehler', {
@@ -224,7 +231,7 @@ watch(logSearchQuery, () => {
     <div v-else class="mx-auto w-full max-w-7xl">
       <ScrollArea class="h-[600px]">
         <div class="flex flex-wrap gap-8 justify-center items-start">
-          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="deleteLog" />
+          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="openDeleteModal" />
         </div>
       </ScrollArea>
 
@@ -333,4 +340,23 @@ watch(logSearchQuery, () => {
 
     </DialogContent>
   </Dialog>
+
+  <!-- Delete Confirmation Dialog -->
+	<AlertDialog v-model:open="showDeleteModal">
+		<AlertDialogContent>
+			<AlertDialogHeader>
+				<AlertDialogTitle>Log löschen</AlertDialogTitle>
+				<p>Sind Sie sich sicher, dass Sie den Log <strong>{{ selectedLog.name }}</strong> löschen möchten?</p>
+				<AlertDialogDescription>
+					Diese Aktion kann nicht rückgängig gemacht werden.
+				</AlertDialogDescription>
+			</AlertDialogHeader>
+			<AlertDialogFooter>
+				<AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
+				<AlertDialogAction @click="deleteLog" class="bg-destructive text-white hover:bg-destructive/90">
+					Log löschen
+				</AlertDialogAction>
+			</AlertDialogFooter>
+		</AlertDialogContent>
+	</AlertDialog>
 </template>
