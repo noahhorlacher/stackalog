@@ -119,7 +119,7 @@ const deleteStack = () => {
 const updateStack = () => {
 	$fetch('/api/stacks/' + selectedStack.value.id, {
 		method: 'PUT',
-		body: formData
+		body: { ...formData }
 	}).then(() => {
 		toast('Erfolg', {
 			description: 'Stack erfolgreich aktualisiert'

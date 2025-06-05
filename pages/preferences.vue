@@ -102,9 +102,7 @@ onMounted(() => {
             <div class="flex gap-2">
               <Input id="email" type="email" placeholder="max.mustermann@example.com"
                 defaultValue="max.mustermann@example.com" class="flex-1" />
-              <Button variant="outline">Verifizieren</Button>
             </div>
-            <p class="text-sm text-muted-foreground">Wir senden Ihnen eine Email um Ihre Änderung zu bestätigen.</p>
           </div>
 
           <div class="space-y-2">
@@ -113,7 +111,6 @@ onMounted(() => {
               <Input type="password" placeholder="••••••••" disabled class="flex-1" />
               <Button variant="outline">Passwort ändern</Button>
             </div>
-            <p class="text-sm text-muted-foreground">Zuletzt geändert vor 3 Monaten</p>
           </div>
 
         </CardContent>

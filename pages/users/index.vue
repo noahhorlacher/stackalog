@@ -13,22 +13,12 @@ const showEditModal = ref(false)
 const showDeleteModal = ref(false)
 const selectedUser = ref(null)
 
-// Computed property for form modal
-const showFormModal = computed({
-	get: () => showAddModal.value || showEditModal.value,
-	set: (value) => {
-		if (!value) {
-			showAddModal.value = false
-			showEditModal.value = false
-		}
-	}
-})
-
 // Form data for add/edit
 const formData = reactive({
-	name: '',
+	firstName: '',
+	lastName: '',
+	isAdmin: false,
 	email: '',
-	role: 'Viewer'
 })
 
 const users = ref([])
@@ -54,25 +44,12 @@ const filteredUsers = computed(() => {
 	)
 })
 
-const formatDate = (dateString) => {
-	return new Date(dateString).toLocaleDateString('de-CH', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
-	})
-}
-
 const openAddModal = () => {
 	resetForm()
 	showAddModal.value = true
 }
 
-const viewUser = (user) => {
-	selectedUser.value = user
-	showViewModal.value = true
-}
-
-const editUser = (user) => {
+const openEditModal = user => {
 	selectedUser.value = user
 	formData.firstName = user.firstName
 	formData.lastName = user.lastName
@@ -82,7 +59,7 @@ const editUser = (user) => {
 	showEditModal.value = true
 }
 
-const deleteUser = (user) => {
+const openDeleteModal = user => {
 	selectedUser.value = user
 	showDeleteModal.value = true
 }
@@ -117,7 +94,28 @@ const saveUser = () => {
 	closeModals()
 }
 
-const confirmDelete = () => {
+const updateUser = () => {
+	console.log('Updating user:', formData)
+	$fetch('/api/users/' + selectedUser.value.id, {
+		method: 'PUT',
+		body: { ...formData }
+	}).then(() => {
+		toast('Erfolg', {
+			description: 'Benutzer erfolgreich aktualisiert'
+		})
+
+		const index = users.value.findIndex(s => s.id === selectedUser.value.id)
+		if (index !== -1) {
+			users.value[index] = { ...users.value[index], ...formData }
+		}
+	}).catch(err => {
+		toast('Fehler', {
+			description: err.message || 'Beim Aktualisieren des Benutzers ist ein Fehler aufgetreten'
+		})
+	}).finally(closeModals)
+}
+
+const deleteUser = () => {
 	const index = users.value.findIndex(u => u.id === selectedUser.value.id)
 	if (index !== -1) {
 		users.value.splice(index, 1)
@@ -162,6 +160,17 @@ const goToPage = (page) => {
 watch(searchQuery, () => {
 	currentPage.value = 1
 })
+
+const safePassword = ref('')
+function generateSafePassword(length = 12) {
+	const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?'
+	let password = ''
+	for (let i = 0; i < length; i++) {
+		const randomIndex = Math.floor(Math.random() * charset.length)
+		password += charset[randomIndex]
+	}
+	safePassword.value = password
+}
 </script>
 
 <template>
@@ -201,8 +210,8 @@ watch(searchQuery, () => {
 	<!-- users -->
 	<ScrollArea v-else class="h-[600px]">
 		<div class="flex flex-wrap gap-8 justify-center items-start">
-			<UserCard v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`" :user @viewUser="viewUser"
-				@editUser="editUser" @deleteUser="deleteUser" />
+			<UserCard v-for="(user, index) in paginatedUsers" :key="`user-row-${index}`" :user
+				@editUser="openEditModal" @deleteUser="openDeleteModal" />
 		</div>
 	</ScrollArea>
 
@@ -221,39 +230,11 @@ watch(searchQuery, () => {
 		</Button>
 	</div>
 
-	<!-- View User Dialog -->
-	<Dialog v-model:open="showViewModal">
+	<!-- Add User Dialog -->
+	<Dialog v-model:open="showAddModal">
 		<DialogContent class="sm:max-w-md">
 			<DialogHeader>
-				<DialogTitle>Benutzerdetails</DialogTitle>
-			</DialogHeader>
-
-			<div v-if="selectedUser" class="space-y-6">
-				<div class="text-center mb-4">
-					<Avatar class="h-16 w-16 mx-auto mb-4">
-						<AvatarFallback class="text-xl">
-							{{ selectedUser.firstName.charAt(0).toUpperCase() +
-								selectedUser.lastName.charAt(0).toUpperCase() }}
-						</AvatarFallback>
-					</Avatar>
-					<h4 class="text-lg font-medium">{{ selectedUser.firstName + ' ' + selectedUser.lastName }}</h4>
-					<span class="text-muted-foreground">{{ selectedUser.email }}</span>
-				</div>
-				<div class="flex justify-center gap-3">
-					<RoleBadge :user="selectedUser" />
-				</div>
-				<div class="flex justify-center mt-8">
-					<span class="text-muted-foreground text-sm">Erstellt: {{ formatDate(selectedUser.joinedAt) }}</span>
-				</div>
-			</div>
-		</DialogContent>
-	</Dialog>
-
-	<!-- Add/Edit User Dialog -->
-	<Dialog v-model:open="showFormModal">
-		<DialogContent class="sm:max-w-md">
-			<DialogHeader>
-				<DialogTitle>{{ showAddModal ? 'Benutzer hinzufügen' : 'Benutzer bearbeiten' }}</DialogTitle>
+				<DialogTitle>Benutzer hinzufügen</DialogTitle>
 			</DialogHeader>
 			<form @submit.prevent="saveUser" class="space-y-4">
 				<div class="space-y-2">
@@ -270,16 +251,51 @@ watch(searchQuery, () => {
 					<Input id="email" v-model="formData.email" type="email" required
 						placeholder="Email Adresse eingeben" />
 				</div>
-				<div class="space-y-2">
-					<Label for="role">Administratorberechtigungen</Label>
+				<div class="gap-x-2 flex items-center">
 					<Checkbox v-model="formData.isAdmin" />
+					<Label for="role">Administratorberechtigungen</Label>
+				</div>
+				<DialogFooter class="gap-2">
+					<Button type="button" variant="outline" @click="closeModals">
+						Abbrechen
+					</Button>
+					<Button type="submit">Benutzer hinzufügen</Button>
+				</DialogFooter>
+			</form>
+		</DialogContent>
+	</Dialog>
+
+	<!-- Edit User Dialog -->
+	<Dialog v-model:open="showEditModal">
+		<DialogContent class="sm:max-w-md">
+			<DialogHeader>
+				<DialogTitle>Benutzer bearbeiten</DialogTitle>
+			</DialogHeader>
+			<form @submit.prevent="updateUser" class="space-y-4">
+				<div class="space-y-2">
+					<Label for="firstName">Vorname</Label>
+					<Input id="firstName" v-model="formData.firstName" required
+						placeholder="Vor- und Mittelnamen eingeben" />
+				</div>
+				<div class="space-y-2">
+					<Label for="lastName">Nachname</Label>
+					<Input id="lastName" v-model="formData.lastName" required placeholder="Nachname eingeben" />
+				</div>
+				<div class="space-y-2">
+					<Label for="email">Email Adresse</Label>
+					<Input id="email" v-model="formData.email" type="email" required
+						placeholder="Email Adresse eingeben" />
+				</div>
+				<div class="gap-x-2 flex items-center">
+					<Checkbox v-model="formData.isAdmin" />
+					<Label for="role">Administratorberechtigungen</Label>
 				</div>
 				<DialogFooter class="gap-2">
 					<Button type="button" variant="outline" @click="closeModals">
 						Abbrechen
 					</Button>
 					<Button type="submit">
-						{{ showAddModal ? 'Benutzer hinzufügen' : 'Änderungen speichern' }}
+						Änderungen speichern
 					</Button>
 				</DialogFooter>
 			</form>
@@ -300,7 +316,7 @@ watch(searchQuery, () => {
 			</AlertDialogHeader>
 			<AlertDialogFooter>
 				<AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
-				<AlertDialogAction @click="confirmDelete" class="bg-destructive text-white hover:bg-destructive/90">
+				<AlertDialogAction @click="deleteUser" class="bg-destructive text-white hover:bg-destructive/90">
 					Benutzer löschen
 				</AlertDialogAction>
 			</AlertDialogFooter>
