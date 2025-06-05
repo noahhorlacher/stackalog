@@ -192,10 +192,10 @@ function copyPassword() {
 					<Input v-model="searchQuery" placeholder="Benutzer mit Name oder Email durchsuchen..."
 						class="pl-10" />
 				</div>
-				<Button @click="openAddModal" class="flex items-center">
+				<CTAButton @click="openAddModal" class="flex items-center">
 					<Icon name="tabler:plus" />
 					Benutzer hinzufügen
-				</Button>
+				</CTAButton>
 			</div>
 		</CardContent>
 	</Card>

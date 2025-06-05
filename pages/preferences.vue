@@ -121,6 +121,6 @@ onMounted(() => {
 
   <div class="flex justify-end gap-2 mt-8">
     <Button variant="outline">Abbrechen</Button>
-    <Button>Änderungen speichern</Button>
+    <CTAButton>Änderungen speichern</CTAButton>
   </div>
 </template>

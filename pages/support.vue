@@ -288,9 +288,9 @@ function isSubmitting() {
 
                   </div>
 
-                  <Button type="submit" class="w-full" :disabled="isSubmitting">
+                  <CTAButton type="submit" class="w-full" :disabled="isSubmitting">
                     Supportanfrage abschicken
-                  </Button>
+                  </CTAButton>
                 </form>
               </CardContent>
             </Card>

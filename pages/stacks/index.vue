@@ -196,10 +196,10 @@ watch(stackSearchQuery, () => {
 					<Input v-model="stackSearchQuery" placeholder="Stacks durchsuchen..." class="pl-10" />
 				</div>
 				<div>
-					<Button @click="openAddModal" class="flex items-center">
+					<CTAButton @click="openAddModal">
 						<Icon name="tabler:plus" />
 						Stack hinzufügen
-					</Button>
+					</CTAButton>
 				</div>
 			</div>
 		</CardContent>

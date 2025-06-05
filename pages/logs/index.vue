@@ -243,10 +243,10 @@ watch(logSearchQuery, () => {
             class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input v-model="logSearchQuery" placeholder="Logs durchsuchen..." class="pl-10" />
         </div>
-        <Button @click="openAddModal" class="flex items-center">
+        <CTAButton @click="openAddModal" class="flex items-center">
           <Icon name="tabler:plus" />
           Log hinzufügen
-        </Button>
+        </CTAButton>
       </div>
     </CardContent>
   </Card>
