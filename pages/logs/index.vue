@@ -1,6 +1,6 @@
 <script setup>
+import { CalendarDate, parseDate, getLocalTimeZone, today } from '@internationalized/date'
 import { toast } from 'vue-sonner'
-import { parseDate, CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 useSeoMeta({
   title: 'Stackalog — Logs'
@@ -8,20 +8,21 @@ useSeoMeta({
 
 const logSearchQuery = ref('')
 const showAddModal = ref(false)
+const showEditModal = ref(false)
 const selectedLog = ref(null)
 const showDeleteModal = ref(false)
 
 const logs = ref([])
 
 const { data: logsData, error: logsError } = await useFetch('/api/logs/')
-if(logsError.value){
+if (logsError.value) {
   toast('Fehler', {
     description: 'Fehler beim Laden der Logs. Kontaktieren Sie den Support.'
   })
 } else {
   logs.value = logsData.value.reverse()
 }
-  
+
 // Form data for add/edit
 const formData = reactive({
   name: '',
@@ -30,12 +31,20 @@ const formData = reactive({
   status: 'Verfügbar',
   assignedTo: '—',
   location: 'Unbekannt',
-  purchaseDate: parseDate(new Date().toISOString().split('T')[0]),
+  purchaseDate: new Date().toISOString().split('T')[0], // YYYY-MM-DD string
   value: 0,
   serialNumber: ''
 })
 
-const dateFormatter = new DateFormatter('de-CH', { dateStyle: 'medium' })
+// Computed bridge for Calendar component
+const purchaseDateCalendar = computed({
+  get() {
+    return formData.purchaseDate ? parseDate(formData.purchaseDate) : undefined
+  },
+  set(value) {
+    formData.purchaseDate = value ? value.toString() : ''
+  }
+})
 
 const filteredLogs = computed(() => {
   if (!logSearchQuery.value.trim()) return logs.value
@@ -53,7 +62,7 @@ const resetForm = () => {
   formData.status = 'Verfügbar'
   formData.assignedTo = '—'
   formData.location = 'Unbekannt'
-  formData.purchaseDate = parseDate(new Date().toISOString().split('T')[0])
+  formData.purchaseDate = new Date().toISOString().split('T')[0]
   formData.value = 0
   formData.serialNumber = ''
 }
@@ -63,55 +72,110 @@ const openAddModal = () => {
   showAddModal.value = true
 }
 
+const openEditModal = log => {
+  resetForm()
+  showEditModal.value = true
+  selectedLog.value = log
+  formData.name = log.name
+  formData.category = log.category || 'Unkategorisiert'
+  formData.subcategory = log.subcategory || ''
+  formData.status = log.status || 'Verfügbar'
+  formData.assignedTo = log.assignedTo || '—'
+  formData.location = log.location || 'Unbekannt'
+  formData.purchaseDate = log.purchaseDate ? log.purchaseDate.split('T')[0] : new Date().toISOString().split('T')[0]
+  formData.value = log.value || 0
+  formData.serialNumber = log.serialNumber || ''
+}
+
 const openDeleteModal = stack => {
-	selectedLog.value = stack
-	showDeleteModal.value = true
+  selectedLog.value = stack
+  showDeleteModal.value = true
 }
 
 const closeModals = () => {
   showAddModal.value = false
+  showEditModal.value = false
+  showDeleteModal.value = false
   resetForm()
 }
 
-const saveLog = () => {
-  $fetch('/api/logs/', {
-    method: 'POST',
-    body: {
-      ...formData,
-      purchaseDate: formData.purchaseDate.toDate(getLocalTimeZone())
-    }
-  }).then(response => {
-    const newLog = { ...formData, id: response.id }
+const saveLog = async () => {
+  try {
+    const { data, error } = await useFetch('/api/logs/', {
+      method: 'POST',
+      body: {
+        ...formData,
+        purchaseDate: formData.purchaseDate
+      }
+    })
 
+    if (error.value) throw error.value
+
+    const newLog = { ...formData, id: data.value.id }
     logs.value.unshift(newLog)
-    
+
     toast('Erfolg', {
       description: 'Log erfolgreich hinzugefügt'
     })
-  }).catch(err => {
+  } catch (err) {
     toast('Error', {
       description: err.message
     })
-  }).finally(closeModals)
+  } finally {
+    closeModals()
+  }
 }
 
-const deleteLog = () => {
-	$fetch('/api/logs/' + selectedLog.value.id, {
-		method: 'DELETE'
-	}).then(() => {
-		toast('Erfolg', {
-			description: 'Log erfolgreich gelöscht'
-		})
+const deleteLog = async () => {
+  try {
+    const { error } = await useFetch('/api/logs/' + selectedLog.value.id, {
+      method: 'DELETE'
+    })
 
-		const index = logs.value.findIndex(l => l.id === selectedLog.value.id)
-		logs.value.splice(index, 1)
-	}).catch(err => {
-		toast('Fehler', {
-			description: err.message || 'Beim Löschen des Logs ist ein Fehler aufgetreten'
-		})
-	}).finally(() => {
-		closeModals()
-	})
+    if (error.value) throw error.value
+
+    toast('Erfolg', {
+      description: 'Log erfolgreich gelöscht'
+    })
+
+    const index = logs.value.findIndex(l => l.id === selectedLog.value.id)
+    logs.value.splice(index, 1)
+  } catch (err) {
+    toast('Fehler', {
+      description: err.message || 'Beim Löschen des Logs ist ein Fehler aufgetreten'
+    })
+  } finally {
+    closeModals()
+  }
+}
+
+const updateLog = async () => {
+  try {
+    const { error } = await useFetch('/api/logs/' + selectedLog.value.id, {
+      method: 'PUT',
+      body: {
+        ...formData,
+        purchaseDate: formData.purchaseDate // already YYYY-MM-DD
+      }
+    })
+
+    if (error.value) throw error.value
+
+    toast('Erfolg', {
+      description: 'Log erfolgreich aktualisiert'
+    })
+
+    const index = logs.value.findIndex(s => s.id === selectedLog.value.id)
+    if (index !== -1) {
+      logs.value[index] = { ...logs.value[index], ...formData }
+    }
+  } catch (err) {
+    toast('Fehler', {
+      description: err.message || 'Beim Aktualisieren des Logs ist ein Fehler aufgetreten'
+    })
+  } finally {
+    closeModals()
+  }
 }
 
 const currentPage = ref(1)
@@ -231,7 +295,7 @@ watch(logSearchQuery, () => {
     <div v-else class="mx-auto w-full max-w-7xl">
       <ScrollArea class="h-[600px]">
         <div class="flex flex-wrap gap-8 justify-center items-start">
-          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="openDeleteModal" />
+          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="openDeleteModal" @editLog="openEditModal" />
         </div>
       </ScrollArea>
 
@@ -305,18 +369,18 @@ watch(logSearchQuery, () => {
                 :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
               >
                 <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
-                {{ formData.purchaseDate ? dateFormatter.format(formData.purchaseDate.toDate(getLocalTimeZone())) : "Kaufdatum wählen" }}
+                {{ formData.purchaseDate ? formData.purchaseDate : "Kaufdatum wählen" }}
               </Button>
             </PopoverTrigger>
             <PopoverContent class="w-auto p-0">
               <Calendar
-                :model-value="formData.purchaseDate"
+                :model-value="purchaseDateCalendar"
                 calendar-label="Kaufdatum"
                 initial-focus
-                :min-value="parseDate('1900-01-01')"
-                :max-value="parseDate(new Date().toISOString().split('T')[0])"
-                @update:model-value="v => formData.purchaseDate = v"
-                />
+                :min-value="new CalendarDate(1900, 1, 1)"
+                :max-value="today(getLocalTimeZone())"
+                @update:model-value="v => purchaseDateCalendar = v"
+              />
             </PopoverContent>
           </Popover>
         </div>
@@ -335,6 +399,94 @@ watch(logSearchQuery, () => {
             Abbrechen
           </Button>
           <Button type="submit">Log hinzufügen</Button>
+        </DialogFooter>
+      </form>
+
+    </DialogContent>
+  </Dialog>
+
+    <!-- Edit Log Dialog -->
+  <Dialog v-model:open="showEditModal">
+    <DialogContent class="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle>Log bearbeiten</DialogTitle>
+      </DialogHeader>
+
+      <form @submit.prevent="updateLog" class="space-y-4">
+        <div class="space-y-2">
+          <Label for="name">Name</Label>
+          <Input id="name" v-model="formData.name" required placeholder="Log Name eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="category">Kategorie</Label>
+          <Input id="category" v-model="formData.category" placeholder="Kategorie eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="subcategory">Unterkategorie</Label>
+          <Input id="subcategory" v-model="formData.subcategory" placeholder="Unterkategorie eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="status">Status</Label>
+          <Select v-model="formData.status" id="status" required>
+            <SelectTrigger>
+              <SelectValue placeholder="Status auswählen" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Verfügbar">Verfügbar</SelectItem>
+              <SelectItem value="Verwendet">Verwendet</SelectItem>
+              <SelectItem value="Defekt">Defekt</SelectItem>
+              <SelectItem value="In Reparatur">In Reparatur</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="space-y-2">
+          <Label for="assignedTo">Zugewiesen an</Label>
+          <Input id="assignedTo" v-model="formData.assignedTo" placeholder="Optional Person eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="location">Ort</Label>
+          <Input id="location" v-model="formData.location" placeholder="Optional Ort eingeben" />
+        </div>
+
+        <div class="space-y-2">
+          <Label for="purchaseDate">Kaufdatum</Label>
+          <Popover>
+            <PopoverTrigger as-child>
+              <Button
+                variant="outline"
+                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
+              >
+                <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
+                {{ formData.purchaseDate ? formData.purchaseDate : "Kaufdatum wählen" }}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent class="w-auto p-0">
+              <Calendar
+                :model-value="purchaseDateCalendar"
+                calendar-label="Kaufdatum"
+                initial-focus
+                :min-value="new CalendarDate(1900, 1, 1)"
+                :max-value="today(getLocalTimeZone())"
+                @update:model-value="v => purchaseDateCalendar = v"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        <div class="space-y-2">
+          <Label for="value">Wert (CHF)</Label>
+          <Input id="value" type="number" v-model.number="formData.value" required placeholder="Wert eingeben" />
+        </div>
+        <div class="space-y-2">
+          <Label for="serialNumber">Seriennummer</Label>
+          <Input id="serialNumber" v-model="formData.serialNumber" placeholder="Optional Seriennummer eingeben" />
+        </div>
+
+        <DialogFooter class="gap-2">
+          <Button type="button" variant="outline" @click="closeModals">
+            Abbrechen
+          </Button>
+          <Button type="submit">Änderungen speichern</Button>
         </DialogFooter>
       </form>
 
