@@ -11,15 +11,15 @@ const emit = defineEmits(['editLog', 'deleteLog', 'addLogToStack'])
 const getStatusColor = () => {
     switch (props.log.status) {
         case 'Verfügbar':
-            return 'text-green-400';
+            return 'bg-green-400 text-green-400';
         case 'In Reparatur':
-            return 'text-yellow-400';
+            return 'bg-yellow-400 text-yellow-400';
         case 'Verwendet':
-            return 'text-violet-400';
+            return 'bg-violet-400 text-violet-400';
         case 'Defekt':
-            return 'text-red-400';
+            return 'bg-red-400 text-red-400';
         default:
-            return 'text-muted-foreground';
+            return 'bg-muted-foreground text-muted-foreground';
     }
 }
 
@@ -46,35 +46,45 @@ const getStatusIcon = () => {
                 <Card class="w-86 pt-4 text-center text-sm hover:bg-muted/50 transition-colors">
                     <CardHeader>
                         <CardTitle class="mb-4 gap-2 flex justify-between items-center w-full">
-                            <p class="break-all font-mono bg-muted/80 px-2 py-1 rounded">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt' }}</p>
+                            <div class="flex items-center gap-2 font-mono bg-muted/80 px-2 py-1 rounded">
+                                <div :class="getStatusColor()" class="w-2 h-2 animate-pulse bg-current rounded-full">
+                                </div>
+                                <p class="break-all">{{ log.id ? 'INV-' + String(log.id).padStart(5, '0') : 'Unbekannt'
+                                    }}</p>
+                            </div>
+                            <div class="flex justify-center gap-2 items-center">
+                                <Badge v-if="log.category === 'Unkategorisiert'" class="text-xs">
+                                    {{ log.category || 'Unkategorisiert' }}
+                                </Badge>
+                                <div v-else>
+                                    <Badge variant="secondary" class="text-xs">
+                                        <p>{{ log.category || 'Unkategorisiert' }}</p>
+                                        <Icon name="tabler:chevron-right" />
+                                        <p>{{ log.subcategory || 'Nicht Unterkategorisiert' }}</p>
+                                    </Badge>
+                                </div>
+                            </div>
+                        </CardTitle>
+                        <CardDescription class="text-lg text-foreground mt-4">
                             <Tooltip>
                                 <TooltipTrigger class="cursor-pointer">
-                                    <div :class="['font-light p-2 pr-0', getStatusColor() ]">
-                                        <Icon :name="getStatusIcon()" />
+                                    <div :class="['font-light p-2 w-12 h-12 items-center flex justify-center rounded-lg shadow-current/30 shadow-md', getStatusColor()]">
+                                        <Icon class="text-black" :name="getStatusIcon()" />
                                     </div>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>{{ log.status || 'Unbekannt' }}</p>
                                 </TooltipContent>
                             </Tooltip>
-                        </CardTitle>
-                        <CardDescription class="text-lg text-foreground">
-                            <p>{{ log.name || 'Unbekannt' }}</p>
-                            <p class="text-sm text-violet-400">{{ log.value ? 'Fr. ' + log.value.toLocaleString('de-CH', {
-                                minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unbekannt' }}</p>
+
+                            <p class="mt-4">{{ log.name || 'Unbekannt' }}</p>
+                            <p class="text-sm text-muted-foreground">{{ log.value ? 'Fr. ' +
+                                log.value.toLocaleString('de-CH', {
+                                    minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unbekannter Wert' }}</p>
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div class="flex justify-center gap-2 items-center">
-                            <Badge class="text-xs">
-                                {{ log.category || 'Unbekannt' }}
-                            </Badge>
-                            <Badge variant="secondary" class="text-xs">
-                                {{ log.subcategory || 'Unbekannt' }}
-                            </Badge>
-                        </div>
-
-                        <div class="flex justify-between items-center text-xs mt-8">
+                        <div class="flex justify-between items-center text-xs mt-4">
                             <p class="text-muted-foreground">Zuweisung</p>
                             <p class="font-bold">{{ log.assignedTo || '—' }}</p>
                         </div>
