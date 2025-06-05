@@ -64,7 +64,7 @@ log.value = logData.value
         <p class="text-lg font-semibold">{{ log.location || 'Unbekannt' }}</p>
         <p class="text-muted-foreground text-sm">Seriennummer</p>
         <p class="text-lg font-semibold">{{ log.serialNumber || 'Keine Seriennummer' }}</p>
-        <p class="text-muted-foreground text-sm">Erstellt am</p>
-        <p class="text-lg font-semibold">{{ log.createdAt ? new Date(log.createdAt).toLocaleDateString('de-CH') : 'Unbekannt' }}</p>
+        <p class="text-muted-foreground text-sm">Gekauft am</p>
+        <p class="text-lg font-semibold">{{ log.createdAt ? new Date(log.purchaseDate).toLocaleDateString('de-CH') : 'Unbekannt' }}</p>
     </div>
 </template>
