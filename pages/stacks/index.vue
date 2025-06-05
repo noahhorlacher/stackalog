@@ -311,7 +311,7 @@ watch(stackSearchQuery, () => {
 		</DialogContent>
 	</Dialog>
 
-		<!-- Delete Confirmation Dialog -->
+	<!-- Delete Confirmation Dialog -->
 	<AlertDialog v-model:open="showDeleteModal">
 		<AlertDialogContent>
 			<AlertDialogHeader>
