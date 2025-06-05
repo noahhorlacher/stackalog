@@ -29,11 +29,11 @@ user.value = userData.value
     <Breadcrumb>
         <BreadcrumbList>
             <BreadcrumbItem>
-                <BreadcrumbLink href="/logs">Benutzer</BreadcrumbLink>
+                <BreadcrumbLink href="/users">Benutzer</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-                <BreadcrumbPage>{{ user.name }}</BreadcrumbPage>
+                <BreadcrumbPage>{{ user.firstName + ' ' + user.lastName }}</BreadcrumbPage>
             </BreadcrumbItem>
         </BreadcrumbList>
     </Breadcrumb>
