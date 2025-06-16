@@ -11,8 +11,11 @@ const showAddModal = ref(false)
 const showEditModal = ref(false)
 const selectedLog = ref(null)
 const showDeleteModal = ref(false)
+const showAddToStackModal = ref(false)
+const addToLogStackComboboxValue = ref('')
 
 const logs = ref([])
+const stacks = ref([])
 
 const { data: logsData, error: logsError } = await useFetch('/api/logs/')
 if (logsError.value) {
@@ -21,6 +24,15 @@ if (logsError.value) {
   })
 } else {
   logs.value = logsData.value.reverse()
+}
+
+const { data: stacksData, error: stacksError } = await useFetch('/api/stacks/')
+if (stacksError.value){
+	toast('Fehler', {
+	description: 'Fehler beim Laden der Stacks. Kontaktieren Sie den Support.'
+})
+} else {
+	stacks.value = stacksData.value.map(s => { return { ...s, logs: [] } }).reverse()
 }
 
 // Form data for add/edit
@@ -97,6 +109,11 @@ const closeModals = () => {
   showEditModal.value = false
   showDeleteModal.value = false
   resetForm()
+}
+
+const openAddToStackModal = log => {
+  selectedLog.value = log
+  showAddToStackModal.value = true
 }
 
 const saveLog = async () => {
@@ -209,29 +226,29 @@ watch(logSearchQuery, () => {
   <!-- stats -->
   <div class="mb-8 grid grid-cols-4 gap-4">
     <StatCard icon="tabler:logs">
-			<template #title>Totale Logs</template>
-			<template #description>In allen Kategorien</template>
-			<template #value>{{ logs.length }}</template>
-		</StatCard>
+      <template #title>Totale Logs</template>
+      <template #description>In allen Kategorien</template>
+      <template #value>{{ logs.length }}</template>
+    </StatCard>
 
     <StatCard color="green" icon="tabler:graph">
-			<template #title>Verfügbar</template>
-			<template #description>Bereit für den Einsatz</template>
-			<template #value>{{ logs.filter(l => l.status === "Verfügbar").length }}</template>
-		</StatCard>
+      <template #title>Verfügbar</template>
+      <template #description>Bereit für den Einsatz</template>
+      <template #value>{{logs.filter(l => l.status === "Verfügbar").length}}</template>
+    </StatCard>
 
     <StatCard color="yellow" icon="tabler:users">
-			<template #title>Defekt</template>
-			<template #description>Defekt oder in Reparatur</template>
-			<template #value>{{ logs.filter(l => ["Defekt", "In Reparatur"].includes(l.status)).length }}</template>
-		</StatCard>
+      <template #title>Defekt</template>
+      <template #description>Defekt oder in Reparatur</template>
+      <template #value>{{logs.filter(l => ["Defekt", "In Reparatur"].includes(l.status)).length}}</template>
+    </StatCard>
 
     <StatCard color="violet" icon="tabler:wallet">
-			<template #title>Totaler Wert</template>
-			<template #description>Vermögensbewertung</template>
-			<template #value>Fr. {{ logs.reduce((a, log) => a + (log.value || 0),
-            0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</template>
-		</StatCard>
+      <template #title>Totaler Wert</template>
+      <template #description>Vermögensbewertung</template>
+      <template #value>Fr. {{logs.reduce((a, log) => a + (log.value || 0),
+        0).toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</template>
+    </StatCard>
   </div>
 
   <!-- search -->
@@ -266,7 +283,8 @@ watch(logSearchQuery, () => {
     <div v-else class="mx-auto w-full max-w-7xl">
       <ScrollArea class="h-[600px]">
         <div class="flex flex-wrap gap-8 justify-center items-start">
-          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="openDeleteModal" @editLog="openEditModal" />
+          <LogCard :log v-for="(log, index) in paginatedLogs" :key="`log-${index}`" @deleteLog="openDeleteModal"
+            @editLog="openEditModal" @addLogToStack="openAddToStackModal" />
         </div>
       </ScrollArea>
 
@@ -335,23 +353,16 @@ watch(logSearchQuery, () => {
           <Label for="purchaseDate">Kaufdatum</Label>
           <Popover>
             <PopoverTrigger as-child>
-              <Button
-                variant="outline"
-                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
-              >
+              <Button variant="outline"
+                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal' : 'text-muted-foreground'">
                 <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
                 {{ formData.purchaseDate ? formData.purchaseDate : "Kaufdatum wählen" }}
               </Button>
             </PopoverTrigger>
             <PopoverContent class="w-auto p-0">
-              <Calendar
-                :model-value="purchaseDateCalendar"
-                calendar-label="Kaufdatum"
-                initial-focus
-                :min-value="new CalendarDate(1900, 1, 1)"
-                :max-value="today(getLocalTimeZone())"
-                @update:model-value="v => purchaseDateCalendar = v"
-              />
+              <Calendar :model-value="purchaseDateCalendar" calendar-label="Kaufdatum" initial-focus
+                :min-value="new CalendarDate(1900, 1, 1)" :max-value="today(getLocalTimeZone())"
+                @update:model-value="v => purchaseDateCalendar = v" />
             </PopoverContent>
           </Popover>
         </div>
@@ -376,7 +387,7 @@ watch(logSearchQuery, () => {
     </DialogContent>
   </Dialog>
 
-    <!-- Edit Log Dialog -->
+  <!-- Edit Log Dialog -->
   <Dialog v-model:open="showEditModal">
     <DialogContent class="sm:max-w-md">
       <DialogHeader>
@@ -423,23 +434,16 @@ watch(logSearchQuery, () => {
           <Label for="purchaseDate">Kaufdatum</Label>
           <Popover>
             <PopoverTrigger as-child>
-              <Button
-                variant="outline"
-                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal': 'text-muted-foreground'"
-              >
+              <Button variant="outline"
+                :class="formData.purchaseDate ? 'w-[280px] justify-start text-left font-normal' : 'text-muted-foreground'">
                 <Icon name="tabler:calendar" class="mr-2 h-4 w-4" />
                 {{ formData.purchaseDate ? formData.purchaseDate : "Kaufdatum wählen" }}
               </Button>
             </PopoverTrigger>
             <PopoverContent class="w-auto p-0">
-              <Calendar
-                :model-value="purchaseDateCalendar"
-                calendar-label="Kaufdatum"
-                initial-focus
-                :min-value="new CalendarDate(1900, 1, 1)"
-                :max-value="today(getLocalTimeZone())"
-                @update:model-value="v => purchaseDateCalendar = v"
-              />
+              <Calendar :model-value="purchaseDateCalendar" calendar-label="Kaufdatum" initial-focus
+                :min-value="new CalendarDate(1900, 1, 1)" :max-value="today(getLocalTimeZone())"
+                @update:model-value="v => purchaseDateCalendar = v" />
             </PopoverContent>
           </Popover>
         </div>
@@ -465,21 +469,62 @@ watch(logSearchQuery, () => {
   </Dialog>
 
   <!-- Delete Confirmation Dialog -->
-	<AlertDialog v-model:open="showDeleteModal">
-		<AlertDialogContent>
-			<AlertDialogHeader>
-				<AlertDialogTitle>Log löschen</AlertDialogTitle>
-				<p>Sind Sie sich sicher, dass Sie den Log <strong>{{ selectedLog.name }}</strong> löschen möchten?</p>
-				<AlertDialogDescription>
-					Diese Aktion kann nicht rückgängig gemacht werden.
-				</AlertDialogDescription>
-			</AlertDialogHeader>
-			<AlertDialogFooter>
-				<AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
-				<AlertDialogAction @click="deleteLog" class="bg-destructive text-white hover:bg-destructive/90">
-					Log löschen
-				</AlertDialogAction>
-			</AlertDialogFooter>
-		</AlertDialogContent>
-	</AlertDialog>
+  <AlertDialog v-model:open="showDeleteModal">
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Log löschen</AlertDialogTitle>
+        <p>Sind Sie sich sicher, dass Sie den Log <strong>{{ selectedLog.name }}</strong> löschen möchten?</p>
+        <AlertDialogDescription>
+          Diese Aktion kann nicht rückgängig gemacht werden.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel @click="closeModals">Abbrechen</AlertDialogCancel>
+        <AlertDialogAction @click="deleteLog" class="bg-destructive text-white hover:bg-destructive/90">
+          Log löschen
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+
+  <!-- add log to stack dialog -->
+  <!-- Delete Confirmation Dialog -->
+  <Dialog v-model:open="showAddToStackModal">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Zu Stack hinzufügen</DialogTitle>
+        <DialogDescription>
+
+          <Combobox by="label" class="w-full">
+            <ComboboxAnchor class="w-full">
+              <ComboboxInput class="pl-2 w-full" :display-value="(val) => val?.label ?? ''"
+                placeholder="Stacks wählen..." />
+            </ComboboxAnchor>
+
+            <ComboboxList>
+              <ComboboxEmpty>
+                Keine Stacks gefunden
+              </ComboboxEmpty>
+
+              <ComboboxGroup>
+                <ComboboxItem v-for="(stack, index) in stacks" :key="`stack-option-${index}`" :value="stack.id">
+                  {{ stack.title }}
+
+                  <ComboboxItemIndicator>
+                    <Icon name="tabler:check" />
+                  </ComboboxItemIndicator>
+                </ComboboxItem>
+              </ComboboxGroup>
+            </ComboboxList>
+          </Combobox>
+
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <DialogClose @click="closeModals">
+          <Button>Schliessen</Button>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>

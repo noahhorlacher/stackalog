@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, unique, int, varchar, date, float, tinyint, datetime } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, date, float, datetime, index, tinyint, foreignKey, unique } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const logs = mysqlTable("logs", {
@@ -12,32 +12,19 @@ export const logs = mysqlTable("logs", {
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	purchaseDate: date({ mode: 'string' }).default('NULL'),
 	value: float().default('NULL'),
-	serialNumber: varchar({ length: 100 }).notNull(),
 	createdAt: datetime({ mode: 'string'}).notNull(),
 	updatedAt: datetime({ mode: 'string'}).notNull(),
+	serialNumber: varchar({ length: 100 }).default('NULL'),
+});
+
+export const logStack = mysqlTable("log_stack", {
+	id: int().autoincrement().notNull(),
+	logId: int("log_id").notNull().references(() => logs.id, { onDelete: "restrict", onUpdate: "restrict" } ),
+	stackId: int("stack_id").notNull().references(() => stacks.id, { onDelete: "restrict", onUpdate: "restrict" } ),
 },
 (table) => [
-	unique("serialNumber").on(table.serialNumber),
-	unique("serialNumber_2").on(table.serialNumber),
-	unique("serialNumber_3").on(table.serialNumber),
-	unique("serialNumber_4").on(table.serialNumber),
-	unique("serialNumber_5").on(table.serialNumber),
-	unique("serialNumber_6").on(table.serialNumber),
-	unique("serialNumber_7").on(table.serialNumber),
-	unique("serialNumber_8").on(table.serialNumber),
-	unique("serialNumber_9").on(table.serialNumber),
-	unique("serialNumber_10").on(table.serialNumber),
-	unique("serialNumber_11").on(table.serialNumber),
-	unique("serialNumber_12").on(table.serialNumber),
-	unique("serialNumber_13").on(table.serialNumber),
-	unique("serialNumber_14").on(table.serialNumber),
-	unique("serialNumber_15").on(table.serialNumber),
-	unique("serialNumber_16").on(table.serialNumber),
-	unique("serialNumber_17").on(table.serialNumber),
-	unique("serialNumber_18").on(table.serialNumber),
-	unique("serialNumber_19").on(table.serialNumber),
-	unique("serialNumber_20").on(table.serialNumber),
-	unique("serialNumber_21").on(table.serialNumber),
+	index("log_id").on(table.logId),
+	index("stack_id").on(table.stackId),
 ]);
 
 export const stacks = mysqlTable("stacks", {

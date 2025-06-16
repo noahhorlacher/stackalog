@@ -28,7 +28,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                             </CardTitle>
                             <CardDescription class="flex flex-col gap-0">
                                         <div class="flex items-center justify-between">
-                                            <p class="text-muted-foreground text-md font-bold">Totaler Wert</p>
+                                            <p class="text-muted-foreground text-xs">Totaler Wert</p>
                                             <div
                                                 class="flex items-center bg-gradient-to-br from-blue-500 to-violet-500 p-1 rounded-md shadow-md shadow-violet-500/20">
                                                 <Icon name="tabler:wallet" class="text-white" size="16" />
@@ -48,7 +48,7 @@ const emit = defineEmits(['editStack', 'deleteStack'])
                                             </div>
                                         </div>
 
-                                        <p class="text-foreground font-bold text-lg">{{ stack.logs.length }}</p>
+                                        <p class="text-foreground font-bold text-2xl flex items-center gap-1"><Icon name="tabler:file-barcode" />{{ stack.logs.length }}</p>
                             </CardDescription>
                         </CardHeader>
                     </div>
